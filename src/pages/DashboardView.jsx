@@ -31,7 +31,14 @@ export default function DashboardView({ session }) {
           <h1>My Recipes</h1>
           <div style={{ display: 'flex', gap: '1rem' }}>
             {session && (
-              <button className="logout-btn" onClick={() => supabase.auth.signOut()} style={{ backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
+              <button 
+                className="logout-btn" 
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  navigate('/login');
+                }} 
+                style={{ backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
+              >
                 Log Out
               </button>
             )}
