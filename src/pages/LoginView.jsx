@@ -4,19 +4,26 @@ import './LoginView.css';
 
 export default function LoginView() {
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const { error } = await supabase.auth.signInWithOtp({ email });
+    setErrorMsg(null);
+    
+    const { error } = await supabase.auth.signInWithPassword({ 
+      email, 
+      password 
+    });
+    
     if (error) {
-      setMessage(`Error: ${error.message}`);
-    } else {
-      setMessage('Check your email for the login link!');
+      setErrorMsg(error.message);
+      setLoading(false);
     }
-    setLoading(false);
+    // If successful, App.jsx's onAuthStateChange listener will automatically
+    // detect the session and redirect you away from this page!
   };
 
   return (
@@ -27,16 +34,23 @@ export default function LoginView() {
         <form onSubmit={handleLogin} className="login-form">
           <input
             type="email"
-            placeholder="Your email address"
+            placeholder="Email address"
             value={email}
             required
             onChange={(e) => setEmail(e.target.value)}
           />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            required
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <button type="submit" disabled={loading} className="login-btn">
-            {loading ? 'Sending...' : 'Send Magic Link'}
+            {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-        {message && <p className="login-message">{message}</p>}
+        {errorMsg && <p className="login-message" style={{ color: '#ff6b6b' }}>{errorMsg}</p>}
       </div>
     </div>
   );
