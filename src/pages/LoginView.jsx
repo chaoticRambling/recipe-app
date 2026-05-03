@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 import './LoginView.css';
 
 export default function LoginView() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,9 +23,10 @@ export default function LoginView() {
     if (error) {
       setErrorMsg(error.message);
       setLoading(false);
+    } else {
+      // Successfully logged in! Route to dashboard.
+      navigate('/');
     }
-    // If successful, App.jsx's onAuthStateChange listener will automatically
-    // detect the session and redirect you away from this page!
   };
 
   return (
