@@ -16,11 +16,13 @@ export default function RecipeEditor() {
   
   const [draftIngredients, setDraftIngredients] = useState('');
   const [draftSteps, setDraftSteps] = useState('');
+  const [isDraft, setIsDraft] = useState(true);
   
   const [sections, setSections] = useState([{ section_name: 'Main', items: [] }]);
   const [steps, setSteps] = useState([]);
   
   const [isLoading, setIsLoading] = useState(false);
+  const [saveError, setSaveError] = useState(null);
 
   useEffect(() => {
     if (id) {
@@ -35,6 +37,7 @@ export default function RecipeEditor() {
           setSteps(data.steps || []);
           setDraftIngredients(data.draft_ingredients || '');
           setDraftSteps(data.draft_steps || '');
+          setIsDraft(data.is_draft ?? true);
         }
         setIsLoading(false);
       });
@@ -43,6 +46,7 @@ export default function RecipeEditor() {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    setSaveError(null);
     const payload = {
       title,
       prep_time_minutes: parseInt(prepTime) || 0,
@@ -52,20 +56,25 @@ export default function RecipeEditor() {
       steps: steps,
       draft_ingredients: draftIngredients,
       draft_steps: draftSteps,
-      is_draft: false,
+      is_draft: isDraft,
       updated_at: new Date().toISOString()
     };
     
-    let targetId = id;
-    if (id) {
-      await updateRecipe(id, payload);
-    } else {
-      payload.created_at = new Date().toISOString();
-      const newRecipe = await createRecipe(payload);
-      targetId = newRecipe.id;
+    try {
+      let targetId = id;
+      if (id) {
+        await updateRecipe(id, payload);
+      } else {
+        payload.created_at = new Date().toISOString();
+        const newRecipe = await createRecipe(payload);
+        targetId = newRecipe.id;
+      }
+      
+      navigate(`/recipe/${targetId}`);
+    } catch (err) {
+      console.error('Save failed:', err);
+      setSaveError(err.message || 'An error occurred while saving.');
     }
-    
-    navigate(`/recipe/${targetId}`);
   };
 
   if (isLoading) return <div className="loader">Loading editor...</div>;
@@ -77,7 +86,14 @@ export default function RecipeEditor() {
           &larr; Cancel
         </button>
         <h1>{id ? 'Edit Recipe' : 'New Recipe'}</h1>
-        <button type="submit" className="save-btn">Save Recipe</button>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {saveError && <span style={{ color: 'red', fontSize: '0.9rem' }}>{saveError}</span>}
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
+            <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
+            Save as Draft
+          </label>
+          <button type="submit" className="save-btn">Save Recipe</button>
+        </div>
       </header>
 
       <div className="editor-layout">

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getRecipes } from '../adapters/database';
+import { supabase } from '../supabaseClient';
 import RecipeList from '../components/RecipeList';
 import './DashboardView.css';
 
-export default function DashboardView() {
+export default function DashboardView({ session }) {
   const navigate = useNavigate();
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,11 +27,18 @@ export default function DashboardView() {
   return (
     <div className="dashboard-view">
       <header className="dashboard-header">
-        <div className="header-content">
+        <div className="header-content" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <h1>My Recipes</h1>
-          <button className="new-recipe-btn" onClick={() => navigate('/editor')}>
-            + New Recipe
-          </button>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            {session && (
+              <button className="logout-btn" onClick={() => supabase.auth.signOut()} style={{ backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
+                Log Out
+              </button>
+            )}
+            <button className="new-recipe-btn" onClick={() => navigate('/editor')}>
+              + New Recipe
+            </button>
+          </div>
         </div>
       </header>
 
