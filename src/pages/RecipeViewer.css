@@ -1,0 +1,222 @@
+.recipe-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.recipe-header {
+  text-align: center;
+  padding-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.recipe-meta {
+  display: flex;
+  justify-content: center;
+  gap: var(--spacing-md);
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+}
+
+.recipe-notes {
+  font-style: italic;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.recipe-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+  .recipe-content {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+.multiplier-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.multiplier-controls button {
+  padding: 0.4em 0.8em;
+  font-size: 0.9em;
+}
+
+.toggle-btn {
+  background-color: transparent;
+  border: 1px solid var(--accent-color);
+  color: var(--accent-color);
+}
+
+.toggle-btn:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.step-card {
+  background-color: var(--bg-secondary);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--spacing-md);
+  text-align: left;
+  position: relative;
+}
+
+.step-card.focus-mode {
+  padding: var(--spacing-xl);
+  border: 2px solid var(--accent-color);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.step-number {
+  display: inline-block;
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: bold;
+  padding: 0.2em 0.6em;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.step-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.step-image {
+  margin-top: var(--spacing-md);
+  max-width: 100%;
+  border-radius: var(--radius-md);
+}
+
+.step-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-lg);
+}
+
+.recipe-footer {
+  text-align: center;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+}
+
+.wakelock-status {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.wakelock-status.active {
+  color: var(--success-color);
+}
+
+.loader {
+  font-size: 1.5rem;
+  color: var(--accent-color);
+  text-align: center;
+  padding: 4rem;
+}
+
+.not-found-container {
+  text-align: center;
+  padding: 6rem 2rem;
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  margin-top: var(--spacing-xl);
+}
+
+.not-found-container h2 {
+  color: var(--accent-color);
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.not-found-container p {
+  color: var(--text-secondary);
+  font-size: 1.2rem;
+  margin-bottom: var(--spacing-xl);
+}
+
+.back-btn {
+  background-color: var(--bg-tertiary);
+  padding: 0.8em 1.6em;
+  font-size: 1.1rem;
+}
+
+.back-btn:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.recipe-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: calc(var(--spacing-md) * -1); /* Pulls header slightly closer */
+}
+
+.nav-back-btn, .nav-edit-btn {
+  background-color: transparent;
+  color: var(--text-secondary);
+  padding: 0.5em 1em;
+  font-size: 0.95rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.nav-edit-btn {
+  color: var(--accent-color);
+  border-color: var(--accent-color);
+}
+
+.nav-back-btn:hover {
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.nav-edit-btn:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.rough-notes-section {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px dashed var(--border-color);
+}
+
+.rough-notes-box {
+  background-color: var(--bg-tertiary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.rough-notes-box h3 {
+  font-size: 1rem;
+  color: var(--accent-color);
+  margin-bottom: var(--spacing-sm);
+}
+
+.rough-notes-box pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0;
+}

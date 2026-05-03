@@ -1,0 +1,180 @@
+.recipe-editor-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.editor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.editor-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.save-btn {
+  background-color: var(--success-color);
+  color: #121212;
+  font-weight: bold;
+}
+
+.save-btn:hover {
+  background-color: #3cb02a;
+}
+
+.editor-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .editor-layout {
+    grid-template-columns: 1fr 1.5fr;
+  }
+}
+
+.editor-left-pane, .editor-right-pane {
+  background-color: var(--bg-secondary);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+}
+
+.help-text {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-secondary);
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+}
+
+input[type="text"], input[type="number"], select, textarea {
+  width: 100%;
+  padding: 0.6em;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+  font-family: inherit;
+}
+
+input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.draft-area {
+  min-height: 250px;
+  resize: vertical;
+}
+
+.editor-divider {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: var(--spacing-xl) 0;
+}
+
+/* Sub-components styling */
+.editor-section {
+  background-color: var(--bg-tertiary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.section-header-edit {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.section-name-input {
+  flex-grow: 1;
+  font-weight: bold;
+}
+
+.editor-item-row, .editor-step-row {
+  display: flex;
+  gap: var(--spacing-sm);
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+  background-color: var(--bg-secondary);
+  padding: var(--spacing-sm);
+  border-radius: var(--radius-sm);
+}
+
+.amt-input {
+  width: 80px;
+}
+
+.unit-select {
+  width: 100px;
+}
+
+.name-input {
+  flex-grow: 1;
+}
+
+.remove-btn {
+  background-color: transparent;
+  color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  padding: 0.4em 0.8em;
+}
+
+.remove-btn:hover {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.row-remove {
+  padding: 0.4em 0.6em;
+}
+
+.add-row-btn, .add-section-btn {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border: 1px dashed var(--border-color);
+  width: 100%;
+  margin-top: var(--spacing-xs);
+}
+
+.add-row-btn:hover, .add-section-btn:hover {
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+  background-color: var(--bg-tertiary);
+}
+
+.step-num-label {
+  font-weight: bold;
+  color: var(--accent-color);
+  min-width: 25px;
+}
+
+.step-textarea {
+  flex-grow: 1;
+  resize: vertical;
+}

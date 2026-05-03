@@ -1,0 +1,39 @@
+.dashboard-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.dashboard-header {
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-color);
+  margin-bottom: var(--spacing-md);
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-content h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.new-recipe-btn {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 0.6em 1.2em;
+  font-weight: bold;
+}
+
+.new-recipe-btn:hover {
+  background-color: var(--accent-hover);
+}
+
+.dashboard-main {
+  width: 100%;
+}
