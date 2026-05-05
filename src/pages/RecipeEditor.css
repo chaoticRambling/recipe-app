@@ -208,6 +208,10 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
   border-radius: var(--radius-sm);
 }
 
+.editor-item-row {
+  flex-wrap: wrap;
+}
+
 .amt-input {
   width: 80px;
 }
@@ -217,7 +221,12 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 }
 
 .name-input {
-  flex-grow: 1;
+  flex-basis: 100%;
+  order: 1;
+}
+
+.editor-item-row .row-remove {
+  margin-left: auto;
 }
 
 .remove-btn {
@@ -259,4 +268,21 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 .step-textarea {
   flex-grow: 1;
   resize: vertical;
+}
+
+/* Desktop overrides for ingredient item row */
+@media (min-width: 768px) {
+  .editor-item-row {
+    flex-wrap: nowrap;
+  }
+  
+  .name-input {
+    flex-basis: auto;
+    flex-grow: 1;
+    order: 0;
+  }
+  
+  .editor-item-row .row-remove {
+    margin-left: 0;
+  }
 }
