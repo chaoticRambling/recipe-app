@@ -1,53 +1,54 @@
-.recipe-list-container {
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl);
+  color: var(--text-secondary);
+  font-style: italic;
   background-color: var(--bg-secondary);
   border-radius: var(--radius-lg);
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.recipe-list-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
+/* Mobile-First: Mini-Cards */
+.recipe-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
 
-.recipe-list-table th {
-  background-color: var(--bg-tertiary);
-  color: var(--text-secondary);
-  font-weight: 600;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  padding: var(--spacing-md) var(--spacing-lg);
-  border-bottom: 2px solid var(--border-color);
+.recipe-list-header {
+  display: none;
 }
 
-.recipe-row {
+.recipe-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  position: relative;
+  padding: var(--spacing-md) 3rem var(--spacing-md) var(--spacing-md);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color 0.2s ease;
-  border-bottom: 1px solid var(--border-color);
+  transition: transform 0.2s ease, border-color 0.2s ease;
 }
 
-.recipe-row:last-child {
-  border-bottom: none;
+.recipe-card:hover {
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
 }
 
-.recipe-row:hover {
-  background-color: var(--bg-tertiary);
-}
-
-.recipe-list-table td {
-  padding: var(--spacing-md) var(--spacing-lg);
-  vertical-align: middle;
-}
-
-.recipe-title {
+.cell-title {
+  width: 100%;
   font-weight: 600;
   color: var(--text-primary);
   font-size: 1.1rem;
+  margin-bottom: var(--spacing-sm);
 }
 
-.recipe-cuisine {
+.cell-cuisine, .cell-time {
+  margin-right: var(--spacing-sm);
+}
+
+.pill-cuisine {
   display: inline-block;
   background-color: rgba(255, 107, 107, 0.1);
   color: var(--accent-color);
@@ -57,19 +58,94 @@
   font-weight: 500;
 }
 
-.recipe-time {
+.pill-time {
+  display: inline-block;
+  background-color: var(--bg-tertiary);
   color: var(--text-secondary);
+  padding: 0.2em 0.6em;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
 }
 
-.right-align {
-  text-align: right;
+.cell-action {
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
 }
 
-.empty-state {
-  text-align: center;
-  padding: var(--spacing-xl);
+.chevron {
+  font-size: 1.5rem;
   color: var(--text-secondary);
-  font-style: italic;
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
+  font-weight: bold;
+}
+
+/* Desktop View: Dense Table Layout */
+@media (min-width: 768px) {
+  .recipe-list-container {
+    background-color: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 0;
+    padding: 0;
+  }
+
+  .recipe-list-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 40px;
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .recipe-card {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 40px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    transform: none;
+  }
+
+  .recipe-card:last-child {
+    border-bottom: none;
+  }
+
+  .recipe-card:hover {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-color);
+    transform: none;
+  }
+
+  .cell-title {
+    width: auto;
+    margin-bottom: 0;
+  }
+
+  .cell-action {
+    position: static;
+    transform: none;
+    text-align: right;
+  }
+
+  .cell-time {
+    text-align: right;
+  }
+
+  /* Strip pill styling on desktop to maintain table aesthetic */
+  .pill-time {
+    background-color: transparent;
+    padding: 0;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    font-weight: normal;
+  }
 }
