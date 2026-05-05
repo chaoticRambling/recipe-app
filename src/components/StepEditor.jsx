@@ -1,6 +1,11 @@
 import React from 'react';
 
 export default function StepEditor({ steps, setSteps }) {
+  const handleAutoResize = (e) => {
+    e.target.style.height = 'auto';
+    e.target.style.height = e.target.scrollHeight + 'px';
+  };
+
   const addStep = () => {
     setSteps([...steps, { step_number: steps.length + 1, text: '', image_url: null }]);
   };
@@ -25,10 +30,11 @@ export default function StepEditor({ steps, setSteps }) {
           <span className="step-num-label">{step.step_number}.</span>
           <textarea 
             value={step.text} 
+            onInput={handleAutoResize}
             onChange={(e) => updateStep(idx, e.target.value)} 
             placeholder="Describe this step..."
             rows={2}
-            className="step-textarea"
+            className="step-textarea auto-resize"
           />
           <div className="step-file-upload">
             <input type="file" accept="image/*" />

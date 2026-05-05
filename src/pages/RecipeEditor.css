@@ -4,6 +4,7 @@
   gap: var(--spacing-xl);
   max-width: 1200px;
   margin: 0 auto;
+  padding-bottom: 80px; /* Space for sticky bar on mobile */
 }
 
 .editor-header {
@@ -37,6 +38,9 @@
 }
 
 @media (min-width: 768px) {
+  .recipe-editor-page {
+    padding-bottom: 0;
+  }
   .editor-layout {
     grid-template-columns: 1fr 1.5fr;
   }
@@ -87,22 +91,100 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 }
 
 .draft-area {
-  min-height: 250px;
+  min-height: 100px;
   resize: vertical;
 }
 
+.auto-resize {
+  overflow: hidden;
+}
+
 .editor-divider {
-  border: 0;
-  border-top: 1px solid var(--border-color);
-  margin: var(--spacing-xl) 0;
+  display: none; /* Replaced by accordion structures */
 }
 
 /* Sub-components styling */
 .editor-section {
   background-color: var(--bg-tertiary);
-  padding: var(--spacing-md);
   border-radius: var(--radius-md);
   margin-bottom: var(--spacing-md);
+}
+
+.editor-section.accordion {
+  padding: 0;
+  overflow: hidden;
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: var(--spacing-md);
+}
+
+.accordion-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.accordion-icon {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.accordion-content {
+  display: none;
+  padding: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
+}
+
+.accordion.open .accordion-content {
+  display: block;
+}
+
+/* Desktop Accordion Overrides */
+@media (min-width: 768px) {
+  .accordion-content {
+    display: block; /* Force open */
+  }
+  .accordion-header {
+    cursor: default;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: var(--spacing-md);
+  }
+  .accordion-icon {
+    display: none; /* Hide toggle button */
+  }
+}
+
+/* Action Bars */
+.mobile-sticky-action-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background-color: var(--bg-secondary);
+  border-top: 1px solid var(--border-color);
+  padding: var(--spacing-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
+}
+
+.desktop-action-bar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .mobile-sticky-action-bar {
+    display: none;
+  }
+  .desktop-action-bar {
+    display: flex;
+  }
 }
 
 .section-header-edit {

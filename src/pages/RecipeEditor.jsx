@@ -5,6 +5,23 @@ import IngredientEditor from '../components/IngredientEditor';
 import StepEditor from '../components/StepEditor';
 import './RecipeEditor.css';
 
+const AccordionSection = ({ title, isOpen, onToggle, children, className }) => (
+  <section className={`editor-section accordion ${className || ''} ${isOpen ? 'open' : ''}`}>
+    <div className="accordion-header" onClick={onToggle}>
+      <h2>{title}</h2>
+      <span className="accordion-icon">{isOpen ? '−' : '+'}</span>
+    </div>
+    <div className="accordion-content">
+      {children}
+    </div>
+  </section>
+);
+
+const handleAutoResize = (e) => {
+  e.target.style.height = 'auto';
+  e.target.style.height = e.target.scrollHeight + 'px';
+};
+
 export default function RecipeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -21,6 +38,7 @@ export default function RecipeEditor() {
   const [sections, setSections] = useState([{ section_name: 'Main', items: [] }]);
   const [steps, setSteps] = useState([]);
   
+  const [activeAccordion, setActiveAccordion] = useState('basic');
   const [isLoading, setIsLoading] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
@@ -86,7 +104,9 @@ export default function RecipeEditor() {
           &larr; Cancel
         </button>
         <h1>{id ? 'Edit Recipe' : 'New Recipe'}</h1>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        
+        {/* Desktop Action Bar */}
+        <div className="desktop-action-bar" style={{ alignItems: 'center', gap: '1rem' }}>
           {saveError && <span style={{ color: 'red', fontSize: '0.9rem' }}>{saveError}</span>}
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
             <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
@@ -99,58 +119,91 @@ export default function RecipeEditor() {
       <div className="editor-layout">
         {/* Left Pane - Drafts */}
         <div className="editor-left-pane">
-          <h2>Draft Scratchpad</h2>
-          <p className="help-text">Paste unstructured text here to reference while building the strict structure on the right.</p>
-          <div className="form-group">
-            <label>Draft Ingredients</label>
-            <textarea 
-              className="draft-area" 
-              value={draftIngredients} 
-              onChange={e => setDraftIngredients(e.target.value)} 
-              placeholder="Paste raw ingredients list here..."
-            />
-          </div>
-          <div className="form-group">
-            <label>Draft Steps</label>
-            <textarea 
-              className="draft-area" 
-              value={draftSteps} 
-              onChange={e => setDraftSteps(e.target.value)} 
-              placeholder="Paste raw steps here..."
-            />
-          </div>
+          <section className="editor-section" style={{ padding: 'var(--spacing-md)' }}>
+            <h2>Draft Scratchpad</h2>
+            <p className="help-text">Paste unstructured text here to reference while building the strict structure on the right.</p>
+            <div className="form-group">
+              <label>Draft Ingredients</label>
+              <textarea 
+                className="draft-area auto-resize" 
+                value={draftIngredients} 
+                onInput={handleAutoResize}
+                onChange={e => setDraftIngredients(e.target.value)} 
+                placeholder="Paste raw ingredients list here..."
+              />
+            </div>
+            <div className="form-group">
+              <label>Draft Steps</label>
+              <textarea 
+                className="draft-area auto-resize" 
+                value={draftSteps} 
+                onInput={handleAutoResize}
+                onChange={e => setDraftSteps(e.target.value)} 
+                placeholder="Paste raw steps here..."
+              />
+            </div>
+          </section>
         </div>
 
         {/* Right Pane - Structure */}
         <div className="editor-right-pane">
-          <h2>Recipe Details</h2>
-          <div className="form-grid">
-            <div className="form-group">
-              <label>Title</label>
-              <input type="text" required value={title} onChange={e => setTitle(e.target.value)} placeholder="Recipe Title" />
+          <AccordionSection 
+            title="Basic Information" 
+            isOpen={activeAccordion === 'basic'} 
+            onToggle={() => setActiveAccordion(activeAccordion === 'basic' ? null : 'basic')}
+          >
+            <div className="form-grid">
+              <div className="form-group">
+                <label>Title</label>
+                <input type="text" required value={title} onChange={e => setTitle(e.target.value)} placeholder="Recipe Title" />
+              </div>
+              <div className="form-group">
+                <label>Prep Time (mins)</label>
+                <input type="number" required value={prepTime} onChange={e => setPrepTime(e.target.value)} placeholder="30" />
+              </div>
+              <div className="form-group">
+                <label>Cuisine Type</label>
+                <input type="text" value={cuisine} onChange={e => setCuisine(e.target.value)} placeholder="e.g. Italian" />
+              </div>
             </div>
             <div className="form-group">
-              <label>Prep Time (mins)</label>
-              <input type="number" required value={prepTime} onChange={e => setPrepTime(e.target.value)} placeholder="30" />
+              <label>Notes</label>
+              <textarea 
+                className="auto-resize"
+                value={notes} 
+                onInput={handleAutoResize}
+                onChange={e => setNotes(e.target.value)} 
+                placeholder="Optional context or tips..." 
+                rows="2" 
+              />
             </div>
-            <div className="form-group">
-              <label>Cuisine Type</label>
-              <input type="text" value={cuisine} onChange={e => setCuisine(e.target.value)} placeholder="e.g. Italian" />
-            </div>
-          </div>
-          <div className="form-group">
-            <label>Notes</label>
-            <textarea value={notes} onChange={e => setNotes(e.target.value)} placeholder="Optional context or tips..." rows="2" />
-          </div>
+          </AccordionSection>
 
-          <hr className="editor-divider" />
-          
-          <IngredientEditor sections={sections} setSections={setSections} />
-          
-          <hr className="editor-divider" />
-          
-          <StepEditor steps={steps} setSteps={setSteps} />
+          <AccordionSection 
+            title="Ingredients" 
+            isOpen={activeAccordion === 'ingredients'} 
+            onToggle={() => setActiveAccordion(activeAccordion === 'ingredients' ? null : 'ingredients')}
+          >
+            <IngredientEditor sections={sections} setSections={setSections} />
+          </AccordionSection>
+
+          <AccordionSection 
+            title="Instructions" 
+            isOpen={activeAccordion === 'steps'} 
+            onToggle={() => setActiveAccordion(activeAccordion === 'steps' ? null : 'steps')}
+          >
+            <StepEditor steps={steps} setSteps={setSteps} />
+          </AccordionSection>
         </div>
+      </div>
+
+      {/* Mobile Sticky Action Bar */}
+      <div className="mobile-sticky-action-bar">
+        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
+          <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
+          Save as Draft
+        </label>
+        <button type="submit" className="save-btn">Save Recipe</button>
       </div>
     </form>
   );
