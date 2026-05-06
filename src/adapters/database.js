@@ -78,3 +78,30 @@ export const uploadRecipeImage = async (file, recipeId) => {
 
   return data.publicUrl;
 };
+
+export const deleteRecipeImage = async (imageUrl) => {
+  if (!imageUrl) return;
+  const urlParts = imageUrl.split('/');
+  const fileName = urlParts[urlParts.length - 1];
+  
+  const { error } = await supabase.storage
+    .from('recipe-images')
+    .remove([fileName]);
+    
+  if (error) {
+    console.error("Error deleting image:", error);
+    throw error;
+  }
+};
+
+export const deleteRecipe = async (id) => {
+  const { error } = await supabase
+    .from('recipes')
+    .delete()
+    .eq('id', id);
+    
+  if (error) {
+    console.error("Error deleting recipe:", error);
+    throw error;
+  }
+};

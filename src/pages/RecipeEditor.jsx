@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getRecipe, createRecipe, updateRecipe, uploadRecipeImage } from '../adapters/database';
+import { getRecipe, createRecipe, updateRecipe, uploadRecipeImage, deleteRecipe, deleteRecipeImage } from '../adapters/database';
 import imageCompression from 'browser-image-compression';
 import IngredientEditor from '../components/IngredientEditor';
 import StepEditor from '../components/StepEditor';
@@ -130,6 +130,24 @@ export default function RecipeEditor() {
       console.error('Save failed:', err);
       setSaveError(err.message || 'An error occurred while saving. Make sure the recipe-images bucket exists and allows uploads.');
     } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (!window.confirm('Are you sure you want to delete this recipe? This action cannot be undone.')) return;
+    
+    setIsSaving(true);
+    setSaveError(null);
+    try {
+      if (existingImageUrl) {
+        await deleteRecipeImage(existingImageUrl);
+      }
+      await deleteRecipe(id);
+      navigate('/');
+    } catch (err) {
+      console.error('Delete failed:', err);
+      setSaveError(err.message || 'Failed to delete recipe. Check Supabase permissions.');
       setIsSaving(false);
     }
   };
@@ -285,6 +303,27 @@ export default function RecipeEditor() {
           </div>
         </div>
       </div>
+
+      {id && (
+        <div style={{ textAlign: 'center', marginTop: 'var(--spacing-xl)' }}>
+          <button 
+            type="button" 
+            onClick={handleDelete}
+            disabled={isSaving}
+            style={{ 
+              backgroundColor: 'transparent', 
+              color: 'red', 
+              border: '1px solid red', 
+              padding: '0.6rem 1.2rem', 
+              borderRadius: 'var(--radius-md)',
+              fontWeight: 'bold',
+              cursor: 'pointer'
+            }}
+          >
+            Delete Recipe
+          </button>
+        </div>
+      )}
 
       {/* Mobile Sticky Action Bar */}
       <div className="mobile-sticky-action-bar" style={{ flexDirection: saveError ? 'column' : 'row', gap: saveError ? '0.5rem' : '0' }}>
