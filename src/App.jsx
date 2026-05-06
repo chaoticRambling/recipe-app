@@ -31,7 +31,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<DashboardView session={session} />} />
+        <Route 
+          path="/" 
+          element={session ? <DashboardView session={session} /> : <Navigate to="/login" replace />} 
+        />
         <Route path="/login" element={<LoginView />} />
         <Route path="/recipe/:id" element={<RecipeViewer />} />
         <Route 
