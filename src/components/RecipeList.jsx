@@ -23,7 +23,7 @@ export default function RecipeList({ recipes }) {
           className="recipe-card"
           onClick={() => navigate('/recipe/' + recipe.id)}
         >
-          <div className="recipe-card-image" style={{ backgroundImage: "url('/recipe_hero.png')" }} />
+          <div className="recipe-card-image" style={{ backgroundImage: `url('${recipe.image_url || '/recipe_hero.png'}')` }} />
           <div className="recipe-card-content">
             <div className="cell-title">{recipe.title || 'Untitled Recipe'}</div>
             

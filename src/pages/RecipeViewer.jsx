@@ -75,7 +75,7 @@ export default function RecipeViewer() {
           Edit Recipe
         </button>
       </nav>
-      <div className="recipe-hero" style={{ backgroundImage: "url('/recipe_hero.png')" }}></div>
+      <div className="recipe-hero" style={{ backgroundImage: `url('${recipe.image_url || '/recipe_hero.png'}')` }}></div>
       <header className="recipe-header">
         <h1>{recipe.title || 'Untitled Recipe'}</h1>
         <div className="recipe-meta">

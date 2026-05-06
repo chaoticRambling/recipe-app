@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getRecipe, createRecipe, updateRecipe } from '../adapters/database';
+import { getRecipe, createRecipe, updateRecipe, uploadRecipeImage } from '../adapters/database';
+import imageCompression from 'browser-image-compression';
 import IngredientEditor from '../components/IngredientEditor';
 import StepEditor from '../components/StepEditor';
 import './RecipeEditor.css';
@@ -42,6 +43,13 @@ export default function RecipeEditor() {
   const [isLoading, setIsLoading] = useState(false);
   const [saveError, setSaveError] = useState(null);
 
+  const [selectedImageFile, setSelectedImageFile] = useState(null);
+  const [localPreviewUrl, setLocalPreviewUrl] = useState(null);
+  const [existingImageUrl, setExistingImageUrl] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const [isSaving, setIsSaving] = useState(false);
+
   useEffect(() => {
     if (id) {
       setIsLoading(true);
@@ -56,29 +64,58 @@ export default function RecipeEditor() {
           setDraftIngredients(data.draft_ingredients || '');
           setDraftSteps(data.draft_steps || '');
           setIsDraft(data.is_draft ?? true);
+          setExistingImageUrl(data.image_url || null);
         }
         setIsLoading(false);
       });
     }
   }, [id]);
 
+  const handleImageSelect = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    try {
+      const options = {
+        maxSizeMB: 1,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true
+      };
+      const compressedFile = await imageCompression(file, options);
+      setSelectedImageFile(compressedFile);
+      setLocalPreviewUrl(URL.createObjectURL(compressedFile));
+    } catch (error) {
+      console.error('Image compression failed:', error);
+      setSaveError('Failed to process image.');
+    }
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     setSaveError(null);
-    const payload = {
-      title,
-      prep_time_minutes: parseInt(prepTime) || 0,
-      cuisine_type: cuisine,
-      notes,
-      ingredients: sections,
-      steps: steps,
-      draft_ingredients: draftIngredients,
-      draft_steps: draftSteps,
-      is_draft: isDraft,
-      updated_at: new Date().toISOString()
-    };
+    setIsSaving(true);
     
     try {
+      let finalImageUrl = existingImageUrl;
+      
+      if (selectedImageFile) {
+        const imagePrefix = id || `new-${Date.now()}`;
+        finalImageUrl = await uploadRecipeImage(selectedImageFile, imagePrefix);
+      }
+
+      const payload = {
+        title,
+        prep_time_minutes: parseInt(prepTime) || 0,
+        cuisine_type: cuisine,
+        notes,
+        ingredients: sections,
+        steps: steps,
+        draft_ingredients: draftIngredients,
+        draft_steps: draftSteps,
+        is_draft: isDraft,
+        image_url: finalImageUrl,
+        updated_at: new Date().toISOString()
+      };
+      
       let targetId = id;
       if (id) {
         await updateRecipe(id, payload);
@@ -91,7 +128,9 @@ export default function RecipeEditor() {
       navigate(`/recipe/${targetId}`);
     } catch (err) {
       console.error('Save failed:', err);
-      setSaveError(err.message || 'An error occurred while saving.');
+      setSaveError(err.message || 'An error occurred while saving. Make sure the recipe-images bucket exists and allows uploads.');
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -112,7 +151,9 @@ export default function RecipeEditor() {
             <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
             Save as Draft
           </label>
-          <button type="submit" className="save-btn">Save Recipe</button>
+          <button type="submit" className="save-btn" disabled={isSaving}>
+            {isSaving ? 'Saving...' : 'Save Recipe'}
+          </button>
         </div>
       </header>
 
@@ -147,6 +188,44 @@ export default function RecipeEditor() {
 
         {/* Right Pane - Structure */}
         <div className="editor-right-pane">
+          <div className="image-upload-section" style={{ marginBottom: 'var(--spacing-md)' }}>
+            <input 
+              type="file" 
+              accept="image/*" 
+              ref={fileInputRef} 
+              hidden 
+              onChange={handleImageSelect} 
+            />
+            
+            <div 
+              className="image-preview-container"
+              onClick={() => fileInputRef.current?.click()}
+              style={{
+                width: '100%',
+                height: '200px',
+                backgroundColor: 'var(--bg-tertiary)',
+                borderRadius: 'var(--radius-lg)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                overflow: 'hidden',
+                border: '1px solid var(--border-color)',
+                position: 'relative'
+              }}
+            >
+              {(localPreviewUrl || existingImageUrl) ? (
+                <img 
+                  src={localPreviewUrl || existingImageUrl} 
+                  alt="Recipe Preview" 
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                />
+              ) : (
+                <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>Tap to add photo</span>
+              )}
+            </div>
+          </div>
+
           <AccordionSection 
             title="Basic Information" 
             isOpen={activeAccordion === 'basic'} 
@@ -194,16 +273,34 @@ export default function RecipeEditor() {
           >
             <StepEditor steps={steps} setSteps={setSteps} />
           </AccordionSection>
+
+          <div style={{ textAlign: 'center', margin: 'var(--spacing-lg) 0' }}>
+            <button 
+              type="button" 
+              onClick={() => fileInputRef.current?.click()}
+              style={{ padding: '0.8rem 1.5rem', backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', color: 'var(--text-primary)', fontWeight: 'bold' }}
+            >
+              Upload / Replace Photo
+            </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Sticky Action Bar */}
-      <div className="mobile-sticky-action-bar">
-        <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
-          <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
-          Save as Draft
-        </label>
-        <button type="submit" className="save-btn">Save Recipe</button>
+      <div className="mobile-sticky-action-bar" style={{ flexDirection: saveError ? 'column' : 'row', gap: saveError ? '0.5rem' : '0' }}>
+        {saveError ? (
+          <div style={{ color: 'red', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
+            {saveError}
+          </div>
+        ) : (
+          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
+            <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
+            Save as Draft
+          </label>
+        )}
+        <button type="submit" className="save-btn" disabled={isSaving} style={{ width: saveError ? '100%' : 'auto' }}>
+          {isSaving ? 'Saving...' : 'Save Recipe'}
+        </button>
       </div>
     </form>
   );

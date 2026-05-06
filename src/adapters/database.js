@@ -55,3 +55,26 @@ export const createRecipe = async (payload) => {
   }
   return data;
 };
+
+export const uploadRecipeImage = async (file, recipeId) => {
+  if (!file) return null;
+  const fileNameStr = file.name || 'image.jpeg';
+  const fileExt = fileNameStr.split('.').pop();
+  const fileName = `${recipeId}-${Math.random()}.${fileExt}`;
+  const filePath = `${fileName}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from('recipe-images')
+    .upload(filePath, file, { upsert: true });
+
+  if (uploadError) {
+    console.error('Error uploading image:', uploadError);
+    throw uploadError;
+  }
+
+  const { data } = supabase.storage
+    .from('recipe-images')
+    .getPublicUrl(filePath);
+
+  return data.publicUrl;
+};
