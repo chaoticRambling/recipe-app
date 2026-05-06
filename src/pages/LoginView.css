@@ -1,18 +1,27 @@
 .login-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 80vh;
+  background-image: url('/login_bg.png');
+  background-size: cover;
+  background-position: center;
 }
 
 .login-card {
   background-color: var(--bg-secondary);
   padding: var(--spacing-xl);
   border-radius: var(--radius-lg);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-elevated);
   width: 100%;
   max-width: 400px;
   text-align: center;
+  position: relative;
+  z-index: 10;
 }
 
 .login-card h1 {
@@ -49,12 +58,13 @@
   background-color: var(--accent-color);
   color: white;
   padding: 0.8rem;
+  border-radius: var(--radius-lg);
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .login-btn:hover:not(:disabled) {
-  background-color: #fca311;
+  background-color: var(--accent-hover);
   transform: translateY(-2px);
 }
 

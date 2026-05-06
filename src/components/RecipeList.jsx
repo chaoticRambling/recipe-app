@@ -23,20 +23,21 @@ export default function RecipeList({ recipes }) {
           className="recipe-card"
           onClick={() => navigate('/recipe/' + recipe.id)}
         >
-          <div className="cell-title">{recipe.title || 'Untitled Recipe'}</div>
-          
-          <div className="cell-cuisine">
-            {recipe.cuisine_type && (
-              <span className="pill-cuisine">{recipe.cuisine_type}</span>
-            )}
-          </div>
-          
-          <div className="cell-time">
-            <span className="pill-time">{recipe.prep_time_minutes} mins</span>
-          </div>
-          
-          <div className="cell-action">
-            <span className="chevron">&rsaquo;</span>
+          <div className="recipe-card-image" style={{ backgroundImage: "url('/recipe_hero.png')" }} />
+          <div className="recipe-card-content">
+            <div className="cell-title">{recipe.title || 'Untitled Recipe'}</div>
+            
+            <div className="recipe-card-footer">
+              <div className="cell-cuisine">
+                {recipe.cuisine_type && (
+                  <span className="pill-cuisine">{recipe.cuisine_type}</span>
+                )}
+              </div>
+              
+              <div className="cell-time">
+                <span className="pill-time">{recipe.prep_time_minutes} mins</span>
+              </div>
+            </div>
           </div>
         </div>
       ))}

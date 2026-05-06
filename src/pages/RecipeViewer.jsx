@@ -75,12 +75,12 @@ export default function RecipeViewer() {
           Edit Recipe
         </button>
       </nav>
+      <div className="recipe-hero" style={{ backgroundImage: "url('/recipe_hero.png')" }}></div>
       <header className="recipe-header">
         <h1>{recipe.title || 'Untitled Recipe'}</h1>
         <div className="recipe-meta">
-          <span>{recipe.prep_time_minutes || 0} mins</span>
-          <span>&bull;</span>
-          <span>{recipe.cuisine_type || 'Unknown'}</span>
+          <span className="pill-tag">{recipe.prep_time_minutes || 0} mins</span>
+          <span className="pill-tag">{recipe.cuisine_type || 'Unknown'}</span>
         </div>
         {recipe.notes && <p className="recipe-notes">{recipe.notes}</p>}
       </header>

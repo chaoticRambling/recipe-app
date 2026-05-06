@@ -56,6 +56,21 @@ export default function DashboardView({ session }) {
           <RecipeList recipes={recipes} />
         )}
       </main>
+
+      <nav className="bottom-nav">
+        <button className="nav-item active">
+          <span className="nav-icon">🥄</span>
+          <span>Recipes</span>
+        </button>
+        <button className="nav-item">
+          <span className="nav-icon">🧺</span>
+          <span>Groceries</span>
+        </button>
+        <button className="nav-item">
+          <span className="nav-icon">🔍</span>
+          <span>Search</span>
+        </button>
+      </nav>
     </div>
   );
 }

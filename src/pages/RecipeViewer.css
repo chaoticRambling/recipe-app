@@ -6,19 +6,37 @@
   margin: 0 auto;
 }
 
+.recipe-hero {
+  width: 100vw;
+  height: 33vh;
+  margin-left: calc(-50vw + 50%);
+  background-size: cover;
+  background-position: center;
+  margin-top: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
 .recipe-header {
   text-align: center;
   padding-bottom: var(--spacing-lg);
-  border-bottom: 2px solid var(--border-color);
 }
 
 .recipe-meta {
   display: flex;
   justify-content: center;
   gap: var(--spacing-md);
-  color: var(--text-secondary);
-  font-weight: 600;
   margin-bottom: var(--spacing-sm);
+}
+
+.pill-tag {
+  display: inline-block;
+  padding: 0.4em 1.2em;
+  border: 1px solid var(--text-primary);
+  border-radius: var(--radius-lg);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 600;
+  background-color: var(--bg-tertiary);
 }
 
 .recipe-notes {
@@ -94,14 +112,26 @@
 }
 
 .step-text {
+  font-family: var(--font-sans);
   font-size: 1.1rem;
   line-height: 1.6;
+  color: var(--text-primary);
 }
 
 .step-image {
   margin-top: var(--spacing-md);
   max-width: 100%;
   border-radius: var(--radius-md);
+}
+
+.ingredients-section, .steps-section {
+  padding-bottom: var(--spacing-xl);
+  border-bottom: 2px dashed var(--border-color);
+  margin-bottom: var(--spacing-xl);
+}
+
+.steps-section {
+  border-bottom: none;
 }
 
 .step-controls {
@@ -166,7 +196,7 @@
 .recipe-nav {
   display: flex;
   justify-content: space-between;
-  margin-bottom: calc(var(--spacing-md) * -1); /* Pulls header slightly closer */
+  margin-bottom: var(--spacing-sm);
 }
 
 .nav-back-btn, .nav-edit-btn {
