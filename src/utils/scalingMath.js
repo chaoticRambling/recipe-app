@@ -2,21 +2,15 @@ export function normalizeAndScale(ingredient, multiplier) {
   const { amount, unit, name } = ingredient;
   const newAmount = amount * multiplier;
   
-  const volumeUnits = ['tsp', 'tbsp', 'fl oz', 'cup', 'pt', 'qt'];
-  const weightUnits = ['g', 'oz', 'lb'];
+  // Disable automatic unit conversion for now based on user feedback
+  // const volumeUnits = ['tsp', 'tbsp', 'fl oz', 'cup', 'pt', 'qt'];
+  // const weightUnits = ['g', 'oz', 'lb'];
   
-  if (volumeUnits.includes(unit)) {
-    return formatVolume(amount, unit, multiplier, name);
-  } else if (weightUnits.includes(unit)) {
-    return formatWeight(amount, unit, multiplier, name);
-  } else {
-    // discrete or unhandled
-    return {
-      amount: Math.round(newAmount * 100) / 100,
-      unit: unit,
-      name: name
-    };
-  }
+  return {
+    amount: Math.round(newAmount * 100) / 100,
+    unit: unit,
+    name: name
+  };
 }
 
 function formatVolume(amount, unit, multiplier, name) {
