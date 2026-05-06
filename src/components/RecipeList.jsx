@@ -28,7 +28,10 @@ export default function RecipeList({ recipes }) {
             <div className="cell-title">{recipe.title || 'Untitled Recipe'}</div>
             
             <div className="recipe-card-footer">
-              <div className="cell-cuisine">
+              <div className="cell-cuisine" style={{ display: 'flex', gap: 'var(--spacing-sm)', flexWrap: 'wrap' }}>
+                {recipe.is_draft && (
+                  <span className="pill-draft">Draft</span>
+                )}
                 {recipe.cuisine_type && (
                   <span className="pill-cuisine">{recipe.cuisine_type}</span>
                 )}

@@ -66,6 +66,19 @@
   padding-top: var(--spacing-sm);
 }
 
+.pill-draft {
+  display: inline-block;
+  background-color: var(--bg-tertiary);
+  color: var(--text-primary);
+  border: 1px dashed var(--text-secondary);
+  padding: 0.2em 0.6em;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .pill-cuisine {
   display: inline-block;
   background-color: rgba(224, 122, 95, 0.1);
