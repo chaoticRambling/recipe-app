@@ -56,3 +56,77 @@ test('imports schema.org recipe JSON-LD from a webpage URL', async () => {
   });
   expect(payload.recipe.steps).toHaveLength(2);
 });
+
+test('imports WP Recipe Maker data before falling back to OpenAI', async () => {
+  vi.spyOn(globalThis, 'fetch').mockResolvedValue({
+    ok: true,
+    text: async () => `
+      <html>
+        <body>
+          <script>
+            window.wprm_recipes = {
+              "recipe-61591": {
+                "name": "Air Fryer Tofu",
+                "image_url": "https://example.com/tofu.jpg",
+                "ingredients": [
+                  {
+                    "amount": "14",
+                    "unit": "ounces",
+                    "name": "extra-firm tofu",
+                    "notes": "",
+                    "unit_systems": {
+                      "unit-system-1": {
+                        "amount": "14",
+                        "unit": "ounces"
+                      }
+                    }
+                  },
+                  {
+                    "amount": "½",
+                    "unit": "tablespoon",
+                    "name": "avocado oil",
+                    "notes": ""
+                  }
+                ]
+              }
+            }
+          </script>
+          <div class="wprm-recipe-total-time-container">
+            <span class="wprm-recipe-time">
+              <span class="wprm-recipe-details wprm-recipe-total_time-minutes">45</span>
+              <span class="wprm-recipe-total_timeunit-minutes">mins</span>
+            </span>
+          </div>
+          <div class="wprm-recipe-servings-container">
+            <span class="wprm-recipe-servings">4</span>
+          </div>
+          <div class=wprm-recipe-instruction-text><span>Press the tofu.</span></div>
+          <div class=wprm-recipe-instruction-text>Air fry until crisp.</div>
+        </body>
+      </html>
+    `
+  });
+
+  const response = await handler({
+    httpMethod: 'POST',
+    body: JSON.stringify({ url: 'https://example.com/air-fryer-tofu' })
+  });
+
+  const payload = JSON.parse(response.body);
+
+  expect(response.statusCode).toBe(200);
+  expect(payload.source).toBe('wprm');
+  expect(payload.recipe.title).toBe('Air Fryer Tofu');
+  expect(payload.recipe.prep_time_minutes).toBe(45);
+  expect(payload.recipe.ingredients[0].items[1]).toMatchObject({
+    amount: 0.5,
+    amount_text: '1/2',
+    unit: 'tablespoon',
+    name: 'avocado oil',
+    scalable: true
+  });
+  expect(payload.recipe.steps).toEqual([
+    { step_number: 1, text: 'Press the tofu.', image_url: null },
+    { step_number: 2, text: 'Air fry until crisp.', image_url: null }
+  ]);
+});

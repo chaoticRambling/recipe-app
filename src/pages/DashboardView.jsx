@@ -6,6 +6,12 @@ import { supabase } from '../supabaseClient';
 import RecipeList from '../components/RecipeList';
 import './DashboardView.css';
 
+const IMPORT_SOURCE_LABELS = {
+  'json-ld': 'recipe metadata',
+  wprm: 'WP Recipe Maker metadata',
+  openai: 'LLM parsing'
+};
+
 export default function DashboardView({ session }) {
   const navigate = useNavigate();
   const [recipes, setRecipes] = useState([]);
@@ -161,7 +167,7 @@ export default function DashboardView({ session }) {
           {importedRecipe && (
             <div className="import-success">
               <p>
-                Draft imported from {importedRecipe.importSource === 'json-ld' ? 'recipe metadata' : 'LLM parsing'}.
+                Draft imported from {IMPORT_SOURCE_LABELS[importedRecipe.importSource] || 'recipe parsing'}.
               </p>
               <div className="import-success-actions">
                 <button type="button" onClick={() => navigate(`/editor/${importedRecipe.id}`)}>

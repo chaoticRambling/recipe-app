@@ -176,6 +176,65 @@ function extractJsonLdRecipe(html) {
   return null;
 }
 
+function extractAssignedObjectLiteral(html, assignmentName) {
+  const assignmentIndex = html.indexOf(assignmentName);
+  if (assignmentIndex === -1) return null;
+
+  const objectStart = html.indexOf('{', assignmentIndex);
+  if (objectStart === -1) return null;
+
+  let depth = 0;
+  let inString = false;
+  let stringQuote = '';
+  let isEscaped = false;
+
+  for (let index = objectStart; index < html.length; index += 1) {
+    const char = html[index];
+
+    if (inString) {
+      if (isEscaped) {
+        isEscaped = false;
+      } else if (char === '\\') {
+        isEscaped = true;
+      } else if (char === stringQuote) {
+        inString = false;
+        stringQuote = '';
+      }
+      continue;
+    }
+
+    if (char === '"' || char === "'") {
+      inString = true;
+      stringQuote = char;
+      continue;
+    }
+
+    if (char === '{') {
+      depth += 1;
+    } else if (char === '}') {
+      depth -= 1;
+      if (depth === 0) {
+        return html.slice(objectStart, index + 1);
+      }
+    }
+  }
+
+  return null;
+}
+
+function extractWprmRecipes(html) {
+  const rawJson = extractAssignedObjectLiteral(html, 'window.wprm_recipes');
+  if (!rawJson) return null;
+
+  try {
+    const parsed = JSON.parse(rawJson);
+    return Object.values(parsed || {});
+  } catch (error) {
+    console.warn('Failed to parse WP Recipe Maker data:', error.message);
+    return null;
+  }
+}
+
 function firstText(value) {
   if (Array.isArray(value)) return firstText(value[0]);
   if (value && typeof value === 'object') return value.url || value.name || '';
@@ -221,6 +280,28 @@ function normalizeInstructions(recipe) {
     }));
 }
 
+function extractWprmInstructions(html) {
+  const matches = html.matchAll(/<div[^>]*class=(?:"[^"]*\bwprm-recipe-instruction-text\b[^"]*"|'[^']*\bwprm-recipe-instruction-text\b[^']*'|[^\s>]*\bwprm-recipe-instruction-text\b[^\s>]*)[^>]*>([\s\S]*?)<\/div>/gi);
+
+  return Array.from(matches)
+    .map(match => stripHtml(match[1]))
+    .filter(Boolean)
+    .map((text, index) => ({
+      step_number: index + 1,
+      text,
+      image_url: null
+    }));
+}
+
+function extractWprmTotalMinutes(html) {
+  const totalTimeMatch = html.match(/wprm-recipe-total-time-container[\s\S]{0,600}?wprm-recipe-total_time-minutes[^>]*>(\d+)/i);
+  if (totalTimeMatch) return Number(totalTimeMatch[1]) || 0;
+
+  const prepMatch = html.match(/wprm-recipe-prep-time-container[\s\S]{0,600}?wprm-recipe-prep_time-minutes[^>]*>(\d+)/i);
+  const cookMatch = html.match(/wprm-recipe-cook-time-container[\s\S]{0,600}?wprm-recipe-cook_time-minutes[^>]*>(\d+)/i);
+  return (Number(prepMatch?.[1]) || 0) + (Number(cookMatch?.[1]) || 0);
+}
+
 function parseIngredientLine(line) {
   const originalText = normalizeFractionGlyphs(line).replace(/\s+/g, ' ').trim();
   const leadingAmount = originalText.match(/^((?:\d+\s+)?\d+\s*\/\s*\d+|\d+(?:\.\d+)?)(?:\s+|$)(.*)$/);
@@ -242,6 +323,23 @@ function parseIngredientLine(line) {
   const unit = parts.length > 1 ? parts[0] : '';
   const name = parts.length > 1 ? parts.slice(1).join(' ') : remainder;
   const amount = parseAmount(amountText);
+
+  return {
+    amount,
+    amount_text: amountText,
+    unit,
+    name,
+    original_text: originalText,
+    scalable: amount !== null
+  };
+}
+
+function normalizeWprmIngredient(item) {
+  const amountText = normalizeFractionGlyphs(item.amount || '').replace(/\s*\/\s*/g, '/').trim();
+  const amount = parseAmount(amountText);
+  const unit = String(item.unit || '').trim();
+  const name = [item.name, item.notes].filter(Boolean).join(', ').trim();
+  const originalText = [amountText, unit, name].filter(Boolean).join(' ');
 
   return {
     amount,
@@ -279,6 +377,28 @@ function normalizeRecipeFromJsonLd(recipe, sourceUrl) {
     draft_ingredients: ingredients.join('\n'),
     draft_steps: normalizeInstructions(recipe).map(step => step.text).join('\n\n'),
     image_url: firstText(recipe.image)
+  };
+}
+
+function normalizeRecipeFromWprm(recipe, html, sourceUrl) {
+  const ingredients = Array.isArray(recipe.ingredients) ? recipe.ingredients : [];
+  const steps = extractWprmInstructions(html);
+
+  return {
+    title: String(recipe.name || 'Imported Recipe').trim(),
+    prep_time_minutes: extractWprmTotalMinutes(html),
+    cuisine_type: '',
+    notes: sourceUrl ? `Imported from ${sourceUrl}` : '',
+    ingredients: [
+      {
+        section_name: 'Main',
+        items: ingredients.map(normalizeWprmIngredient)
+      }
+    ],
+    steps,
+    draft_ingredients: ingredients.map(item => normalizeWprmIngredient(item).original_text).filter(Boolean).join('\n'),
+    draft_steps: steps.map(step => step.text).join('\n\n'),
+    image_url: recipe.image_url || ''
   };
 }
 
@@ -413,6 +533,14 @@ export const handler = async (event) => {
       return jsonResponse(200, {
         recipe: normalizeRecipeFromJsonLd(jsonLdRecipe, parsedUrl.toString()),
         source: 'json-ld'
+      });
+    }
+
+    const wprmRecipes = extractWprmRecipes(html);
+    if (wprmRecipes?.length) {
+      return jsonResponse(200, {
+        recipe: normalizeRecipeFromWprm(wprmRecipes[0], html, parsedUrl.toString()),
+        source: 'wprm'
       });
     }
 
