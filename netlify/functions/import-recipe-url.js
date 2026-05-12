@@ -1,5 +1,7 @@
 const OPENAI_MODEL = process.env.OPENAI_RECIPE_IMPORT_MODEL || 'gpt-5-nano';
 const MAX_PAGE_TEXT_CHARS = 24000;
+const IMPORTER_USER_AGENT = 'RecipeImporter/1.0 (+personal recipe import tool)';
+const REDDIT_USER_AGENT = 'RecipeImporter/1.0 by personal-use-recipe-app';
 
 const RECIPE_SCHEMA = {
   type: 'object',
@@ -80,6 +82,22 @@ function jsonResponse(statusCode, body) {
     headers: { 'content-type': 'application/json' },
     body: JSON.stringify(body)
   };
+}
+
+function isRedditUrl(parsedUrl) {
+  return parsedUrl.hostname === 'reddit.com'
+    || parsedUrl.hostname === 'www.reddit.com'
+    || parsedUrl.hostname === 'old.reddit.com'
+    || parsedUrl.hostname.endsWith('.reddit.com');
+}
+
+function redditJsonUrl(parsedUrl) {
+  const nextUrl = new URL(parsedUrl.toString());
+  nextUrl.hostname = 'www.reddit.com';
+  if (!nextUrl.pathname.endsWith('.json')) {
+    nextUrl.pathname = nextUrl.pathname.replace(/\/?$/, '/') + '.json';
+  }
+  return nextUrl.toString();
 }
 
 function normalizeFractionGlyphs(value) {
@@ -302,6 +320,24 @@ function extractWprmTotalMinutes(html) {
   return (Number(prepMatch?.[1]) || 0) + (Number(cookMatch?.[1]) || 0);
 }
 
+function redditPostText(payload, sourceUrl) {
+  const post = payload?.[0]?.data?.children?.[0]?.data;
+  if (!post) return '';
+
+  const commentText = (payload?.[1]?.data?.children || [])
+    .map(child => child?.data?.body)
+    .filter(Boolean)
+    .slice(0, 3)
+    .join('\n\n');
+
+  return [
+    `Source URL: ${sourceUrl}`,
+    `Title: ${post.title || ''}`,
+    post.selftext || '',
+    commentText ? `Top comments:\n${commentText}` : ''
+  ].filter(Boolean).join('\n\n');
+}
+
 function parseIngredientLine(line) {
   const originalText = normalizeFractionGlyphs(line).replace(/\s+/g, ' ').trim();
   const leadingAmount = originalText.match(/^((?:\d+\s+)?\d+\s*\/\s*\d+|\d+(?:\.\d+)?)(?:\s+|$)(.*)$/);
@@ -491,6 +527,40 @@ async function parseRecipeWithOpenAI(pageText, sourceUrl) {
   return normalizeLlmRecipe(JSON.parse(outputText), pageText, sourceUrl);
 }
 
+async function parseRecipeFromReddit(parsedUrl) {
+  if (!process.env.OPENAI_API_KEY) {
+    return {
+      error: 'Reddit posts require OpenAI fallback parsing. Add OPENAI_API_KEY to enable Reddit imports.'
+    };
+  }
+
+  const response = await fetch(redditJsonUrl(parsedUrl), {
+    headers: {
+      accept: 'application/json',
+      'user-agent': REDDIT_USER_AGENT
+    }
+  });
+
+  if (!response.ok) {
+    return {
+      error: `Could not fetch Reddit post JSON: ${response.status}`
+    };
+  }
+
+  const payload = await response.json();
+  const postText = redditPostText(payload, parsedUrl.toString());
+
+  if (!postText) {
+    return {
+      error: 'Could not find readable recipe text in this Reddit post.'
+    };
+  }
+
+  return {
+    recipe: await parseRecipeWithOpenAI(postText, parsedUrl.toString())
+  };
+}
+
 export const handler = async (event) => {
   if (event.httpMethod !== 'POST') {
     return jsonResponse(405, { error: 'Method not allowed' });
@@ -515,10 +585,22 @@ export const handler = async (event) => {
   }
 
   try {
+    if (isRedditUrl(parsedUrl)) {
+      const redditResult = await parseRecipeFromReddit(parsedUrl);
+      if (redditResult.error) {
+        return jsonResponse(422, { error: redditResult.error });
+      }
+
+      return jsonResponse(200, {
+        recipe: redditResult.recipe,
+        source: 'reddit'
+      });
+    }
+
     const pageResponse = await fetch(parsedUrl.toString(), {
       headers: {
         accept: 'text/html,application/xhtml+xml',
-        'user-agent': 'RecipeImporter/1.0'
+        'user-agent': IMPORTER_USER_AGENT
       }
     });
 

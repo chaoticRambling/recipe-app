@@ -9,6 +9,7 @@ import './DashboardView.css';
 const IMPORT_SOURCE_LABELS = {
   'json-ld': 'recipe metadata',
   wprm: 'site recipe metadata',
+  reddit: 'Reddit post parsing',
   openai: 'LLM parsing'
 };
 
