@@ -138,80 +138,8 @@ test('imports WP Recipe Maker data before falling back to OpenAI', async () => {
   ]);
 });
 
-test('imports Reddit post text through OpenAI fallback', async () => {
-  const fetchMock = vi.spyOn(globalThis, 'fetch').mockImplementation(async (url) => {
-    if (String(url).includes('reddit.com') && String(url).endsWith('.json')) {
-      return {
-        ok: true,
-        json: async () => ([
-          {
-            data: {
-              children: [
-                {
-                  data: {
-                    title: 'Crispy Air Fryer Tofu Recipe (Korean Style)',
-                    selftext: [
-                      '# Ingredients',
-                      '* 1 lb firm tofu',
-                      '* 1/2 tsp garlic powder',
-                      '# Instructions',
-                      '1. Air fry the tofu.'
-                    ].join('\n')
-                  }
-                }
-              ]
-            }
-          },
-          { data: { children: [] } }
-        ])
-      };
-    }
-
-    if (String(url).includes('api.openai.com')) {
-      return {
-        ok: true,
-        json: async () => ({
-          output_text: JSON.stringify({
-            title: 'Crispy Air Fryer Tofu Recipe (Korean Style)',
-            prep_time_minutes: 0,
-            cuisine_type: 'Korean',
-            notes: '',
-            ingredients: [
-              {
-                section_name: 'Main',
-                items: [
-                  {
-                    amount: 1,
-                    amount_text: '1',
-                    unit: 'lb',
-                    name: 'firm tofu',
-                    original_text: '1 lb firm tofu',
-                    scalable: true
-                  },
-                  {
-                    amount: 0.5,
-                    amount_text: '1/2',
-                    unit: 'tsp',
-                    name: 'garlic powder',
-                    original_text: '1/2 tsp garlic powder',
-                    scalable: true
-                  }
-                ]
-              }
-            ],
-            steps: [
-              { step_number: 1, text: 'Air fry the tofu.', image_url: null }
-            ]
-          })
-        })
-      };
-    }
-
-    throw new Error(`Unexpected fetch: ${url}`);
-  });
-
-  process.env.OPENAI_API_KEY = 'test-key';
-
+test('rejects Reddit URLs with a clear unsupported message', async () => {
+  const fetchMock = vi.spyOn(globalThis, 'fetch');
   const response = await handler({
     httpMethod: 'POST',
     body: JSON.stringify({
@@ -221,22 +149,7 @@ test('imports Reddit post text through OpenAI fallback', async () => {
 
   const payload = JSON.parse(response.body);
 
-  expect(response.statusCode).toBe(200);
-  expect(payload.source).toBe('reddit');
-  expect(payload.recipe.title).toBe('Crispy Air Fryer Tofu Recipe (Korean Style)');
-  expect(payload.recipe.ingredients[0].items[1]).toMatchObject({
-    amount: 0.5,
-    amount_text: '1/2',
-    unit: 'tsp',
-    name: 'garlic powder',
-    scalable: true
-  });
-  expect(fetchMock).toHaveBeenCalledWith(
-    'https://www.reddit.com/r/vegetarianrecipes/comments/1r79lj2/crispy_air_fryer_tofu_recipe_korean_style/.json',
-    expect.objectContaining({
-      headers: expect.objectContaining({
-        accept: 'application/json'
-      })
-    })
-  );
+  expect(response.statusCode).toBe(422);
+  expect(payload.error).toBe('Reddit import is not currently supported.');
+  expect(fetchMock).not.toHaveBeenCalled();
 });
