@@ -2,6 +2,37 @@ import React, { useEffect } from 'react';
 import { DndContext, closestCenter, PointerSensor, TouchSensor, useSensor, useSensors } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, arrayMove, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { parseStrictNumber } from '../utils/scalingMath';
+
+const UNIT_SUGGESTIONS = [
+  'tsp',
+  'tbsp',
+  'fl oz',
+  'cup',
+  'pt',
+  'qt',
+  'g',
+  'oz',
+  'lb',
+  'whole',
+  'clove',
+  'pinch',
+  'handful',
+  'can',
+  'sprig',
+  'bunch',
+  'sheet',
+  'packet',
+  'jar'
+];
+
+function getAmountInputValue(item) {
+  if (item.amount_text !== undefined && item.amount_text !== null) {
+    return item.amount_text;
+  }
+
+  return item.amount ?? '';
+}
 
 function SortableIngredientItem({ item, sectionIndex, itemIndex, updateRow, removeRow }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: item.id });
@@ -24,36 +55,21 @@ function SortableIngredientItem({ item, sectionIndex, itemIndex, updateRow, remo
         ⋮⋮
       </div>
       <input 
-        type="number" step="0.1" className="amt-input"
-        value={item.amount} onChange={(e) => updateRow(sectionIndex, itemIndex, 'amount', e.target.value)} 
+        type="text" className="amt-input"
+        value={getAmountInputValue(item)}
+        onChange={(e) => updateRow(sectionIndex, itemIndex, 'amount_text', e.target.value)} 
         placeholder="Amt"
       />
-      <select 
-        className="unit-select" value={item.unit} onChange={(e) => updateRow(sectionIndex, itemIndex, 'unit', e.target.value)}
-      >
-        <optgroup label="Volume">
-          <option value="tsp">tsp</option>
-          <option value="tbsp">tbsp</option>
-          <option value="fl oz">fl oz</option>
-          <option value="cup">cup</option>
-          <option value="pt">pt</option>
-          <option value="qt">qt</option>
-        </optgroup>
-        <optgroup label="Weight">
-          <option value="g">g</option>
-          <option value="oz">oz</option>
-          <option value="lb">lb</option>
-        </optgroup>
-        <optgroup label="Discrete">
-          <option value="whole">whole</option>
-          <option value="clove">clove</option>
-          <option value="pinch">pinch</option>
-          <option value="handful">handful</option>
-          <option value="can">can</option>
-        </optgroup>
-      </select>
+      <input
+        type="text"
+        className="unit-input"
+        list="ingredient-unit-suggestions"
+        value={item.unit || ''}
+        onChange={(e) => updateRow(sectionIndex, itemIndex, 'unit', e.target.value)}
+        placeholder="Unit"
+      />
       <input 
-        type="text" className="name-input" value={item.name} 
+        type="text" className="name-input" value={item.name || ''} 
         onChange={(e) => updateRow(sectionIndex, itemIndex, 'name', e.target.value)} 
         placeholder="Ingredient name"
       />
@@ -126,10 +142,36 @@ export default function IngredientEditor({ sections, setSections }) {
         secUpdated = true;
       }
       const newItems = newSec.items.map(item => {
+        const amount = parseStrictNumber(item.amount_text) ?? parseStrictNumber(item.amount);
+        const amountText = item.amount_text ?? (amount !== null ? String(amount) : '');
+        const scalable = item.scalable ?? (amount !== null);
+        const normalizedItem = {
+          ...item,
+          amount,
+          amount_text: amountText,
+          unit: item.unit || '',
+          name: item.name || '',
+          original_text: item.original_text || '',
+          scalable
+        };
+
         if (!item.id) {
           secUpdated = true;
-          return { ...item, id: crypto.randomUUID() };
+          return { ...normalizedItem, id: crypto.randomUUID() };
         }
+
+        if (
+          item.amount !== normalizedItem.amount ||
+          item.amount_text !== normalizedItem.amount_text ||
+          item.unit !== normalizedItem.unit ||
+          item.name !== normalizedItem.name ||
+          item.original_text !== normalizedItem.original_text ||
+          item.scalable !== normalizedItem.scalable
+        ) {
+          secUpdated = true;
+          return normalizedItem;
+        }
+
         return item;
       });
       if (secUpdated) {
@@ -162,7 +204,15 @@ export default function IngredientEditor({ sections, setSections }) {
   const addRow = (sectionIndex) => {
     setSections(prev => {
       const newSections = JSON.parse(JSON.stringify(prev));
-      newSections[sectionIndex].items.push({ amount: 1, unit: 'whole', name: '', id: crypto.randomUUID() });
+      newSections[sectionIndex].items.push({
+        amount: null,
+        amount_text: '',
+        unit: '',
+        name: '',
+        original_text: '',
+        scalable: false,
+        id: crypto.randomUUID()
+      });
       return newSections;
     });
   };
@@ -170,8 +220,11 @@ export default function IngredientEditor({ sections, setSections }) {
   const updateRow = (sectionIndex, itemIndex, field, value) => {
     setSections(prev => {
       const newSections = JSON.parse(JSON.stringify(prev));
-      if (field === 'amount') {
-        newSections[sectionIndex].items[itemIndex][field] = parseFloat(value) || 0;
+      if (field === 'amount_text') {
+        const amount = parseStrictNumber(value);
+        newSections[sectionIndex].items[itemIndex].amount_text = value;
+        newSections[sectionIndex].items[itemIndex].amount = amount;
+        newSections[sectionIndex].items[itemIndex].scalable = amount !== null;
       } else {
         newSections[sectionIndex].items[itemIndex][field] = value;
       }
@@ -273,6 +326,11 @@ export default function IngredientEditor({ sections, setSections }) {
 
   return (
     <div className="ingredient-editor">
+      <datalist id="ingredient-unit-suggestions">
+        {UNIT_SUGGESTIONS.map(unit => (
+          <option key={unit} value={unit} />
+        ))}
+      </datalist>
       <DndContext 
         sensors={sensors} 
         collisionDetection={closestCenter} 

@@ -38,6 +38,131 @@
   width: 100%;
 }
 
+.import-panel {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.import-form {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-md);
+  align-items: end;
+}
+
+.import-copy h2 {
+  margin: 0 0 var(--spacing-xs);
+  font-size: 1.1rem;
+}
+
+.import-copy p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.import-controls {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.import-controls input {
+  flex: 1;
+  min-width: 0;
+}
+
+.import-controls button {
+  background-color: var(--accent-color);
+  color: white;
+  font-weight: bold;
+}
+
+.import-controls button:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.import-message {
+  margin: var(--spacing-sm) 0 0;
+  font-size: 0.9rem;
+}
+
+.import-error {
+  color: #ff6b6b;
+}
+
+.import-progress {
+  margin-top: var(--spacing-md);
+}
+
+.import-progress-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.import-progress-track {
+  width: 100%;
+  height: 8px;
+  overflow: hidden;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+}
+
+.import-progress-fill {
+  height: 100%;
+  background-color: var(--accent-color);
+  border-radius: inherit;
+  transition: width 350ms ease;
+}
+
+.import-success {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  align-items: center;
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+}
+
+.import-success p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.import-success-actions {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.import-success-actions button {
+  background-color: var(--success-color);
+  color: #121212;
+  font-weight: bold;
+}
+
+.import-success-actions .secondary-action {
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+@media (min-width: 768px) {
+  .import-form {
+    grid-template-columns: minmax(220px, 0.65fr) minmax(320px, 1fr);
+  }
+}
+
 .dashboard-view {
   padding-bottom: 80px;
 }

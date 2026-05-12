@@ -75,6 +75,13 @@
   font-size: 0.9em;
 }
 
+.scaling-warning {
+  color: #ff6b6b;
+  font-size: 0.85rem;
+  margin: calc(-1 * var(--spacing-sm)) 0 var(--spacing-sm);
+  text-align: right;
+}
+
 .toggle-btn {
   background-color: transparent;
   border: 1px solid var(--accent-color);

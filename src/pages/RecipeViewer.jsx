@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipe } from '../adapters/database';
 import IngredientList from '../components/IngredientList';
+import { hasUnscaledIngredients } from '../utils/scalingMath';
 import './RecipeViewer.css';
 
 export default function RecipeViewer() {
@@ -64,6 +65,7 @@ export default function RecipeViewer() {
   }
 
   const handleMultiplier = (val) => setMultiplier(val);
+  const showScalingWarning = hasUnscaledIngredients(recipe.ingredients, multiplier);
 
   return (
     <div className="recipe-viewer">
@@ -101,6 +103,9 @@ export default function RecipeViewer() {
               ))}
             </div>
           </div>
+          {showScalingWarning && (
+            <p className="scaling-warning">Some ingredients were not scaled.</p>
+          )}
           <IngredientList sections={recipe.ingredients} multiplier={multiplier} />
         </section>
 

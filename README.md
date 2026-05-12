@@ -5,6 +5,7 @@ A mobile-first, responsive recipe management application built with React, Vite,
 ## Features
 - **Authentication**: Secure login and user session management powered by Supabase.
 - **Dashboard**: View your library of recipes at a glance.
+- **URL Import**: Create a draft recipe from a webpage URL using recipe metadata first, with optional LLM fallback.
 - **Recipe Viewer**: An elegant, mobile-friendly interface for cooking and reading recipes.
 - **Advanced Recipe Editor**: 
   - Drag-and-drop reordering using `@dnd-kit`.
@@ -46,6 +47,21 @@ To run the app locally, create a `.env.local` file in the root directory and add
 VITE_SUPABASE_URL=your_supabase_project_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 ```
+
+URL imports preserve the original webpage in a `source_url` column. Apply the SQL in `planning/url_import_schema.sql` to add it.
+
+## URL Import Configuration
+
+The URL importer runs as a Netlify Function at `/.netlify/functions/import-recipe-url`.
+
+It first tries to parse `schema.org/Recipe` JSON-LD from the webpage. If no recipe metadata is available, it can fall back to OpenAI structured extraction when these Netlify environment variables are set:
+
+```env
+OPENAI_API_KEY=your_openai_api_key
+OPENAI_RECIPE_IMPORT_MODEL=gpt-5-nano
+```
+
+For local function testing, run the app through Netlify Dev rather than plain Vite so `/.netlify/functions/*` routes are available.
 
 ## Deployment (Netlify)
 

@@ -37,6 +37,15 @@
   border-bottom: 1px solid var(--border-color);
 }
 
+.ingredient-item-unscaled {
+  background-color: rgba(255, 107, 107, 0.12);
+  border-left: 3px solid #ff6b6b;
+  border-radius: var(--radius-sm);
+  margin: var(--spacing-xs) 0;
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+}
+
 .ingredient-item:last-child {
   border-bottom: none;
 }
