@@ -8,7 +8,7 @@ import './DashboardView.css';
 
 const IMPORT_SOURCE_LABELS = {
   'json-ld': 'recipe metadata',
-  wprm: 'WP Recipe Maker metadata',
+  wprm: 'site recipe metadata',
   openai: 'LLM parsing'
 };
 
