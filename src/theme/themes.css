@@ -16,11 +16,50 @@
   --color-on-primary: #FFFFFF;
   --color-on-success: #121212;
   --image-login-bg: url('/login_bg.png');
+
+  --radius-control: 12px;
+  --radius-panel: 12px;
+  --radius-card: 20px;
+  --radius-pill: 999px;
+  --radius-media: 12px;
+
+  --skin-app-bg: var(--color-app-bg);
+  --skin-surface-bg: var(--color-surface);
+  --skin-muted-bg: var(--color-surface-muted);
+  --skin-control-bg: var(--color-surface-muted);
+  --skin-control-hover-bg: var(--color-border);
+  --skin-control-active-bg: var(--color-border);
+  --skin-primary-bg: var(--color-primary);
+  --skin-primary-hover-bg: var(--color-primary-hover);
+  --skin-success-bg: var(--color-success);
+  --skin-danger-bg: var(--color-danger-bg);
+  --skin-input-bg: var(--color-surface-muted);
+  --skin-tag-bg: var(--color-surface-muted);
+  --skin-nav-bg: var(--color-surface);
+
+  --skin-border: 1px solid var(--color-border);
+  --skin-control-border: 1px solid transparent;
+  --skin-primary-border: 1px solid transparent;
+  --skin-input-border: 1px solid var(--color-border);
+  --skin-panel-border: 1px solid var(--color-border);
+  --skin-focus-border: 1px solid var(--color-primary);
+
+  --skin-control-shadow: none;
+  --skin-control-active-shadow: none;
+  --skin-control-active-transform: scale(0.98);
+  --skin-surface-shadow: 0 4px 12px rgba(45, 49, 66, 0.08);
+  --skin-elevated-shadow: 0 8px 24px rgba(45, 49, 66, 0.12);
+  --skin-inset-shadow: none;
+  --skin-sticky-shadow: 0 -4px 10px rgba(45, 49, 66, 0.16);
+
   --shadow-subtle: 0 4px 12px rgba(45, 49, 66, 0.08);
   --shadow-elevated: 0 8px 24px rgba(45, 49, 66, 0.12);
   --shadow-focus: 0 8px 16px rgba(45, 49, 66, 0.2);
   --shadow-sticky: 0 -4px 10px rgba(45, 49, 66, 0.16);
 
+  --radius-sm: var(--radius-control);
+  --radius-md: var(--radius-panel);
+  --radius-lg: var(--radius-card);
   --bg-primary: var(--color-app-bg);
   --bg-secondary: var(--color-surface);
   --bg-tertiary: var(--color-surface-muted);
@@ -56,6 +95,9 @@
   --shadow-elevated: 0 8px 24px rgba(37, 49, 37, 0.12);
   --shadow-focus: 0 8px 16px rgba(37, 49, 37, 0.18);
   --shadow-sticky: 0 -4px 10px rgba(37, 49, 37, 0.14);
+  --skin-surface-shadow: var(--shadow-subtle);
+  --skin-elevated-shadow: var(--shadow-elevated);
+  --skin-sticky-shadow: var(--shadow-sticky);
 }
 
 :root[data-theme='citrus'] {
@@ -78,6 +120,9 @@
   --shadow-elevated: 0 8px 24px rgba(47, 43, 37, 0.12);
   --shadow-focus: 0 8px 16px rgba(47, 43, 37, 0.18);
   --shadow-sticky: 0 -4px 10px rgba(47, 43, 37, 0.14);
+  --skin-surface-shadow: var(--shadow-subtle);
+  --skin-elevated-shadow: var(--shadow-elevated);
+  --skin-sticky-shadow: var(--shadow-sticky);
 }
 
 :root[data-theme='midnight'] {
@@ -100,4 +145,104 @@
   --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.34);
   --shadow-focus: 0 8px 16px rgba(0, 0, 0, 0.4);
   --shadow-sticky: 0 -4px 10px rgba(0, 0, 0, 0.38);
+  --skin-surface-shadow: var(--shadow-subtle);
+  --skin-elevated-shadow: var(--shadow-elevated);
+  --skin-sticky-shadow: var(--shadow-sticky);
+}
+
+:root[data-theme='desktop95'] {
+  --color-app-bg: #C0C0C0;
+  --color-surface: #C0C0C0;
+  --color-surface-muted: #D8D8D8;
+  --color-text: #000000;
+  --color-text-muted: #404040;
+  --color-primary: #000080;
+  --color-primary-bg: #000080;
+  --color-primary-hover: #0000A8;
+  --color-border: #808080;
+  --color-success: #008000;
+  --color-success-hover: #006A00;
+  --color-danger: #800000;
+  --color-danger-bg: #F0D8D8;
+  --color-on-primary: #FFFFFF;
+  --color-on-success: #FFFFFF;
+  --image-login-bg:
+    linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.1) 25%, transparent 25%),
+    linear-gradient(135deg, #008080, #007474);
+  --font-serif: Arial, system-ui, sans-serif;
+  --font-sans: Arial, system-ui, sans-serif;
+
+  --radius-control: 0;
+  --radius-panel: 0;
+  --radius-card: 2px;
+  --radius-pill: 0;
+  --radius-media: 0;
+  --radius-sm: var(--radius-control);
+  --radius-md: var(--radius-panel);
+  --radius-lg: var(--radius-card);
+
+  --skin-app-bg:
+    linear-gradient(45deg, rgba(255,255,255,0.08) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
+    #C0C0C0;
+  --skin-surface-bg:
+    linear-gradient(135deg, rgba(255,255,255,0.22), rgba(0,0,0,0.04)),
+    #C0C0C0;
+  --skin-muted-bg:
+    linear-gradient(135deg, #D8D8D8, #BDBDBD);
+  --skin-control-bg:
+    linear-gradient(135deg, #F0F0F0 0%, #D8D8D8 48%, #C0C0C0 100%);
+  --skin-control-hover-bg:
+    linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 50%, #C8C8C8 100%);
+  --skin-control-active-bg: #C0C0C0;
+  --skin-primary-bg:
+    linear-gradient(180deg, #0000A8 0%, #000080 100%);
+  --skin-primary-hover-bg:
+    linear-gradient(180deg, #1111C0 0%, #000098 100%);
+  --skin-success-bg:
+    linear-gradient(180deg, #008A00 0%, #006A00 100%);
+  --skin-danger-bg:
+    linear-gradient(135deg, #F0D8D8, #D8B8B8);
+  --skin-input-bg: #FFFFFF;
+  --skin-tag-bg:
+    linear-gradient(135deg, #E8E8E8, #C8C8C8);
+  --skin-nav-bg:
+    linear-gradient(180deg, #D8D8D8, #BEBEBE);
+
+  --skin-border: 1px solid #808080;
+  --skin-control-border: 1px solid #808080;
+  --skin-primary-border: 1px solid #000000;
+  --skin-input-border: 1px solid #808080;
+  --skin-panel-border: 1px solid #808080;
+  --skin-focus-border: 1px dotted #000000;
+
+  --skin-control-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #404040,
+    inset -2px -2px 0 #808080;
+  --skin-control-active-shadow:
+    inset 1px 1px 0 #404040,
+    inset 2px 2px 0 #808080,
+    inset -1px -1px 0 #FFFFFF;
+  --skin-control-active-transform: translate(1px, 1px);
+  --skin-surface-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #404040;
+  --skin-elevated-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #404040,
+    2px 2px 0 rgba(0,0,0,0.22);
+  --skin-inset-shadow:
+    inset 1px 1px 0 #404040,
+    inset -1px -1px 0 #FFFFFF;
+  --skin-sticky-shadow:
+    inset 0 1px 0 #FFFFFF,
+    0 -1px 0 #404040,
+    0 -3px 0 #808080;
+
+  --shadow-subtle: var(--skin-surface-shadow);
+  --shadow-elevated: var(--skin-elevated-shadow);
+  --shadow-focus: var(--skin-elevated-shadow);
+  --shadow-sticky: var(--skin-sticky-shadow);
 }

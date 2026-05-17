@@ -31,12 +31,12 @@
 .pill-tag {
   display: inline-block;
   padding: 0.4em 1.2em;
-  border: 1px solid var(--text-primary);
-  border-radius: var(--radius-lg);
+  border: var(--skin-border);
+  border-radius: var(--radius-pill);
   color: var(--text-primary);
   font-size: 0.9rem;
   font-weight: 600;
-  background-color: var(--bg-tertiary);
+  background: var(--skin-tag-bg);
 }
 
 .recipe-notes {
@@ -83,38 +83,41 @@
 }
 
 .toggle-btn {
-  background-color: transparent;
-  border: 1px solid var(--accent-color);
+  background: transparent;
+  border: var(--skin-primary-border);
   color: var(--accent-color);
 }
 
 .toggle-btn:hover {
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
   color: var(--color-on-primary);
 }
 
 .step-card {
-  background-color: var(--bg-secondary);
+  background: var(--skin-surface-bg);
   padding: var(--spacing-lg);
-  border-radius: var(--radius-lg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
   margin-bottom: var(--spacing-md);
   text-align: left;
   position: relative;
+  box-shadow: var(--skin-surface-shadow);
 }
 
 .step-card.focus-mode {
   padding: var(--spacing-xl);
-  border: 2px solid var(--accent-color);
+  border: var(--skin-primary-border);
   box-shadow: var(--shadow-focus);
 }
 
 .step-number {
   display: inline-block;
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
   color: var(--color-on-primary);
   font-weight: bold;
   padding: 0.2em 0.6em;
-  border-radius: var(--radius-sm);
+  border: var(--skin-primary-border);
+  border-radius: var(--radius-pill);
   margin-bottom: var(--spacing-sm);
 }
 
@@ -128,7 +131,7 @@
 .step-image {
   margin-top: var(--spacing-md);
   max-width: 100%;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-media);
 }
 
 .ingredients-section, .steps-section {
@@ -172,8 +175,10 @@
 .not-found-container {
   text-align: center;
   padding: 6rem 2rem;
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--skin-surface-shadow);
   margin-top: var(--spacing-xl);
 }
 
@@ -190,13 +195,13 @@
 }
 
 .back-btn {
-  background-color: var(--bg-tertiary);
+  background: var(--skin-control-bg);
   padding: 0.8em 1.6em;
   font-size: 1.1rem;
 }
 
 .back-btn:hover {
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
   color: var(--color-on-primary);
 }
 
@@ -207,27 +212,27 @@
 }
 
 .nav-back-btn, .nav-edit-btn {
-  background-color: transparent;
+  background: transparent;
   color: var(--text-secondary);
   padding: 0.5em 1em;
   font-size: 0.95rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  border: var(--skin-control-border);
+  border-radius: var(--radius-control);
 }
 
 .nav-edit-btn {
   color: var(--accent-color);
-  border-color: var(--accent-color);
+  border: var(--skin-primary-border);
 }
 
 .nav-back-btn:hover {
-  background-color: var(--bg-tertiary);
+  background: var(--skin-control-hover-bg);
   color: var(--text-primary);
   border-color: var(--text-secondary);
 }
 
 .nav-edit-btn:hover {
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
   color: var(--color-on-primary);
 }
 
@@ -238,9 +243,10 @@
 }
 
 .rough-notes-box {
-  background-color: var(--bg-tertiary);
+  background: var(--skin-muted-bg);
+  border: var(--skin-panel-border);
   padding: var(--spacing-md);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-panel);
   margin-bottom: var(--spacing-md);
 }
 

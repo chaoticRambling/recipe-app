@@ -40,6 +40,16 @@ export const THEMES = [
       loginBackground: '/login_bg.png',
       recipeHero: '/recipe_hero.png'
     }
+  },
+  {
+    id: 'desktop95',
+    name: 'Desktop 95',
+    metaThemeColor: '#C0C0C0',
+    swatches: ['#C0C0C0', '#FFFFFF', '#000080', '#008080'],
+    assets: {
+      loginBackground: '/login_bg.png',
+      recipeHero: '/recipe_hero.png'
+    }
   }
 ];
 

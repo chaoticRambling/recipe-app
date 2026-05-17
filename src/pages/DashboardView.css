@@ -31,19 +31,20 @@
 }
 
 .new-recipe-btn {
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
+  border: var(--skin-primary-border);
   color: var(--color-on-primary);
   padding: 0.6em 1.2em;
   font-weight: bold;
 }
 
 .new-recipe-btn:hover {
-  background-color: var(--accent-hover);
+  background: var(--skin-primary-hover-bg);
 }
 
 .logout-btn {
-  background-color: transparent;
-  border: 1px solid var(--border-color);
+  background: transparent;
+  border: var(--skin-control-border);
   color: var(--text-secondary);
 }
 
@@ -52,9 +53,10 @@
 }
 
 .import-panel {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--skin-surface-shadow);
   padding: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
 }
@@ -88,7 +90,8 @@
 }
 
 .import-controls button {
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
+  border: var(--skin-primary-border);
   color: var(--color-on-primary);
   font-weight: bold;
 }
@@ -124,14 +127,14 @@
   width: 100%;
   height: 8px;
   overflow: hidden;
-  background-color: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
+  background: var(--skin-muted-bg);
+  border: var(--skin-border);
+  border-radius: var(--radius-pill);
 }
 
 .import-progress-fill {
   height: 100%;
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
   border-radius: inherit;
   transition: width 350ms ease;
 }
@@ -159,14 +162,14 @@
 }
 
 .import-success-actions button {
-  background-color: var(--success-color);
+  background: var(--skin-success-bg);
   color: var(--color-on-success);
   font-weight: bold;
 }
 
 .import-success-actions .secondary-action {
-  background-color: transparent;
-  border: 1px solid var(--border-color);
+  background: transparent;
+  border: var(--skin-control-border);
   color: var(--text-secondary);
 }
 
@@ -185,12 +188,12 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: var(--bg-secondary);
-  border-top: 1px solid var(--border-color);
+  background: var(--skin-nav-bg);
+  border-top: var(--skin-border);
   display: flex;
   justify-content: space-around;
   padding: var(--spacing-sm) 0;
-  box-shadow: var(--shadow-sticky);
+  box-shadow: var(--skin-sticky-shadow);
   z-index: 100;
 }
 
@@ -200,6 +203,7 @@
   align-items: center;
   background: transparent;
   border: none;
+  box-shadow: none;
   color: var(--text-secondary);
   font-size: 0.85rem;
   gap: 4px;

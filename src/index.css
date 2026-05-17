@@ -27,7 +27,7 @@
   line-height: 1.5;
   font-weight: 400;
   color: var(--text-primary);
-  background-color: var(--bg-primary);
+  background: var(--skin-app-bg);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -44,6 +44,7 @@ body {
   display: flex;
   min-height: 100vh;
   min-width: 320px;
+  background: var(--skin-app-bg);
 }
 
 #root {
@@ -73,33 +74,37 @@ h1, h2, h3, h4 {
 }
 
 button {
-  border-radius: var(--radius-md);
-  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  border: var(--skin-control-border);
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 600;
   font-family: inherit;
-  background-color: var(--bg-tertiary);
+  background: var(--skin-control-bg);
   color: var(--text-primary);
   cursor: pointer;
-  transition: background-color 0.2s, border-color 0.2s;
+  box-shadow: var(--skin-control-shadow);
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
 button:hover {
-  background-color: var(--border-color);
+  background: var(--skin-control-hover-bg);
 }
 
 button:active {
-  transform: scale(0.98);
+  background: var(--skin-control-active-bg);
+  box-shadow: var(--skin-control-active-shadow);
+  transform: var(--skin-control-active-transform);
 }
 
 button.active-multiplier {
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
+  border: var(--skin-primary-border);
   color: var(--color-on-primary);
 }
 
 button.active-multiplier:hover {
-  background-color: var(--accent-hover);
+  background: var(--skin-primary-hover-bg);
 }
 
 /* Base styles to be extended by components */

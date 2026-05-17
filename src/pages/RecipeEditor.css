@@ -21,13 +21,13 @@
 }
 
 .save-btn {
-  background-color: var(--success-color);
+  background: var(--skin-success-bg);
   color: var(--color-on-success);
   font-weight: bold;
 }
 
 .save-btn:hover {
-  background-color: var(--success-hover);
+  background: var(--success-hover);
 }
 
 .editor-layout {
@@ -47,9 +47,11 @@
 }
 
 .editor-left-pane, .editor-right-pane {
-  background-color: var(--bg-secondary);
+  background: var(--skin-surface-bg);
   padding: var(--spacing-lg);
-  border-radius: var(--radius-lg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--skin-surface-shadow);
 }
 
 .help-text {
@@ -78,16 +80,17 @@
 input[type="text"], input[type="number"], select, textarea {
   width: 100%;
   padding: 0.6em;
-  background-color: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-sm);
+  background: var(--skin-input-bg);
+  border: var(--skin-input-border);
+  border-radius: var(--radius-control);
+  box-shadow: var(--skin-inset-shadow);
   color: var(--text-primary);
   font-family: inherit;
 }
 
 input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--accent-color);
+  border: var(--skin-focus-border);
 }
 
 .draft-area {
@@ -105,9 +108,11 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 
 /* Sub-components styling */
 .editor-section {
-  background-color: var(--bg-tertiary);
-  border-radius: var(--radius-md);
+  background: var(--skin-muted-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-panel);
   margin-bottom: var(--spacing-md);
+  box-shadow: var(--skin-surface-shadow);
 }
 
 .editor-section.accordion {
@@ -165,17 +170,31 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
   left: 0;
   width: 100%;
   z-index: 50;
-  background-color: var(--bg-secondary);
-  border-top: 1px solid var(--border-color);
+  background: var(--skin-nav-bg);
+  border-top: var(--skin-border);
   padding: var(--spacing-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: var(--shadow-sticky);
+  box-shadow: var(--skin-sticky-shadow);
 }
 
 .desktop-action-bar {
   display: none;
+  align-items: center;
+  gap: 1rem;
+}
+
+.editor-save-error {
+  color: var(--danger-color);
+  font-size: 0.9rem;
+}
+
+.draft-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
 }
 
 @media (min-width: 768px) {
@@ -193,6 +212,88 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
   margin-bottom: var(--spacing-sm);
 }
 
+.scratchpad-section {
+  padding: var(--spacing-md);
+}
+
+.image-upload-section {
+  margin-bottom: var(--spacing-md);
+}
+
+.image-preview-container {
+  width: 100%;
+  height: 200px;
+  background: var(--skin-muted-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-media);
+  box-shadow: var(--skin-inset-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.image-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.image-preview-placeholder {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+.upload-photo-action,
+.delete-recipe-action {
+  text-align: center;
+  margin-top: var(--spacing-xl);
+}
+
+.upload-photo-action {
+  margin: var(--spacing-lg) 0;
+}
+
+.upload-photo-btn {
+  padding: 0.8rem 1.5rem;
+  background: var(--skin-control-bg);
+  border: var(--skin-control-border);
+  border-radius: var(--radius-control);
+  color: var(--text-primary);
+  font-weight: bold;
+}
+
+.delete-recipe-btn {
+  background: transparent;
+  color: var(--danger-color);
+  border: 1px solid var(--danger-color);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--radius-control);
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.delete-recipe-btn:hover {
+  background: var(--skin-danger-bg);
+  color: var(--danger-color);
+}
+
+.mobile-sticky-action-bar.has-error {
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.mobile-save-error {
+  width: 100%;
+  text-align: center;
+}
+
+.save-btn-full {
+  width: 100%;
+}
+
 .section-name-input {
   flex-grow: 1;
   font-weight: bold;
@@ -203,9 +304,11 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
   gap: var(--spacing-sm);
   align-items: center;
   margin-bottom: var(--spacing-sm);
-  background-color: var(--bg-secondary);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
   padding: var(--spacing-sm);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--skin-inset-shadow);
 }
 
 .editor-item-row, .editor-step-row {
@@ -230,14 +333,14 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 }
 
 .remove-btn {
-  background-color: transparent;
+  background: transparent;
   color: var(--accent-color);
-  border: 1px solid var(--accent-color);
+  border: var(--skin-primary-border);
   padding: 0.4em 0.8em;
 }
 
 .remove-btn:hover {
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
   color: var(--color-on-primary);
 }
 
@@ -246,9 +349,9 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 }
 
 .add-row-btn, .add-section-btn {
-  background-color: var(--bg-secondary);
+  background: var(--skin-surface-bg);
   color: var(--text-primary);
-  border: 1px dashed var(--border-color);
+  border: var(--skin-control-border);
   width: 100%;
   margin-top: var(--spacing-xs);
 }
@@ -256,7 +359,7 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 .add-row-btn:hover, .add-section-btn:hover {
   border-color: var(--accent-color);
   color: var(--accent-color);
-  background-color: var(--bg-tertiary);
+  background: var(--skin-control-hover-bg);
 }
 
 .step-num-label {

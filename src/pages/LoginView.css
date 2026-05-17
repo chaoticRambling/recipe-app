@@ -13,10 +13,11 @@
 }
 
 .login-card {
-  background-color: var(--bg-secondary);
+  background: var(--skin-surface-bg);
   padding: var(--spacing-xl);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-elevated);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--skin-elevated-shadow);
   width: 100%;
   max-width: 400px;
   text-align: center;
@@ -42,9 +43,10 @@
 
 .login-form input {
   padding: 0.8rem;
-  border-radius: var(--radius-sm);
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-control);
+  border: var(--skin-input-border);
+  background: var(--skin-input-bg);
+  box-shadow: var(--skin-inset-shadow);
   color: var(--text-primary);
   font-size: 1rem;
 }
@@ -55,24 +57,25 @@
 }
 
 .login-btn {
-  background-color: var(--accent-color);
+  background: var(--skin-primary-bg);
+  border: var(--skin-primary-border);
   color: var(--color-on-primary);
   padding: 0.8rem;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-control);
   font-weight: bold;
   font-size: 1.1rem;
 }
 
 .login-btn:hover:not(:disabled) {
-  background-color: var(--accent-hover);
+  background: var(--skin-primary-hover-bg);
   transform: translateY(-2px);
 }
 
 .login-message {
   margin-top: var(--spacing-md);
   padding: var(--spacing-sm);
-  background-color: var(--bg-tertiary);
-  border-radius: var(--radius-sm);
+  background: var(--skin-muted-bg);
+  border-radius: var(--radius-panel);
   color: var(--text-primary);
 }
 

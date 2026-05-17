@@ -163,9 +163,9 @@ export default function RecipeEditor() {
         <h1>{id ? 'Edit Recipe' : 'New Recipe'}</h1>
         
         {/* Desktop Action Bar */}
-        <div className="desktop-action-bar" style={{ alignItems: 'center', gap: '1rem' }}>
-          {saveError && <span style={{ color: 'var(--danger-color)', fontSize: '0.9rem' }}>{saveError}</span>}
-          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
+        <div className="desktop-action-bar">
+          {saveError && <span className="editor-save-error">{saveError}</span>}
+          <label className="draft-toggle">
             <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
             Save as Draft
           </label>
@@ -178,7 +178,7 @@ export default function RecipeEditor() {
       <div className="editor-layout">
         {/* Left Pane - Drafts */}
         <div className="editor-left-pane">
-          <section className="editor-section" style={{ padding: 'var(--spacing-md)' }}>
+          <section className="editor-section scratchpad-section">
             <h2>Draft Scratchpad</h2>
             <p className="help-text">Paste unstructured text here to reference while building the strict structure on the right.</p>
             <div className="form-group">
@@ -206,7 +206,7 @@ export default function RecipeEditor() {
 
         {/* Right Pane - Structure */}
         <div className="editor-right-pane">
-          <div className="image-upload-section" style={{ marginBottom: 'var(--spacing-md)' }}>
+          <div className="image-upload-section">
             <input 
               type="file" 
               accept="image/*" 
@@ -218,28 +218,15 @@ export default function RecipeEditor() {
             <div 
               className="image-preview-container"
               onClick={() => fileInputRef.current?.click()}
-              style={{
-                width: '100%',
-                height: '200px',
-                backgroundColor: 'var(--bg-tertiary)',
-                borderRadius: 'var(--radius-lg)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                overflow: 'hidden',
-                border: '1px solid var(--border-color)',
-                position: 'relative'
-              }}
             >
               {(localPreviewUrl || existingImageUrl) ? (
                 <img 
                   src={localPreviewUrl || existingImageUrl} 
                   alt="Recipe Preview" 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                  className="image-preview"
                 />
               ) : (
-                <span style={{ color: 'var(--text-secondary)', fontWeight: 600 }}>Tap to add photo</span>
+                <span className="image-preview-placeholder">Tap to add photo</span>
               )}
             </div>
           </div>
@@ -292,11 +279,11 @@ export default function RecipeEditor() {
             <StepEditor steps={steps} setSteps={setSteps} />
           </AccordionSection>
 
-          <div style={{ textAlign: 'center', margin: 'var(--spacing-lg) 0' }}>
+          <div className="upload-photo-action">
             <button 
               type="button" 
               onClick={() => fileInputRef.current?.click()}
-              style={{ padding: '0.8rem 1.5rem', backgroundColor: 'var(--bg-tertiary)', border: '1px solid var(--border-color)', borderRadius: 'var(--radius-md)', color: 'var(--text-primary)', fontWeight: 'bold' }}
+              className="upload-photo-btn"
             >
               Upload / Replace Photo
             </button>
@@ -305,20 +292,12 @@ export default function RecipeEditor() {
       </div>
 
       {id && (
-        <div style={{ textAlign: 'center', marginTop: 'var(--spacing-xl)' }}>
+        <div className="delete-recipe-action">
           <button 
             type="button" 
             onClick={handleDelete}
             disabled={isSaving}
-            style={{ 
-              backgroundColor: 'transparent', 
-              color: 'var(--danger-color)', 
-              border: '1px solid var(--danger-color)', 
-              padding: '0.6rem 1.2rem', 
-              borderRadius: 'var(--radius-md)',
-              fontWeight: 'bold',
-              cursor: 'pointer'
-            }}
+            className="delete-recipe-btn"
           >
             Delete Recipe
           </button>
@@ -326,18 +305,18 @@ export default function RecipeEditor() {
       )}
 
       {/* Mobile Sticky Action Bar */}
-      <div className="mobile-sticky-action-bar" style={{ flexDirection: saveError ? 'column' : 'row', gap: saveError ? '0.5rem' : '0' }}>
+      <div className={`mobile-sticky-action-bar ${saveError ? 'has-error' : ''}`}>
         {saveError ? (
-          <div style={{ color: 'var(--danger-color)', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
+          <div className="editor-save-error mobile-save-error">
             {saveError}
           </div>
         ) : (
-          <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
+          <label className="draft-toggle">
             <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
             Save as Draft
           </label>
         )}
-        <button type="submit" className="save-btn" disabled={isSaving} style={{ width: saveError ? '100%' : 'auto' }}>
+        <button type="submit" className={`save-btn ${saveError ? 'save-btn-full' : ''}`} disabled={isSaving}>
           {isSaving ? 'Saving...' : 'Save Recipe'}
         </button>
       </div>

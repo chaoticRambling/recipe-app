@@ -3,8 +3,10 @@
   padding: var(--spacing-xl);
   color: var(--text-secondary);
   font-style: italic;
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--skin-surface-shadow);
 }
 
 .recipe-list-container {
@@ -21,19 +23,19 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-lg);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   overflow: hidden;
-  box-shadow: var(--shadow-subtle);
+  box-shadow: var(--skin-surface-shadow);
   padding: 0;
 }
 
 .recipe-card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-elevated);
+  box-shadow: var(--skin-elevated-shadow);
 }
 
 .recipe-card-image {
@@ -74,11 +76,11 @@
 
 .pill-draft {
   display: inline-block;
-  background-color: var(--bg-tertiary);
+  background: var(--skin-tag-bg);
   color: var(--text-primary);
-  border: 1px dashed var(--text-secondary);
+  border: var(--skin-border);
   padding: 0.2em 0.6em;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   font-size: 0.85rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -87,20 +89,20 @@
 
 .pill-cuisine {
   display: inline-block;
-  background-color: var(--accent-bg);
+  background: var(--accent-bg);
   color: var(--accent-color);
   padding: 0.2em 0.6em;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   font-size: 0.85rem;
   font-weight: 500;
 }
 
 .pill-time {
   display: inline-block;
-  background-color: var(--bg-tertiary);
+  background: var(--skin-tag-bg);
   color: var(--text-secondary);
   padding: 0.2em 0.6em;
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-pill);
   font-size: 0.85rem;
   font-weight: 500;
 }

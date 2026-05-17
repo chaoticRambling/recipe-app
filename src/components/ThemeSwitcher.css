@@ -12,9 +12,9 @@
 .theme-swatch {
   width: 14px;
   height: 14px;
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  box-shadow: 0 0 0 1px var(--bg-secondary);
+  border: var(--skin-border);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 0 1px var(--color-surface);
 }
 
 .theme-swatch + .theme-swatch {
@@ -25,9 +25,10 @@
   min-width: 155px;
   max-width: 190px;
   padding: 0.5rem 2rem 0.5rem 0.7rem;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius-md);
-  background-color: var(--bg-secondary);
+  border: var(--skin-input-border);
+  border-radius: var(--radius-control);
+  background: var(--skin-input-bg);
+  box-shadow: var(--skin-inset-shadow);
   color: var(--text-primary);
   font: inherit;
   font-weight: 600;

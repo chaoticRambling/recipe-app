@@ -1,9 +1,10 @@
 .ingredient-list {
-  background-color: var(--bg-secondary);
-  border-radius: var(--radius-lg);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
   padding: var(--spacing-lg);
   margin-bottom: var(--spacing-xl);
-  box-shadow: var(--shadow-subtle);
+  box-shadow: var(--skin-surface-shadow);
   text-align: left;
 }
 
@@ -38,9 +39,9 @@
 }
 
 .ingredient-item-unscaled {
-  background-color: var(--danger-bg);
+  background: var(--skin-danger-bg);
   border-left: 3px solid var(--danger-color);
-  border-radius: var(--radius-sm);
+  border-radius: var(--radius-panel);
   margin: var(--spacing-xs) 0;
   padding-left: var(--spacing-sm);
   padding-right: var(--spacing-sm);
