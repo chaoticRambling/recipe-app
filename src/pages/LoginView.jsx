@@ -53,7 +53,7 @@ export default function LoginView() {
             {loading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-        {errorMsg && <p className="login-message" style={{ color: '#ff6b6b' }}>{errorMsg}</p>}
+        {errorMsg && <p className="login-message login-error">{errorMsg}</p>}
       </div>
     </div>
   );

@@ -50,6 +50,8 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 URL imports preserve the original webpage in a `source_url` column. Apply the SQL in `planning/url_import_schema.sql` to add it.
 
+Theme selection is stored locally for immediate reloads and synced to Supabase for authenticated users. Apply the SQL in `planning/theme_preferences_schema.sql` to create the `user_preferences` table and ownership-aware RLS policies.
+
 ## URL Import Configuration
 
 The URL importer runs as a Netlify Function at `/.netlify/functions/import-recipe-url`.

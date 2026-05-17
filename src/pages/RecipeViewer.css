@@ -76,7 +76,7 @@
 }
 
 .scaling-warning {
-  color: #ff6b6b;
+  color: var(--danger-color);
   font-size: 0.85rem;
   margin: calc(-1 * var(--spacing-sm)) 0 var(--spacing-sm);
   text-align: right;
@@ -90,7 +90,7 @@
 
 .toggle-btn:hover {
   background-color: var(--accent-color);
-  color: white;
+  color: var(--color-on-primary);
 }
 
 .step-card {
@@ -105,13 +105,13 @@
 .step-card.focus-mode {
   padding: var(--spacing-xl);
   border: 2px solid var(--accent-color);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  box-shadow: var(--shadow-focus);
 }
 
 .step-number {
   display: inline-block;
   background-color: var(--accent-color);
-  color: white;
+  color: var(--color-on-primary);
   font-weight: bold;
   padding: 0.2em 0.6em;
   border-radius: var(--radius-sm);
@@ -197,7 +197,7 @@
 
 .back-btn:hover {
   background-color: var(--accent-color);
-  color: white;
+  color: var(--color-on-primary);
 }
 
 .recipe-nav {
@@ -228,7 +228,7 @@
 
 .nav-edit-btn:hover {
   background-color: var(--accent-color);
-  color: white;
+  color: var(--color-on-primary);
 }
 
 .rough-notes-section {

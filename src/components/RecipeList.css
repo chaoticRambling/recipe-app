@@ -66,6 +66,12 @@
   padding-top: var(--spacing-sm);
 }
 
+.cell-cuisine {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
 .pill-draft {
   display: inline-block;
   background-color: var(--bg-tertiary);
@@ -81,7 +87,7 @@
 
 .pill-cuisine {
   display: inline-block;
-  background-color: rgba(224, 122, 95, 0.1);
+  background-color: var(--accent-bg);
   color: var(--accent-color);
   padding: 0.2em 0.6em;
   border-radius: var(--radius-sm);

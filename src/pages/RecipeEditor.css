@@ -22,12 +22,12 @@
 
 .save-btn {
   background-color: var(--success-color);
-  color: #121212;
+  color: var(--color-on-success);
   font-weight: bold;
 }
 
 .save-btn:hover {
-  background-color: #3cb02a;
+  background-color: var(--success-hover);
 }
 
 .editor-layout {
@@ -171,7 +171,7 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 -4px 10px rgba(0,0,0,0.3);
+  box-shadow: var(--shadow-sticky);
 }
 
 .desktop-action-bar {
@@ -238,7 +238,7 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 
 .remove-btn:hover {
   background-color: var(--accent-color);
-  color: white;
+  color: var(--color-on-primary);
 }
 
 .row-remove {

@@ -3,12 +3,14 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipe } from '../adapters/database';
 import IngredientList from '../components/IngredientList';
 import { hasUnscaledIngredients } from '../utils/scalingMath';
+import { useTheme } from '../theme/useTheme';
 import './RecipeViewer.css';
 
 export default function RecipeViewer() {
   const { id } = useParams();
   const recipeId = id || '123';
   const navigate = useNavigate();
+  const { activeTheme } = useTheme();
   const [recipe, setRecipe] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [multiplier, setMultiplier] = useState(1);
@@ -77,7 +79,7 @@ export default function RecipeViewer() {
           Edit Recipe
         </button>
       </nav>
-      <div className="recipe-hero" style={{ backgroundImage: `url('${recipe.image_url || '/recipe_hero.png'}')` }}></div>
+      <div className="recipe-hero" style={{ backgroundImage: `url('${recipe.image_url || activeTheme.assets.recipeHero}')` }}></div>
       <header className="recipe-header">
         <h1>{recipe.title || 'Untitled Recipe'}</h1>
         <div className="recipe-meta">

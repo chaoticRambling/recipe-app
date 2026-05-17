@@ -4,6 +4,7 @@ import { createRecipe, getRecipes } from '../adapters/database';
 import { importRecipeFromUrl } from '../adapters/importRecipe';
 import { supabase } from '../supabaseClient';
 import RecipeList from '../components/RecipeList';
+import ThemeSwitcher from '../components/ThemeSwitcher';
 import './DashboardView.css';
 
 const IMPORT_SOURCE_LABELS = {
@@ -101,17 +102,17 @@ export default function DashboardView({ session }) {
   return (
     <div className="dashboard-view">
       <header className="dashboard-header">
-        <div className="header-content" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="header-content">
           <h1>My Recipes</h1>
-          <div style={{ display: 'flex', gap: '1rem' }}>
+          <div className="header-actions">
+            <ThemeSwitcher />
             {session && (
               <button 
                 className="logout-btn" 
                 onClick={async () => {
                   await supabase.auth.signOut();
                   navigate('/login');
-                }} 
-                style={{ backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}
+                }}
               >
                 Log Out
               </button>

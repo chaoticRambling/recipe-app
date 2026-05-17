@@ -164,7 +164,7 @@ export default function RecipeEditor() {
         
         {/* Desktop Action Bar */}
         <div className="desktop-action-bar" style={{ alignItems: 'center', gap: '1rem' }}>
-          {saveError && <span style={{ color: 'red', fontSize: '0.9rem' }}>{saveError}</span>}
+          {saveError && <span style={{ color: 'var(--danger-color)', fontSize: '0.9rem' }}>{saveError}</span>}
           <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--text-secondary)' }}>
             <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
             Save as Draft
@@ -312,8 +312,8 @@ export default function RecipeEditor() {
             disabled={isSaving}
             style={{ 
               backgroundColor: 'transparent', 
-              color: 'red', 
-              border: '1px solid red', 
+              color: 'var(--danger-color)', 
+              border: '1px solid var(--danger-color)', 
               padding: '0.6rem 1.2rem', 
               borderRadius: 'var(--radius-md)',
               fontWeight: 'bold',
@@ -328,7 +328,7 @@ export default function RecipeEditor() {
       {/* Mobile Sticky Action Bar */}
       <div className="mobile-sticky-action-bar" style={{ flexDirection: saveError ? 'column' : 'row', gap: saveError ? '0.5rem' : '0' }}>
         {saveError ? (
-          <div style={{ color: 'red', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
+          <div style={{ color: 'var(--danger-color)', fontSize: '0.9rem', width: '100%', textAlign: 'center' }}>
             {saveError}
           </div>
         ) : (
