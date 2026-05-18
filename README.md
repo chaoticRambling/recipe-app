@@ -32,6 +32,8 @@ src/
 │
 ├── components/              # Reusable, interactive UI elements
 │   ├── ThemeSwitcher.jsx    # Theme selector UI
+│   ├── SettingsMenu.jsx     # Settings popover with theme controls
+│   ├── Desktop95ScrollArea.jsx # Custom chunky scroll area for Desktop 95
 │   ├── IngredientEditor.jsx # Drag-and-drop ingredient sections
 │   ├── StepEditor.jsx       # Sortable and auto-expanding instruction steps
 │   ├── IngredientList.jsx   # Read-only ingredient display
@@ -47,12 +49,16 @@ Themes are code-authored presets defined in `src/theme/themeCatalog.js` and styl
 
 Themes can also declare lightweight chrome metadata through `uiChrome`. `Desktop 95` uses this to request a window frame, top tabs, decorative window controls, and chunky scrollbar styling. Non-retro themes keep the regular page frame and bottom navigation.
 
+Desktop 95 uses `src/components/Desktop95ScrollArea.jsx` for its app-like scroll regions instead of relying only on browser-native scrollbar styling. Recipe viewer pages and recipe editor pages get a right-hand Windows-95-style page scrollbar inside the faux window so bottom content such as rough notes, delete actions, and editor controls remains reachable. Ingredients and instructions keep their own fixed-height inset scroll panes inside the recipe viewer.
+
 The theme layer now has two levels of tokens:
 
 - Compatibility tokens such as `--bg-primary`, `--accent-color`, and `--radius-lg`.
 - Component-level skin tokens such as `--skin-control-bg`, `--skin-panel-border`, `--skin-inset-shadow`, `--radius-control`, and `--radius-card`.
 
 Desktop-style chrome uses additional tokens such as `--skin-window-bg`, `--skin-titlebar-bg`, `--skin-window-control-shadow`, `--skin-tab-bg`, and `--skin-scrollbar-thumb-bg`.
+
+The custom Desktop 95 scrollbar thumb supports hover, active, and click-drag interactions. Keep active/drag selectors scoped to the scroll area that owns the thumb, because recipe pages can nest ingredient/instruction scroll panes inside the full-page scroll pane.
 
 Prefer the component-level skin tokens when styling UI surfaces. They support full `background` values, so a theme can use flat colors, gradients, bevels, inset shadows, and generated textures. `Desktop 95` is the current proof theme for this deeper skinning model.
 
