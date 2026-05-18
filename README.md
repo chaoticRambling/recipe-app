@@ -6,6 +6,7 @@ A mobile-first, responsive recipe management application built with React, Vite,
 - **Authentication**: Secure login and user session management powered by Supabase.
 - **Dashboard**: View your library of recipes at a glance.
 - **URL Import**: Create a draft recipe from a webpage URL using recipe metadata first, with optional LLM fallback.
+- **Theme Skins**: Switch between code-authored visual skins, including a `Desktop 95` proof theme with sharp corners, bevels, and CSS-generated texture.
 - **Recipe Viewer**: An elegant, mobile-friendly interface for cooking and reading recipes.
 - **Advanced Recipe Editor**: 
   - Drag-and-drop reordering using `@dnd-kit`.
@@ -21,6 +22,7 @@ src/
 ├── App.jsx / main.jsx       # Application entry point and routing setup
 ├── index.css / App.css      # Global styles and design tokens
 ├── supabaseClient.js        # Supabase client initialization
+├── theme/                   # Theme catalog, runtime provider, and skin tokens
 │
 ├── pages/                   # Full-page routing views
 │   ├── LoginView.jsx        # Authentication view
@@ -29,6 +31,7 @@ src/
 │   └── RecipeEditor.jsx     # Complex creation and editing environment
 │
 ├── components/              # Reusable, interactive UI elements
+│   ├── ThemeSwitcher.jsx    # Theme selector UI
 │   ├── IngredientEditor.jsx # Drag-and-drop ingredient sections
 │   ├── StepEditor.jsx       # Sortable and auto-expanding instruction steps
 │   ├── IngredientList.jsx   # Read-only ingredient display
@@ -37,6 +40,25 @@ src/
 ├── adapters/                # Data transformation layer (Supabase to Frontend)
 └── utils/                   # Generic helper functions
 ```
+
+## Theme System Notes
+
+Themes are code-authored presets defined in `src/theme/themeCatalog.js` and styled through CSS custom properties in `src/theme/themes.css`. The app applies the active skin by setting `data-theme` on the document root through `ThemeProvider`.
+
+Themes can also declare lightweight chrome metadata through `uiChrome`. `Desktop 95` uses this to request a window frame, top tabs, decorative window controls, and chunky scrollbar styling. Non-retro themes keep the regular page frame and bottom navigation.
+
+The theme layer now has two levels of tokens:
+
+- Compatibility tokens such as `--bg-primary`, `--accent-color`, and `--radius-lg`.
+- Component-level skin tokens such as `--skin-control-bg`, `--skin-panel-border`, `--skin-inset-shadow`, `--radius-control`, and `--radius-card`.
+
+Desktop-style chrome uses additional tokens such as `--skin-window-bg`, `--skin-titlebar-bg`, `--skin-window-control-shadow`, `--skin-tab-bg`, and `--skin-scrollbar-thumb-bg`.
+
+Prefer the component-level skin tokens when styling UI surfaces. They support full `background` values, so a theme can use flat colors, gradients, bevels, inset shadows, and generated textures. `Desktop 95` is the current proof theme for this deeper skinning model.
+
+Theme choice is persisted immediately in `localStorage` and synced to Supabase for authenticated users through `public.user_preferences.theme_id`.
+
+For deeper context before continuing theme work, see `planning/theme_handoff.md`.
 
 ## Backend Configuration (Supabase)
 
@@ -75,3 +97,7 @@ This app is designed to be easily deployed to Netlify as a standard Vite single-
 - **Publish directory:** `dist`
 
 Ensure that you add your `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to your Netlify Environment Variables in the site settings. If routing fails upon refresh, you may need a `_redirects` file in your `public` directory containing `/* /index.html 200` to support React Router.
+
+### Future Performance Note
+
+The production build may emit a Vite chunk-size warning when the main JavaScript bundle lands just over the default 500 kB warning threshold. This does not block deployment, but if the bundle keeps growing, consider route-level lazy loading, splitting vendor chunks, or lazy-loading heavier editor-only dependencies such as image compression.

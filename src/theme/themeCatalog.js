@@ -1,5 +1,14 @@
 export const DEFAULT_THEME_ID = 'classic';
 
+/**
+ * uiChrome describes optional layout chrome a theme can request.
+ *
+ * frame: 'page' | 'window'
+ * nav: 'bottom' | 'top-tabs'
+ * controls: 'none' | 'window-buttons'
+ * scrollbars: 'native' | 'chunky'
+ * title/icon: decorative app titlebar content for window chrome.
+ */
 export const THEMES = [
   {
     id: 'classic',
@@ -9,6 +18,14 @@ export const THEMES = [
     assets: {
       loginBackground: '/login_bg.png',
       recipeHero: '/recipe_hero.png'
+    },
+    uiChrome: {
+      frame: 'page',
+      nav: 'bottom',
+      controls: 'none',
+      scrollbars: 'native',
+      title: 'Recipe App',
+      icon: '🍲'
     }
   },
   {
@@ -19,6 +36,14 @@ export const THEMES = [
     assets: {
       loginBackground: '/login_bg.png',
       recipeHero: '/recipe_hero.png'
+    },
+    uiChrome: {
+      frame: 'page',
+      nav: 'bottom',
+      controls: 'none',
+      scrollbars: 'native',
+      title: 'Recipe App',
+      icon: '🍲'
     }
   },
   {
@@ -29,6 +54,14 @@ export const THEMES = [
     assets: {
       loginBackground: '/login_bg.png',
       recipeHero: '/recipe_hero.png'
+    },
+    uiChrome: {
+      frame: 'page',
+      nav: 'bottom',
+      controls: 'none',
+      scrollbars: 'native',
+      title: 'Recipe App',
+      icon: '🍲'
     }
   },
   {
@@ -39,6 +72,14 @@ export const THEMES = [
     assets: {
       loginBackground: '/login_bg.png',
       recipeHero: '/recipe_hero.png'
+    },
+    uiChrome: {
+      frame: 'page',
+      nav: 'bottom',
+      controls: 'none',
+      scrollbars: 'native',
+      title: 'Recipe App',
+      icon: '🍲'
     }
   },
   {
@@ -49,6 +90,14 @@ export const THEMES = [
     assets: {
       loginBackground: '/login_bg.png',
       recipeHero: '/recipe_hero.png'
+    },
+    uiChrome: {
+      frame: 'window',
+      nav: 'top-tabs',
+      controls: 'window-buttons',
+      scrollbars: 'chunky',
+      title: 'Kitchen 95',
+      icon: ''
     }
   }
 ];
@@ -64,4 +113,16 @@ export function normalizeThemeId(themeId) {
 
 export function getThemeById(themeId) {
   return THEME_BY_ID[normalizeThemeId(themeId)];
+}
+
+export function usesWindowChrome(theme) {
+  return theme?.uiChrome?.frame === 'window';
+}
+
+export function usesTopTabs(theme) {
+  return theme?.uiChrome?.nav === 'top-tabs';
+}
+
+export function usesWindowControls(theme) {
+  return theme?.uiChrome?.controls === 'window-buttons';
 }

@@ -68,6 +68,7 @@ export default function RecipeViewer() {
 
   const handleMultiplier = (val) => setMultiplier(val);
   const showScalingWarning = hasUnscaledIngredients(recipe.ingredients, multiplier);
+  const startCookingLabel = activeTheme.id === 'desktop95' ? 'Start Cooking' : 'Step-by-Step Mode';
 
   return (
     <div className="recipe-viewer">
@@ -121,7 +122,7 @@ export default function RecipeViewer() {
                 setCurrentStepIndex(0);
               }}
             >
-              {stepByStepMode ? 'Show All Steps' : 'Step-by-Step Mode'}
+              {stepByStepMode ? 'Show All Steps' : startCookingLabel}
             </button>
           </div>
 

@@ -35,6 +35,9 @@
   --skin-danger-bg: var(--color-danger-bg);
   --skin-input-bg: var(--color-surface-muted);
   --skin-tag-bg: var(--color-surface-muted);
+  --skin-tag-color: var(--color-text);
+  --skin-tag-border: var(--skin-border);
+  --skin-tag-shadow: none;
   --skin-nav-bg: var(--color-surface);
 
   --skin-border: 1px solid var(--color-border);
@@ -51,6 +54,50 @@
   --skin-elevated-shadow: 0 8px 24px rgba(45, 49, 66, 0.12);
   --skin-inset-shadow: none;
   --skin-sticky-shadow: 0 -4px 10px rgba(45, 49, 66, 0.16);
+
+  --skin-window-bg: var(--skin-surface-bg);
+  --skin-window-border: var(--skin-panel-border);
+  --skin-window-shadow: var(--skin-elevated-shadow);
+  --skin-titlebar-bg: var(--skin-primary-bg);
+  --skin-titlebar-color: var(--color-on-primary);
+  --skin-titlebar-height: 44px;
+  --skin-titlebar-padding: 0 var(--spacing-sm);
+  --skin-titlebar-icon-bg: var(--skin-control-bg);
+  --skin-window-control-bg: var(--skin-control-bg);
+  --skin-window-control-border: var(--skin-control-border);
+  --skin-window-control-shadow: var(--skin-control-shadow);
+  --skin-window-control-size: 32px;
+
+  --skin-tab-bg: var(--skin-control-bg);
+  --skin-tab-active-bg: var(--skin-surface-bg);
+  --skin-tab-border: var(--skin-control-border);
+  --skin-tab-active-border: var(--skin-panel-border);
+  --skin-tab-shadow: var(--skin-control-shadow);
+  --skin-tab-active-shadow: var(--skin-surface-shadow);
+  --skin-tab-radius: var(--radius-control);
+  --skin-tab-padding: 0.6rem 1rem;
+  --skin-tab-gap: var(--spacing-xs);
+
+  --skin-scrollbar-size: 14px;
+  --skin-scrollbar-track-bg: var(--skin-muted-bg);
+  --skin-scrollbar-thumb-bg: var(--skin-control-bg);
+  --skin-scrollbar-thumb-border: var(--skin-control-border);
+  --skin-scrollbar-thumb-shadow: var(--skin-control-shadow);
+  --skin-scrollbar-button-bg: var(--skin-control-bg);
+  --skin-scrollbar-button-shadow: var(--skin-control-shadow);
+  --skin-scroll-panel-bg: var(--skin-surface-bg);
+  --skin-scroll-panel-border: var(--skin-panel-border);
+  --skin-scroll-panel-shadow: var(--skin-inset-shadow);
+  --skin-section-header-bg: var(--skin-muted-bg);
+
+  --skin-list-hover-bg: var(--skin-surface-bg);
+  --skin-list-hover-color: var(--color-text);
+  --skin-list-hover-muted-color: var(--color-text-muted);
+  --skin-list-hover-tag-bg: var(--skin-tag-bg);
+  --skin-list-hover-tag-border: var(--skin-tag-border);
+  --skin-list-hover-tag-shadow: var(--skin-tag-shadow);
+  --skin-list-hover-shadow: var(--skin-elevated-shadow);
+  --skin-list-hover-transform: translateY(-4px);
 
   --shadow-subtle: 0 4px 12px rgba(45, 49, 66, 0.08);
   --shadow-elevated: 0 8px 24px rgba(45, 49, 66, 0.12);
@@ -207,6 +254,11 @@
   --skin-input-bg: #FFFFFF;
   --skin-tag-bg:
     linear-gradient(135deg, #E8E8E8, #C8C8C8);
+  --skin-tag-color: #000000;
+  --skin-tag-border: 1px solid #808080;
+  --skin-tag-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #808080;
   --skin-nav-bg:
     linear-gradient(180deg, #D8D8D8, #BEBEBE);
 
@@ -241,8 +293,104 @@
     0 -1px 0 #404040,
     0 -3px 0 #808080;
 
+  --skin-window-bg: #C0C0C0;
+  --skin-window-border: 2px solid #808080;
+  --skin-window-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #000000,
+    3px 3px 0 rgba(0,0,0,0.24);
+  --skin-titlebar-bg:
+    linear-gradient(90deg, #007A7A 0%, #008C8C 45%, #00A0A0 100%);
+  --skin-titlebar-color: #FFFFFF;
+  --skin-titlebar-height: 42px;
+  --skin-titlebar-padding: 0 8px;
+  --skin-titlebar-icon-bg:
+    linear-gradient(135deg, #FFFFFF, #C0C0C0);
+  --skin-window-control-bg:
+    linear-gradient(135deg, #F0F0F0 0%, #D8D8D8 48%, #C0C0C0 100%);
+  --skin-window-control-border: 1px solid #000000;
+  --skin-window-control-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #404040,
+    inset -2px -2px 0 #808080;
+  --skin-window-control-size: 30px;
+
+  --skin-tab-bg:
+    linear-gradient(180deg, #D8D8D8, #BEBEBE);
+  --skin-tab-active-bg: #C0C0C0;
+  --skin-tab-border: 1px solid #808080;
+  --skin-tab-active-border: 1px solid #000000;
+  --skin-tab-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #808080;
+  --skin-tab-active-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px 0 0 #404040;
+  --skin-tab-radius: 0;
+  --skin-tab-padding: 0.7rem 1.1rem;
+  --skin-tab-gap: 0;
+
+  --skin-scrollbar-size: 18px;
+  --skin-scrollbar-track-bg:
+    linear-gradient(90deg, #D0D0D0, #B8B8B8);
+  --skin-scrollbar-thumb-bg:
+    linear-gradient(135deg, #F0F0F0 0%, #D8D8D8 48%, #C0C0C0 100%);
+  --skin-scrollbar-thumb-border: 1px solid #808080;
+  --skin-scrollbar-thumb-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    inset -1px -1px 0 #404040;
+  --skin-scrollbar-button-bg: var(--skin-scrollbar-thumb-bg);
+  --skin-scrollbar-button-shadow: var(--skin-scrollbar-thumb-shadow);
+  --skin-scroll-panel-bg: #FFFFFF;
+  --skin-scroll-panel-border: 1px solid #808080;
+  --skin-scroll-panel-shadow:
+    inset 1px 1px 0 #404040,
+    inset -1px -1px 0 #FFFFFF;
+
+  --skin-list-hover-bg:
+    linear-gradient(180deg, #0000A8 0%, #000080 100%);
+  --skin-list-hover-color: #FFFFFF;
+  --skin-list-hover-muted-color: #FFFFFF;
+  --skin-list-hover-tag-bg: transparent;
+  --skin-list-hover-tag-border: 1px solid #FFFFFF;
+  --skin-list-hover-tag-shadow: none;
+  --skin-list-hover-shadow: var(--skin-surface-shadow);
+  --skin-list-hover-transform: none;
+
   --shadow-subtle: var(--skin-surface-shadow);
   --shadow-elevated: var(--skin-elevated-shadow);
   --shadow-focus: var(--skin-elevated-shadow);
   --shadow-sticky: var(--skin-sticky-shadow);
+}
+
+:root[data-theme='desktop95'] * {
+  scrollbar-color: #C0C0C0 #D0D0D0;
+  scrollbar-width: auto;
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar {
+  width: var(--skin-scrollbar-size);
+  height: var(--skin-scrollbar-size);
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar-track {
+  background: var(--skin-scrollbar-track-bg);
+  border-left: 1px solid #808080;
+  box-shadow: var(--skin-inset-shadow);
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar-thumb {
+  background: var(--skin-scrollbar-thumb-bg);
+  border: var(--skin-scrollbar-thumb-border);
+  box-shadow: var(--skin-scrollbar-thumb-shadow);
+  min-height: 32px;
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar-button {
+  display: block;
+  width: var(--skin-scrollbar-size);
+  height: var(--skin-scrollbar-size);
+  background: var(--skin-scrollbar-button-bg);
+  border: var(--skin-scrollbar-thumb-border);
+  box-shadow: var(--skin-scrollbar-button-shadow);
 }

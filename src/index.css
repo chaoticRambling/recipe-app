@@ -55,6 +55,16 @@ body {
   text-align: center;
 }
 
+:root[data-theme='desktop95'] {
+  -webkit-font-smoothing: none;
+  text-rendering: geometricPrecision;
+}
+
+:root[data-theme='desktop95'] #root {
+  padding: clamp(8px, 1.8vw, 18px);
+  text-align: left;
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
@@ -71,6 +81,14 @@ h1, h2, h3, h4 {
   color: var(--text-primary);
   margin-bottom: var(--spacing-md);
   font-family: var(--font-serif);
+}
+
+:root[data-theme='desktop95'] h1,
+:root[data-theme='desktop95'] h2,
+:root[data-theme='desktop95'] h3,
+:root[data-theme='desktop95'] h4 {
+  font-weight: 900;
+  letter-spacing: 0;
 }
 
 button {
@@ -105,6 +123,23 @@ button.active-multiplier {
 
 button.active-multiplier:hover {
   background: var(--skin-primary-hover-bg);
+}
+
+:root[data-theme='desktop95'] input,
+:root[data-theme='desktop95'] select,
+:root[data-theme='desktop95'] textarea {
+  border-radius: 0;
+  background: #FFFFFF;
+  border: var(--skin-input-border);
+  box-shadow: var(--skin-inset-shadow);
+}
+
+:root[data-theme='desktop95'] button:focus-visible,
+:root[data-theme='desktop95'] input:focus-visible,
+:root[data-theme='desktop95'] select:focus-visible,
+:root[data-theme='desktop95'] textarea:focus-visible {
+  outline: 1px dotted #000000;
+  outline-offset: -4px;
 }
 
 /* Base styles to be extended by components */

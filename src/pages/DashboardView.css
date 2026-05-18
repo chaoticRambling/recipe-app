@@ -52,6 +52,42 @@
   width: 100%;
 }
 
+.desktop95-welcome {
+  display: none;
+}
+
+.top-tab-nav {
+  display: flex;
+  gap: var(--skin-tab-gap);
+  align-items: flex-end;
+  border-bottom: var(--skin-tab-active-border);
+  margin-bottom: calc(-1 * var(--spacing-sm));
+  overflow-x: auto;
+  padding-top: var(--spacing-xs);
+}
+
+.top-tab {
+  background: var(--skin-tab-bg);
+  border: var(--skin-tab-border);
+  border-bottom: none;
+  border-radius: var(--skin-tab-radius) var(--skin-tab-radius) 0 0;
+  box-shadow: var(--skin-tab-shadow);
+  color: var(--text-primary);
+  padding: var(--skin-tab-padding);
+  min-width: 130px;
+  white-space: nowrap;
+}
+
+.top-tab.active {
+  background: var(--skin-tab-active-bg);
+  border: var(--skin-tab-active-border);
+  border-bottom-color: transparent;
+  box-shadow: var(--skin-tab-active-shadow);
+  color: var(--text-primary);
+  position: relative;
+  z-index: 1;
+}
+
 .import-panel {
   background: var(--skin-surface-bg);
   border: var(--skin-panel-border);
@@ -183,6 +219,201 @@
   padding-bottom: 80px;
 }
 
+:root[data-theme='desktop95'] .dashboard-view {
+  gap: var(--spacing-sm);
+  max-width: none;
+  padding-bottom: 0;
+}
+
+:root[data-theme='desktop95'] .dashboard-main {
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  max-height: none;
+  overflow: visible;
+  padding: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .dashboard-header {
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  margin-bottom: 0;
+  padding: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .header-content h1 {
+  font-size: 1.35rem;
+  margin-bottom: 0;
+}
+
+:root[data-theme='desktop95'] .header-content h1::before {
+  content: '95';
+  display: inline-grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  margin-right: var(--spacing-sm);
+  background: var(--skin-titlebar-icon-bg);
+  border: var(--skin-control-border);
+  box-shadow: var(--skin-control-shadow);
+  font-size: 0.85rem;
+  vertical-align: -2px;
+}
+
+:root[data-theme='desktop95'] .header-actions {
+  gap: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .logout-btn {
+  background: var(--skin-control-bg);
+  color: var(--text-primary);
+}
+
+:root[data-theme='desktop95'] .new-recipe-btn,
+:root[data-theme='desktop95'] .import-controls button {
+  color: #000000;
+  background: var(--skin-control-bg);
+  border: var(--skin-control-border);
+  box-shadow: var(--skin-control-shadow);
+}
+
+:root[data-theme='desktop95'] .new-recipe-btn:hover,
+:root[data-theme='desktop95'] .import-controls button:hover {
+  background: var(--skin-control-hover-bg);
+}
+
+:root[data-theme='desktop95'] .top-tab-nav {
+  border-bottom: 2px solid #808080;
+  margin-bottom: -2px;
+  padding-left: var(--spacing-sm);
+  padding-top: var(--spacing-xs);
+}
+
+:root[data-theme='desktop95'] .top-tab {
+  font-size: 0.95rem;
+  font-weight: 800;
+  min-width: 136px;
+  padding: 0.55rem 0.8rem;
+}
+
+:root[data-theme='desktop95'] .desktop95-welcome {
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr) auto;
+  gap: var(--spacing-md);
+  align-items: center;
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  padding: var(--spacing-sm);
+  margin-bottom: var(--spacing-sm);
+}
+
+.desktop95-chef-avatar {
+  width: 54px;
+  height: 54px;
+  background: #FFFFFF;
+  border: 2px solid #000000;
+  box-shadow:
+    inset 2px 2px 0 #FFFFFF,
+    inset -2px -2px 0 #404040;
+  overflow: hidden;
+}
+
+.desktop95-chef-avatar img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  object-fit: cover;
+}
+
+.desktop95-welcome-copy {
+  min-width: 0;
+}
+
+.desktop95-kicker {
+  color: #000080;
+  font-size: 0.8rem;
+  font-weight: 900;
+  margin: 0 0 2px;
+  text-transform: uppercase;
+}
+
+.desktop95-welcome-copy h2 {
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.desktop95-welcome-copy p {
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.desktop95-status-tile {
+  display: grid;
+  min-width: 72px;
+  min-height: 54px;
+  place-items: center;
+  background: #FFFFFF;
+  border: var(--skin-scroll-panel-border);
+  box-shadow: var(--skin-scroll-panel-shadow);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  text-align: center;
+}
+
+.desktop95-status-tile span {
+  color: #000080;
+  font-size: 1.25rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.desktop95-status-tile small {
+  color: var(--text-primary);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+:root[data-theme='desktop95'] .import-panel {
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .import-copy h2 {
+  color: #000080;
+  font-size: 0.95rem;
+  margin-bottom: 0;
+}
+
+:root[data-theme='desktop95'] .import-copy p {
+  display: none;
+}
+
+:root[data-theme='desktop95'] .import-form {
+  grid-template-columns: minmax(128px, 0.32fr) minmax(220px, 1fr);
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+:root[data-theme='desktop95'] .import-controls {
+  gap: var(--spacing-xs);
+}
+
+:root[data-theme='desktop95'] .import-controls input {
+  padding: 0.57rem 0.65rem;
+}
+
+:root[data-theme='desktop95'] .import-progress-track {
+  border-radius: 0;
+  box-shadow: var(--skin-inset-shadow);
+  height: 16px;
+}
+
+:root[data-theme='desktop95'] .import-progress-fill {
+  border-radius: 0;
+}
+
 .bottom-nav {
   position: fixed;
   bottom: 0;
@@ -227,5 +458,18 @@
     width: 100%;
     flex-wrap: wrap;
     justify-content: flex-end;
+  }
+
+  :root[data-theme='desktop95'] .desktop95-welcome {
+    grid-template-columns: 54px minmax(0, 1fr);
+  }
+
+  :root[data-theme='desktop95'] .desktop95-status-tile {
+    grid-column: 1 / -1;
+    min-height: 38px;
+  }
+
+  :root[data-theme='desktop95'] .import-form {
+    grid-template-columns: 1fr;
   }
 }

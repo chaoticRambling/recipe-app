@@ -39,6 +39,33 @@
   border-color: var(--accent-color);
 }
 
+:root[data-theme='desktop95'] .theme-switcher {
+  gap: var(--spacing-xs);
+}
+
+:root[data-theme='desktop95'] .theme-swatch {
+  border-radius: 0;
+  box-shadow:
+    inset 1px 1px 0 rgba(255,255,255,0.75),
+    inset -1px -1px 0 rgba(0,0,0,0.35);
+  height: 13px;
+  width: 13px;
+}
+
+:root[data-theme='desktop95'] .theme-swatch + .theme-swatch {
+  margin-left: -2px;
+}
+
+:root[data-theme='desktop95'] .theme-select {
+  background: #FFFFFF;
+  border-radius: 0;
+  box-shadow: var(--skin-inset-shadow);
+  font-size: 0.9rem;
+  font-weight: 800;
+  min-width: 142px;
+  padding: 0.48rem 1.8rem 0.48rem 0.55rem;
+}
+
 @media (max-width: 640px) {
   .theme-switcher {
     width: 100%;

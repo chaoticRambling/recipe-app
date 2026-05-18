@@ -5,6 +5,7 @@ import DashboardView from './pages/DashboardView';
 import RecipeViewer from './pages/RecipeViewer';
 import RecipeEditor from './pages/RecipeEditor';
 import LoginView from './pages/LoginView';
+import AppChrome from './components/AppChrome';
 import ThemeProvider from './theme/ThemeProvider';
 import './App.css';
 
@@ -32,24 +33,26 @@ function App() {
       {loading ? (
         <div className="loader">Loading App...</div>
       ) : (
-        <BrowserRouter>
-          <Routes>
-            <Route 
-              path="/" 
-              element={session ? <DashboardView session={session} /> : <Navigate to="/login" replace />} 
-            />
-            <Route path="/login" element={<LoginView />} />
-            <Route path="/recipe/:id" element={<RecipeViewer />} />
-            <Route 
-              path="/editor" 
-              element={session ? <RecipeEditor /> : <Navigate to="/login" replace />} 
-            />
-            <Route 
-              path="/editor/:id" 
-              element={session ? <RecipeEditor /> : <Navigate to="/login" replace />} 
-            />
-          </Routes>
-        </BrowserRouter>
+        <AppChrome>
+          <BrowserRouter>
+            <Routes>
+              <Route 
+                path="/" 
+                element={session ? <DashboardView session={session} /> : <Navigate to="/login" replace />} 
+              />
+              <Route path="/login" element={<LoginView />} />
+              <Route path="/recipe/:id" element={<RecipeViewer />} />
+              <Route 
+                path="/editor" 
+                element={session ? <RecipeEditor /> : <Navigate to="/login" replace />} 
+              />
+              <Route 
+                path="/editor/:id" 
+                element={session ? <RecipeEditor /> : <Navigate to="/login" replace />} 
+              />
+            </Routes>
+          </BrowserRouter>
+        </AppChrome>
       )}
     </ThemeProvider>
   );

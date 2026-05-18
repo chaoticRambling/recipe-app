@@ -27,15 +27,38 @@
   border: var(--skin-panel-border);
   border-radius: var(--radius-card);
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   overflow: hidden;
   box-shadow: var(--skin-surface-shadow);
   padding: 0;
 }
 
 .recipe-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--skin-elevated-shadow);
+  background: var(--skin-list-hover-bg);
+  color: var(--skin-list-hover-color);
+  transform: var(--skin-list-hover-transform);
+  box-shadow: var(--skin-list-hover-shadow);
+}
+
+.recipe-card:hover .cell-title {
+  color: var(--skin-list-hover-color);
+}
+
+.recipe-card:hover .pill-draft,
+.recipe-card:hover .pill-cuisine,
+.recipe-card:hover .pill-time {
+  background: var(--skin-list-hover-tag-bg);
+  border: var(--skin-list-hover-tag-border);
+  box-shadow: var(--skin-list-hover-tag-shadow);
+}
+
+.recipe-card:hover .pill-draft,
+.recipe-card:hover .pill-cuisine {
+  color: var(--skin-list-hover-color);
+}
+
+.recipe-card:hover .pill-time {
+  color: var(--skin-list-hover-muted-color);
 }
 
 .recipe-card-image {
@@ -77,8 +100,9 @@
 .pill-draft {
   display: inline-block;
   background: var(--skin-tag-bg);
-  color: var(--text-primary);
-  border: var(--skin-border);
+  color: var(--skin-tag-color);
+  border: var(--skin-tag-border);
+  box-shadow: var(--skin-tag-shadow);
   padding: 0.2em 0.6em;
   border-radius: var(--radius-pill);
   font-size: 0.85rem;
@@ -89,8 +113,10 @@
 
 .pill-cuisine {
   display: inline-block;
-  background: var(--accent-bg);
-  color: var(--accent-color);
+  background: var(--skin-tag-bg);
+  color: var(--skin-tag-color);
+  border: var(--skin-tag-border);
+  box-shadow: var(--skin-tag-shadow);
   padding: 0.2em 0.6em;
   border-radius: var(--radius-pill);
   font-size: 0.85rem;
@@ -100,9 +126,175 @@
 .pill-time {
   display: inline-block;
   background: var(--skin-tag-bg);
-  color: var(--text-secondary);
+  color: var(--skin-tag-color);
+  border: var(--skin-tag-border);
+  box-shadow: var(--skin-tag-shadow);
   padding: 0.2em 0.6em;
   border-radius: var(--radius-pill);
   font-size: 0.85rem;
   font-weight: 500;
+}
+
+:root[data-theme='desktop95'] .empty-state {
+  background: #FFFFFF;
+  border: var(--skin-scroll-panel-border);
+  border-radius: 0;
+  box-shadow: var(--skin-scroll-panel-shadow);
+  color: var(--text-primary);
+  font-style: normal;
+  padding: var(--spacing-lg);
+}
+
+:root[data-theme='desktop95'] .recipe-list-container {
+  display: block;
+  background: #FFFFFF;
+  border: var(--skin-scroll-panel-border);
+  box-shadow: var(--skin-scroll-panel-shadow);
+  max-height: min(46vh, 430px);
+  overflow: auto;
+}
+
+:root[data-theme='desktop95'] .recipe-list-header {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 116px 92px 34px;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: var(--skin-muted-bg);
+  border-bottom: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #FFFFFF;
+  color: #000080;
+  font-size: 0.82rem;
+  font-weight: 900;
+  padding: 6px 8px 6px 92px;
+}
+
+:root[data-theme='desktop95'] .recipe-card {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr) 32px;
+  gap: var(--spacing-sm);
+  align-items: center;
+  min-height: 78px;
+  background: #FFFFFF;
+  border: 0;
+  border-bottom: 1px solid #A0A0A0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--text-primary);
+  padding: 6px 7px;
+  transition: none;
+}
+
+:root[data-theme='desktop95'] .recipe-card::after {
+  content: '>';
+  display: inline-grid;
+  place-items: center;
+  width: 28px;
+  height: 32px;
+  justify-self: end;
+  background: var(--skin-control-bg);
+  border: var(--skin-control-border);
+  box-shadow: var(--skin-control-shadow);
+  color: #000000;
+  font-weight: 900;
+}
+
+:root[data-theme='desktop95'] .recipe-card:hover {
+  background: var(--skin-list-hover-bg);
+  color: var(--skin-list-hover-color);
+}
+
+:root[data-theme='desktop95'] .recipe-card:hover .pill-draft,
+:root[data-theme='desktop95'] .recipe-card:hover .pill-cuisine,
+:root[data-theme='desktop95'] .recipe-card:hover .pill-time {
+  color: var(--skin-list-hover-color);
+}
+
+:root[data-theme='desktop95'] .recipe-card:hover::after {
+  background: var(--skin-control-hover-bg);
+}
+
+:root[data-theme='desktop95'] .recipe-card-image {
+  width: 76px;
+  height: 62px;
+  border: 1px solid #808080;
+  box-shadow:
+    inset 1px 1px 0 #FFFFFF,
+    1px 1px 0 #404040;
+}
+
+:root[data-theme='desktop95'] .recipe-card-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(136px, 0.55fr);
+  gap: var(--spacing-sm);
+  align-items: center;
+  min-width: 0;
+  padding: 0;
+}
+
+:root[data-theme='desktop95'] .cell-title {
+  font-size: 1rem;
+  font-weight: 900;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:root[data-theme='desktop95'] .recipe-card-footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--spacing-xs);
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+:root[data-theme='desktop95'] .cell-cuisine {
+  gap: var(--spacing-xs);
+  min-width: 0;
+  overflow: hidden;
+}
+
+:root[data-theme='desktop95'] .pill-draft,
+:root[data-theme='desktop95'] .pill-cuisine,
+:root[data-theme='desktop95'] .pill-time {
+  border-radius: 0;
+  font-size: 0.75rem;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0.18em 0.45em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:root[data-theme='desktop95'] .pill-draft {
+  color: #000080;
+}
+
+@media (max-width: 640px) {
+  :root[data-theme='desktop95'] .recipe-list-container {
+    max-height: 48vh;
+  }
+
+  :root[data-theme='desktop95'] .recipe-list-header {
+    display: none;
+  }
+
+  :root[data-theme='desktop95'] .recipe-card {
+    grid-template-columns: 70px minmax(0, 1fr) 30px;
+  }
+
+  :root[data-theme='desktop95'] .recipe-card-image {
+    width: 70px;
+    height: 58px;
+  }
+
+  :root[data-theme='desktop95'] .recipe-card-content {
+    grid-template-columns: 1fr;
+    gap: 3px;
+  }
 }

@@ -62,3 +62,51 @@
   color: var(--text-secondary);
   font-size: 1.1rem;
 }
+
+:root[data-theme='desktop95'] .ingredient-list {
+  background: #FFFFFF;
+  border: var(--skin-scroll-panel-border);
+  border-radius: 0;
+  box-shadow: var(--skin-scroll-panel-shadow);
+  margin-bottom: 0;
+  max-height: 320px;
+  overflow: auto;
+  padding: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .ingredient-section {
+  margin-bottom: var(--spacing-md);
+}
+
+:root[data-theme='desktop95'] .section-title {
+  background: var(--skin-section-header-bg);
+  border: 1px solid #A0A0A0;
+  box-shadow: inset 1px 1px 0 #FFFFFF;
+  color: #000080;
+  font-size: 0.88rem;
+  letter-spacing: 0;
+  margin-bottom: var(--spacing-xs);
+  padding: 4px 6px;
+}
+
+:root[data-theme='desktop95'] .ingredient-item {
+  align-items: center;
+  border-bottom: 1px solid #D0D0D0;
+  min-height: 28px;
+  padding: 4px 2px;
+}
+
+:root[data-theme='desktop95'] .ingredient-amount {
+  min-width: 74px;
+  margin-right: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .ingredient-name {
+  color: var(--text-primary);
+  font-size: 0.95rem;
+}
+
+:root[data-theme='desktop95'] .ingredient-item-unscaled {
+  border-left: 3px solid #800000;
+  border-radius: 0;
+}
