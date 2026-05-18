@@ -533,6 +533,43 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
   width: 100%;
 }
 
+/* Header & Action Bar Alignment */
+:root[data-theme='desktop95'] .editor-header {
+  align-items: center;
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  margin-bottom: 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-bottom: var(--skin-panel-border);
+}
+
+:root[data-theme='desktop95'] .editor-header h1 {
+  color: #000000;
+  font-size: 1.35rem;
+  line-height: 1.15;
+  margin: 0;
+  min-width: 0;
+  font-family: var(--font-sans);
+  font-weight: 900;
+}
+
+/* Panes and Spacing Alignment */
+:root[data-theme='desktop95'] .editor-left-pane,
+:root[data-theme='desktop95'] .editor-right-pane {
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: 0;
+  margin: 0;
+  padding: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .editor-layout {
+  gap: var(--spacing-sm);
+}
+
+/* Import Panel */
 :root[data-theme='desktop95'] .editor-import-panel {
   padding: var(--spacing-sm);
 }
@@ -541,6 +578,8 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
   color: #000080;
   font-size: 0.95rem;
   margin-bottom: 0;
+  font-family: var(--font-sans);
+  font-weight: 900;
 }
 
 :root[data-theme='desktop95'] .editor-import-copy p {
@@ -559,17 +598,146 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 
 :root[data-theme='desktop95'] .editor-import-controls input[type="url"] {
   padding: 0.57rem 0.65rem;
+  border-radius: 0;
 }
 
+/* Group Sections & Accordion Panels */
+:root[data-theme='desktop95'] .editor-section {
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: 0;
+  margin-bottom: var(--spacing-sm);
+  padding: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .accordion-header {
+  background: var(--skin-section-header-bg);
+  border: 1px solid #A0A0A0;
+  box-shadow: inset 1px 1px 0 #FFFFFF;
+  margin-bottom: var(--spacing-sm);
+  padding: 5px 6px;
+  cursor: pointer;
+}
+
+:root[data-theme='desktop95'] .accordion-header h2 {
+  color: #000080;
+  font-size: 0.95rem;
+  font-family: var(--font-sans);
+  font-weight: 900;
+  margin: 0;
+}
+
+:root[data-theme='desktop95'] .accordion-icon {
+  color: #000080;
+  font-size: 0.95rem;
+  font-weight: bold;
+}
+
+:root[data-theme='desktop95'] .accordion-content {
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  :root[data-theme='desktop95'] .accordion-header {
+    cursor: default;
+    border-bottom: 1px solid #A0A0A0;
+  }
+}
+
+/* Row elements framing and bevels */
+:root[data-theme='desktop95'] .editor-item-row,
+:root[data-theme='desktop95'] .editor-step-row {
+  border-radius: 0;
+  box-shadow: none;
+  background: #FFFFFF;
+  border: 1px solid #A0A0A0;
+  padding: var(--spacing-xs);
+  margin-bottom: var(--spacing-xs);
+}
+
+/* Labels and toggles solid black color */
+:root[data-theme='desktop95'] .form-group label {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: #000000;
+  margin-bottom: 2px;
+}
+
+:root[data-theme='desktop95'] .help-text {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  color: #505050;
+  margin-bottom: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .draft-toggle {
+  color: #000000;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+}
+
+/* Standard Gray Button Bevels & Click Transforms */
+:root[data-theme='desktop95'] .save-btn,
+:root[data-theme='desktop95'] .upload-photo-btn,
+:root[data-theme='desktop95'] .delete-recipe-btn,
+:root[data-theme='desktop95'] .add-row-btn,
+:root[data-theme='desktop95'] .add-section-btn,
+:root[data-theme='desktop95'] .remove-btn,
+:root[data-theme='desktop95'] .row-remove,
 :root[data-theme='desktop95'] .editor-import-controls button {
   color: #000000;
   background: var(--skin-control-bg);
   border: var(--skin-control-border);
   box-shadow: var(--skin-control-shadow);
+  border-radius: 0;
+  font-weight: 800;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  padding: 0.4em 1em;
 }
 
+:root[data-theme='desktop95'] .save-btn:hover,
+:root[data-theme='desktop95'] .upload-photo-btn:hover,
+:root[data-theme='desktop95'] .delete-recipe-btn:hover,
+:root[data-theme='desktop95'] .add-row-btn:hover,
+:root[data-theme='desktop95'] .add-section-btn:hover,
+:root[data-theme='desktop95'] .remove-btn:hover,
+:root[data-theme='desktop95'] .row-remove:hover,
 :root[data-theme='desktop95'] .editor-import-controls button:hover {
   background: var(--skin-control-hover-bg);
+  color: #000000;
+}
+
+:root[data-theme='desktop95'] .save-btn:active,
+:root[data-theme='desktop95'] .upload-photo-btn:active,
+:root[data-theme='desktop95'] .delete-recipe-btn:active,
+:root[data-theme='desktop95'] .add-row-btn:active,
+:root[data-theme='desktop95'] .add-section-btn:active,
+:root[data-theme='desktop95'] .remove-btn:active,
+:root[data-theme='desktop95'] .row-remove:active,
+:root[data-theme='desktop95'] .editor-import-controls button:active {
+  background: var(--skin-control-active-bg);
+  box-shadow: var(--skin-control-active-shadow);
+  transform: var(--skin-control-active-transform);
+}
+
+:root[data-theme='desktop95'] .delete-recipe-btn {
+  color: #800000; /* retro dark red */
+}
+
+:root[data-theme='desktop95'] .delete-recipe-btn:hover {
+  color: #800000;
+}
+
+:root[data-theme='desktop95'] .remove-btn,
+:root[data-theme='desktop95'] .row-remove {
+  padding: 0.2em 0.5em;
+}
+
+:root[data-theme='desktop95'] .upload-photo-action,
+:root[data-theme='desktop95'] .delete-recipe-action {
+  margin-top: var(--spacing-md);
 }
 
 :root[data-theme='desktop95'] .editor-import-progress-track {
@@ -580,6 +748,14 @@ input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:foc
 
 :root[data-theme='desktop95'] .editor-import-progress-fill {
   border-radius: 0;
+}
+
+/* Mobile Sticky Bar Override */
+:root[data-theme='desktop95'] .mobile-sticky-action-bar {
+  padding: var(--spacing-sm);
+  background: var(--skin-nav-bg);
+  border-top: var(--skin-border);
+  box-shadow: var(--skin-sticky-shadow);
 }
 
 @media (max-width: 640px) {

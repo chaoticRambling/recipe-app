@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { supabase } from './supabaseClient';
 import DashboardView from './pages/DashboardView';
 import RecipeViewer from './pages/RecipeViewer';
-import RecipeEditor from './pages/RecipeEditor';
 import LoginView from './pages/LoginView';
 import AppChrome from './components/AppChrome';
 import ThemeProvider from './theme/ThemeProvider';
+
+const RecipeEditor = lazy(() => import('./pages/RecipeEditor'));
 import './App.css';
 
 function App() {
@@ -44,11 +45,23 @@ function App() {
               <Route path="/recipe/:id" element={<RecipeViewer />} />
               <Route 
                 path="/editor" 
-                element={session ? <RecipeEditor /> : <Navigate to="/login" replace />} 
+                element={
+                  session ? (
+                    <Suspense fallback={<div className="loader">Loading editor...</div>}>
+                      <RecipeEditor />
+                    </Suspense>
+                  ) : <Navigate to="/login" replace />
+                } 
               />
               <Route 
                 path="/editor/:id" 
-                element={session ? <RecipeEditor /> : <Navigate to="/login" replace />} 
+                element={
+                  session ? (
+                    <Suspense fallback={<div className="loader">Loading editor...</div>}>
+                      <RecipeEditor />
+                    </Suspense>
+                  ) : <Navigate to="/login" replace />
+                } 
               />
             </Routes>
           </BrowserRouter>

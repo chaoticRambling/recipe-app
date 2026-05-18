@@ -23,6 +23,7 @@ export default function Desktop95ScrollArea({ children, className = '', contentC
     });
   }, []);
 
+  // Mount/Unmount effect: Register observer and resize listener once
   useEffect(() => {
     updateScrollMetrics();
 
@@ -40,6 +41,11 @@ export default function Desktop95ScrollArea({ children, className = '', contentC
       resizeObserver?.disconnect();
       window.removeEventListener('resize', updateScrollMetrics);
     };
+  }, [updateScrollMetrics]);
+
+  // Children update effect: Re-run metrics only when children render/change
+  useEffect(() => {
+    updateScrollMetrics();
   }, [children, updateScrollMetrics]);
 
   const maxScrollTop = Math.max(scrollMetrics.scrollHeight - scrollMetrics.clientHeight, 0);

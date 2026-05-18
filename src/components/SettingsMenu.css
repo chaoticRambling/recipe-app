@@ -38,7 +38,7 @@
   background: var(--skin-surface-bg);
   border: var(--skin-panel-border);
   border-radius: var(--radius-panel);
-  box-shadow: var(--shadow-elevated);
+  box-shadow: var(--skin-elevated-shadow);
   text-align: left;
   z-index: 200;
 }
