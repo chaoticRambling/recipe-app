@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipe, createRecipe, updateRecipe, uploadRecipeImage, deleteRecipe, deleteRecipeImage } from '../adapters/database';
+import { importRecipeFromUrl } from '../adapters/importRecipe';
 import imageCompression from 'browser-image-compression';
 import IngredientEditor from '../components/IngredientEditor';
 import StepEditor from '../components/StepEditor';
@@ -21,6 +22,49 @@ const AccordionSection = ({ title, isOpen, onToggle, children, className }) => (
 const handleAutoResize = (e) => {
   e.target.style.height = 'auto';
   e.target.style.height = e.target.scrollHeight + 'px';
+};
+
+const hasText = (value) => String(value ?? '').trim().length > 0;
+
+const hasIngredientContent = (sections = []) => (
+  sections.some((section, index) => {
+    const sectionName = String(section.section_name || '').trim();
+    const hasCustomSectionName = sectionName && (index !== 0 || sectionName !== 'Main');
+    const hasItems = (section.items || []).some(item => (
+      hasText(item.amount_text) ||
+      hasText(item.amount) ||
+      hasText(item.unit) ||
+      hasText(item.name) ||
+      hasText(item.original_text)
+    ));
+
+    return hasCustomSectionName || hasItems;
+  })
+);
+
+const hasStepContent = (steps = []) => (
+  steps.some(step => hasText(step.text) || hasText(step.image_url))
+);
+
+const buildImportedDraft = (recipe, sourceUrl) => {
+  const importedRecipe = recipe || {};
+  const now = new Date().toISOString();
+
+  return {
+    title: importedRecipe.title || 'Imported Recipe',
+    prep_time_minutes: Number(importedRecipe.prep_time_minutes) || 0,
+    cuisine_type: importedRecipe.cuisine_type || '',
+    notes: importedRecipe.notes || '',
+    ingredients: importedRecipe.ingredients || [{ section_name: 'Main', items: [] }],
+    steps: importedRecipe.steps || [],
+    draft_ingredients: importedRecipe.draft_ingredients || '',
+    draft_steps: importedRecipe.draft_steps || '',
+    is_draft: true,
+    image_url: importedRecipe.image_url || null,
+    source_url: sourceUrl,
+    created_at: now,
+    updated_at: now
+  };
 };
 
 export default function RecipeEditor() {
@@ -49,10 +93,17 @@ export default function RecipeEditor() {
   const fileInputRef = useRef(null);
 
   const [isSaving, setIsSaving] = useState(false);
+  const [importUrl, setImportUrl] = useState('');
+  const [importError, setImportError] = useState('');
+  const [isImporting, setIsImporting] = useState(false);
+  const [importProgress, setImportProgress] = useState(0);
+  const [importStatus, setImportStatus] = useState('');
 
   useEffect(() => {
     if (id) {
       setIsLoading(true);
+      setSelectedImageFile(null);
+      setLocalPreviewUrl(null);
       getRecipe(id).then(data => {
         if (data) {
           setTitle(data.title || '');
@@ -70,6 +121,83 @@ export default function RecipeEditor() {
       });
     }
   }, [id]);
+
+  useEffect(() => {
+    if (!isImporting) return undefined;
+
+    const timer = window.setInterval(() => {
+      setImportProgress(prev => {
+        if (prev < 35) return prev + 5;
+        if (prev < 70) return prev + 3;
+        if (prev < 88) return prev + 1;
+        return prev;
+      });
+    }, 700);
+
+    return () => window.clearInterval(timer);
+  }, [isImporting]);
+
+  const hasManualRecipeInput = () => (
+    hasText(title) ||
+    hasText(prepTime) ||
+    hasText(cuisine) ||
+    hasText(notes) ||
+    hasText(draftIngredients) ||
+    hasText(draftSteps) ||
+    hasIngredientContent(sections) ||
+    hasStepContent(steps) ||
+    Boolean(selectedImageFile)
+  );
+
+  const handleUrlImport = async (event) => {
+    event.preventDefault();
+
+    const trimmedUrl = importUrl.trim();
+    if (!trimmedUrl) {
+      setImportError('Enter a recipe URL to import.');
+      return;
+    }
+
+    try {
+      new URL(trimmedUrl);
+    } catch {
+      setImportError('Enter a full URL, including https://.');
+      return;
+    }
+
+    if (hasManualRecipeInput()) {
+      const shouldContinue = window.confirm(
+        'Importing from a URL will create and open a separate draft. Unsaved edits on this page will be left behind. Continue?'
+      );
+
+      if (!shouldContinue) return;
+    }
+
+    setImportError('');
+    setIsImporting(true);
+    setImportProgress(8);
+    setImportStatus('Fetching the recipe page...');
+
+    try {
+      const { recipe } = await importRecipeFromUrl(trimmedUrl);
+      setImportProgress(90);
+      setImportStatus('Creating draft recipe...');
+
+      const savedRecipe = await createRecipe(buildImportedDraft(recipe, trimmedUrl));
+      setImportProgress(100);
+      setImportStatus('Draft ready. Opening editor...');
+      setImportUrl('');
+      navigate(`/editor/${savedRecipe.id}`);
+    } catch (error) {
+      setImportError(error.message || 'Recipe import failed.');
+    } finally {
+      setIsImporting(false);
+      window.setTimeout(() => {
+        setImportProgress(0);
+        setImportStatus('');
+      }, 900);
+    }
+  };
 
   const handleImageSelect = async (e) => {
     const file = e.target.files[0];
@@ -169,11 +297,59 @@ export default function RecipeEditor() {
             <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
             Save as Draft
           </label>
-          <button type="submit" className="save-btn" disabled={isSaving}>
+          <button type="submit" className="save-btn" disabled={isSaving || isImporting}>
             {isSaving ? 'Saving...' : 'Save Recipe'}
           </button>
         </div>
       </header>
+
+      {!id && (
+        <section className="editor-import-panel" aria-labelledby="editor-import-title">
+          <div className="editor-import-form">
+            <div className="editor-import-copy">
+              <h2 id="editor-import-title">Import From URL</h2>
+              <p>Create a draft recipe from a webpage, then review it in the editor.</p>
+            </div>
+            <div className="editor-import-controls">
+              <input
+                type="url"
+                value={importUrl}
+                onChange={(event) => setImportUrl(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    handleUrlImport(event);
+                  }
+                }}
+                placeholder="https://example.com/recipe"
+                disabled={isImporting}
+                aria-label="Recipe URL"
+              />
+              <button type="button" onClick={handleUrlImport} disabled={isImporting}>
+                {isImporting ? 'Importing...' : 'Import'}
+              </button>
+            </div>
+          </div>
+
+          {importError && (
+            <p className="editor-import-message editor-import-error">{importError}</p>
+          )}
+
+          {(isImporting || importProgress > 0) && (
+            <div className="editor-import-progress" role="status" aria-live="polite">
+              <div className="editor-import-progress-row">
+                <span>{importStatus || 'Importing recipe...'}</span>
+                <span>{Math.round(importProgress)}%</span>
+              </div>
+              <div className="editor-import-progress-track" aria-hidden="true">
+                <div
+                  className="editor-import-progress-fill"
+                  style={{ width: `${Math.min(importProgress, 100)}%` }}
+                />
+              </div>
+            </div>
+          )}
+        </section>
+      )}
 
       <div className="editor-layout">
         {/* Left Pane - Drafts */}
@@ -316,7 +492,7 @@ export default function RecipeEditor() {
             Save as Draft
           </label>
         )}
-        <button type="submit" className={`save-btn ${saveError ? 'save-btn-full' : ''}`} disabled={isSaving}>
+        <button type="submit" className={`save-btn ${saveError ? 'save-btn-full' : ''}`} disabled={isSaving || isImporting}>
           {isSaving ? 'Saving...' : 'Save Recipe'}
         </button>
       </div>
