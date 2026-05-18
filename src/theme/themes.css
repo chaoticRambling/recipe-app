@@ -299,8 +299,7 @@
     inset 1px 1px 0 #FFFFFF,
     inset -1px -1px 0 #000000,
     3px 3px 0 rgba(0,0,0,0.24);
-  --skin-titlebar-bg:
-    linear-gradient(90deg, #007A7A 0%, #008C8C 45%, #00A0A0 100%);
+  --skin-titlebar-bg: #000090;
   --skin-titlebar-color: #FFFFFF;
   --skin-titlebar-height: 42px;
   --skin-titlebar-padding: 0 8px;

@@ -56,6 +56,13 @@ Desktop-style chrome uses additional tokens such as `--skin-window-bg`, `--skin-
 
 Prefer the component-level skin tokens when styling UI surfaces. They support full `background` values, so a theme can use flat colors, gradients, bevels, inset shadows, and generated textures. `Desktop 95` is the current proof theme for this deeper skinning model.
 
+`Desktop 95` also has replaceable PNG placeholders in `public/` for visual polish:
+
+- `desktop95-chef-placeholder.png`: dashboard welcome avatar beside `Welcome back, Chef!`.
+- `desktop95-dashboard-icon.png`: small icon before the `My Recipes` dashboard heading.
+
+Keep the same filenames when replacing these assets. Square PNGs work best; the CSS uses pixelated rendering for the retro look.
+
 Theme choice is persisted immediately in `localStorage` and synced to Supabase for authenticated users through `public.user_preferences.theme_id`.
 
 For deeper context before continuing theme work, see `planning/theme_handoff.md`.

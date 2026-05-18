@@ -248,17 +248,18 @@
 }
 
 :root[data-theme='desktop95'] .header-content h1::before {
-  content: '95';
+  content: '';
   display: inline-grid;
   place-items: center;
   width: 24px;
   height: 24px;
   margin-right: var(--spacing-sm);
-  background: var(--skin-titlebar-icon-bg);
-  border: var(--skin-control-border);
-  box-shadow: var(--skin-control-shadow);
+  background: url('/desktop95-dashboard-icon.png') center / contain no-repeat;
+  border: 0;
+  box-shadow: none;
+  image-rendering: pixelated;
   font-size: 0.85rem;
-  vertical-align: -2px;
+  vertical-align: 8px;
 }
 
 :root[data-theme='desktop95'] .header-actions {
