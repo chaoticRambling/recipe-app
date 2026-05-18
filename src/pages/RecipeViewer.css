@@ -209,7 +209,15 @@
 .recipe-nav {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-sm);
   margin-bottom: var(--spacing-sm);
+}
+
+.recipe-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
 }
 
 .nav-back-btn, .nav-edit-btn {
@@ -265,12 +273,30 @@
   margin: 0;
 }
 
+:root[data-theme='desktop95'] .recipe-page-scroll {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+}
+
+:root[data-theme='desktop95'] .recipe-page-scroll-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-right: var(--spacing-sm);
+}
+
 :root[data-theme='desktop95'] .recipe-viewer {
+  flex: 1 1 auto;
   gap: var(--spacing-sm);
+  margin: 0;
   max-width: none;
+  min-width: 0;
+  width: 100%;
 }
 
 :root[data-theme='desktop95'] .recipe-nav {
+  align-items: center;
   background: var(--skin-surface-bg);
   border: var(--skin-panel-border);
   box-shadow: var(--skin-surface-shadow);
@@ -339,7 +365,11 @@
 }
 
 :root[data-theme='desktop95'] .recipe-content {
+  --desktop95-recipe-scroll-height: min(360px, 48vh);
+
   gap: var(--spacing-sm);
+  min-width: 0;
+  width: 100%;
 }
 
 :root[data-theme='desktop95'] .ingredients-section,
@@ -349,12 +379,15 @@
   border: var(--skin-panel-border);
   box-shadow: var(--skin-surface-shadow);
   margin: 0;
+  min-width: 0;
   padding: var(--spacing-sm);
 }
 
 :root[data-theme='desktop95'] .ingredients-section,
 :root[data-theme='desktop95'] .steps-section {
   border-bottom: var(--skin-panel-border);
+  display: flex;
+  flex-direction: column;
 }
 
 :root[data-theme='desktop95'] .section-header {
@@ -397,8 +430,9 @@
   background: #FFFFFF;
   border: var(--skin-scroll-panel-border);
   box-shadow: var(--skin-scroll-panel-shadow);
-  max-height: 360px;
-  overflow: auto;
+  flex: 1 1 auto;
+  height: var(--desktop95-recipe-scroll-height);
+  min-height: 0;
 }
 
 :root[data-theme='desktop95'] .step-card {
@@ -464,6 +498,14 @@
 }
 
 @media (max-width: 640px) {
+  .recipe-nav {
+    flex-wrap: wrap;
+  }
+
+  .recipe-nav-actions {
+    margin-left: auto;
+  }
+
   :root[data-theme='desktop95'] .recipe-hero {
     height: 190px;
   }

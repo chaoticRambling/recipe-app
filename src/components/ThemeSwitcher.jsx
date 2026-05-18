@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from '../theme/useTheme';
 import './ThemeSwitcher.css';
 
-export default function ThemeSwitcher() {
+export default function ThemeSwitcher({ selectId = 'theme-select' }) {
   const { activeTheme, setThemeId, themeId, themes } = useTheme();
 
   return (
@@ -16,9 +16,9 @@ export default function ThemeSwitcher() {
           />
         ))}
       </div>
-      <label className="visually-hidden" htmlFor="theme-select">Recipe skin</label>
+      <label className="visually-hidden" htmlFor={selectId}>Recipe skin</label>
       <select
-        id="theme-select"
+        id={selectId}
         className="theme-select"
         value={themeId}
         onChange={(event) => setThemeId(event.target.value)}

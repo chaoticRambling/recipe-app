@@ -3,8 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipe, createRecipe, updateRecipe, uploadRecipeImage, deleteRecipe, deleteRecipeImage } from '../adapters/database';
 import { importRecipeFromUrl } from '../adapters/importRecipe';
 import imageCompression from 'browser-image-compression';
+import Desktop95ScrollArea from '../components/Desktop95ScrollArea';
 import IngredientEditor from '../components/IngredientEditor';
 import StepEditor from '../components/StepEditor';
+import { useTheme } from '../theme/useTheme';
 import './RecipeEditor.css';
 
 const AccordionSection = ({ title, isOpen, onToggle, children, className }) => (
@@ -70,6 +72,7 @@ const buildImportedDraft = (recipe, sourceUrl) => {
 export default function RecipeEditor() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { activeTheme } = useTheme();
   
   const [title, setTitle] = useState('');
   const [prepTime, setPrepTime] = useState('');
@@ -282,7 +285,7 @@ export default function RecipeEditor() {
 
   if (isLoading) return <div className="loader">Loading editor...</div>;
 
-  return (
+  const editorForm = (
     <form className="recipe-editor-page" onSubmit={handleSave}>
       <header className="editor-header">
         <button type="button" className="nav-back-btn" onClick={() => navigate('/')}>
@@ -498,4 +501,18 @@ export default function RecipeEditor() {
       </div>
     </form>
   );
+
+  if (activeTheme.id === 'desktop95') {
+    return (
+      <Desktop95ScrollArea
+        className="editor-page-scroll"
+        contentClassName="editor-page-scroll-content"
+        scrollStep={240}
+      >
+        {editorForm}
+      </Desktop95ScrollArea>
+    );
+  }
+
+  return editorForm;
 }

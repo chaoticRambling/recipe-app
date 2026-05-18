@@ -61,6 +61,11 @@ body {
 }
 
 :root[data-theme='desktop95'] #root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  min-height: 100vh;
+  overflow: hidden;
   padding: clamp(8px, 1.8vw, 18px);
   text-align: left;
 }

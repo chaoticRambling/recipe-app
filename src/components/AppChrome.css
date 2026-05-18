@@ -94,11 +94,19 @@
 }
 
 :root[data-theme='desktop95'] .app-window-shell {
+  display: flex;
+  flex: 1;
   max-width: 1120px;
+  min-height: 0;
 }
 
 :root[data-theme='desktop95'] .app-window {
   border-color: #DCDCDC #202020 #202020 #DCDCDC;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
 }
 
 :root[data-theme='desktop95'] .app-titlebar {
@@ -129,6 +137,15 @@
 
 :root[data-theme='desktop95'] .window-control {
   font-family: Arial, system-ui, sans-serif;
+}
+
+:root[data-theme='desktop95'] .app-window-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-height: none;
+  min-height: 0;
+  overflow: hidden;
 }
 
 @media (max-width: 640px) {

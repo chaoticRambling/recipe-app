@@ -1,0 +1,114 @@
+.settings-menu {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  z-index: 30;
+}
+
+.settings-menu-button {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  padding: 0;
+  background: var(--skin-control-bg);
+  border: var(--skin-control-border);
+  color: var(--text-primary);
+}
+
+.settings-menu-button:hover,
+.settings-menu-button[aria-expanded='true'] {
+  background: var(--skin-control-hover-bg);
+  border-color: var(--accent-color);
+}
+
+.settings-menu-icon {
+  display: block;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.settings-menu-panel {
+  position: absolute;
+  top: calc(100% + var(--spacing-sm));
+  right: 0;
+  width: min(320px, calc(100vw - 32px));
+  padding: var(--spacing-md);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-elevated);
+  text-align: left;
+  z-index: 200;
+}
+
+.settings-menu-left .settings-menu-panel {
+  left: 0;
+  right: auto;
+}
+
+.settings-menu-panel h2 {
+  font-size: 1.1rem;
+  margin: 0 0 var(--spacing-md);
+}
+
+.settings-menu-row {
+  display: grid;
+  gap: var(--spacing-sm);
+}
+
+.settings-menu-label {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.settings-menu .theme-switcher {
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.settings-menu .theme-select {
+  flex: 1;
+  max-width: none;
+  min-width: 0;
+}
+
+:root[data-theme='desktop95'] .settings-menu-button {
+  border-radius: 0;
+  box-shadow: var(--skin-control-shadow);
+  color: #000000;
+  font-weight: 900;
+}
+
+:root[data-theme='desktop95'] .settings-menu-button:hover,
+:root[data-theme='desktop95'] .settings-menu-button[aria-expanded='true'] {
+  background: var(--skin-control-hover-bg);
+  border: var(--skin-control-border);
+}
+
+:root[data-theme='desktop95'] .settings-menu-panel {
+  border-radius: 0;
+  box-shadow: var(--skin-window-shadow);
+  padding: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .settings-menu-panel h2 {
+  color: #000080;
+  font-size: 0.95rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .settings-menu-label {
+  color: var(--text-primary);
+  font-size: 0.8rem;
+}
+
+@media (max-width: 640px) {
+  .settings-menu-panel {
+    right: 0;
+    width: min(300px, calc(100vw - 24px));
+  }
+}

@@ -93,17 +93,26 @@
 }
 
 :root[data-theme='desktop95'] .dashboard-view {
+  flex: 1;
   gap: var(--spacing-sm);
+  margin: 0;
   max-width: none;
+  min-height: 0;
+  overflow: hidden;
   padding-bottom: 0;
+  width: 100%;
 }
 
 :root[data-theme='desktop95'] .dashboard-main {
   background: var(--skin-surface-bg);
   border: var(--skin-panel-border);
   box-shadow: var(--skin-surface-shadow);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
   max-height: none;
-  overflow: visible;
+  min-height: 0;
+  overflow: hidden;
   padding: var(--spacing-sm);
 }
 
@@ -113,6 +122,12 @@
   box-shadow: var(--skin-surface-shadow);
   margin-bottom: 0;
   padding: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .dashboard-header,
+:root[data-theme='desktop95'] .top-tab-nav,
+:root[data-theme='desktop95'] .desktop95-welcome {
+  flex: 0 0 auto;
 }
 
 :root[data-theme='desktop95'] .header-content h1 {

@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Desktop95ScrollArea from './Desktop95ScrollArea';
 import { useTheme } from '../theme/useTheme';
 import './RecipeList.css';
 
@@ -11,7 +12,7 @@ export default function RecipeList({ recipes }) {
   }
 
   return (
-    <div className="recipe-list-container">
+    <Desktop95ScrollArea className="recipe-list-shell" contentClassName="recipe-list-container">
       <div className="recipe-list-header">
         <div>Title</div>
         <div>Cuisine</div>
@@ -46,6 +47,6 @@ export default function RecipeList({ recipes }) {
           </div>
         </div>
       ))}
-    </div>
+    </Desktop95ScrollArea>
   );
 }

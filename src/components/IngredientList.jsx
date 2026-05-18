@@ -1,4 +1,5 @@
 import React from 'react';
+import Desktop95ScrollArea from './Desktop95ScrollArea';
 import { formatIngredientParts, shouldFlagUnscaledIngredient } from '../utils/scalingMath';
 import './IngredientList.css';
 
@@ -8,7 +9,7 @@ export default function IngredientList({ sections, multiplier }) {
   }
 
   return (
-    <div className="ingredient-list">
+    <Desktop95ScrollArea className="ingredient-list" contentClassName="ingredient-list-content">
       {sections.map((section, idx) => (
         <div key={idx} className="ingredient-section">
           {section.section_name && <h3 className="section-title">{section.section_name}</h3>}
@@ -32,6 +33,6 @@ export default function IngredientList({ sections, multiplier }) {
           </ul>
         </div>
       ))}
-    </div>
+    </Desktop95ScrollArea>
   );
 }

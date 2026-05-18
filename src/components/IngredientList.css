@@ -68,9 +68,14 @@
   border: var(--skin-scroll-panel-border);
   border-radius: 0;
   box-shadow: var(--skin-scroll-panel-shadow);
+  flex: 1 1 auto;
+  height: var(--desktop95-recipe-scroll-height, min(360px, 48vh));
   margin-bottom: 0;
-  max-height: 320px;
-  overflow: auto;
+  min-height: 0;
+  padding: 0;
+}
+
+:root[data-theme='desktop95'] .ingredient-list-content {
   padding: var(--spacing-sm);
 }
 

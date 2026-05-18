@@ -1,0 +1,101 @@
+.desktop95-scroll-area {
+  width: 100%;
+}
+
+.desktop95-scroll-content {
+  min-width: 0;
+}
+
+.desktop95-scrollbar {
+  display: none;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-area {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--skin-scrollbar-size);
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
+  overflow: hidden;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-content {
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: none;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-content::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+:root[data-theme='desktop95'] .desktop95-scrollbar {
+  display: grid;
+  grid-template-rows: var(--skin-scrollbar-size) minmax(0, 1fr) var(--skin-scrollbar-size);
+  min-height: 0;
+  background: var(--skin-scrollbar-track-bg);
+  border-left: 1px solid #808080;
+  box-shadow: var(--skin-inset-shadow);
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-btn {
+  display: inline-grid;
+  place-items: center;
+  width: var(--skin-scrollbar-size);
+  height: var(--skin-scrollbar-size);
+  min-width: var(--skin-scrollbar-size);
+  padding: 0;
+  background: var(--skin-scrollbar-button-bg);
+  border: var(--skin-scrollbar-thumb-border);
+  border-radius: 0;
+  box-shadow: var(--skin-scrollbar-button-shadow);
+  color: #000000;
+  font-family: Arial, system-ui, sans-serif;
+  font-size: 0.68rem;
+  line-height: 1;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-btn:disabled {
+  color: #808080;
+  cursor: default;
+  opacity: 1;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-track {
+  min-height: 0;
+  position: relative;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-thumb {
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  min-height: 28px;
+  background: var(--skin-scrollbar-thumb-bg);
+  border: var(--skin-scrollbar-thumb-border);
+  border-radius: 0;
+  box-shadow: var(--skin-scrollbar-thumb-shadow);
+  cursor: grab;
+  touch-action: none;
+  transition: background 120ms ease;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-thumb:hover:not(.is-disabled) {
+  background:
+    linear-gradient(135deg, rgba(255,255,255,0.38) 0 25%, transparent 25% 50%, rgba(255,255,255,0.38) 50% 75%, transparent 75% 100%),
+    #D2D2D2;
+  background-size: 4px 4px;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-thumb:active:not(.is-disabled),
+:root[data-theme='desktop95'] .desktop95-scroll-area.is-dragging > .desktop95-scrollbar .desktop95-scroll-thumb:not(.is-disabled) {
+  background:
+    linear-gradient(135deg, rgba(0,0,0,0.12) 0 25%, transparent 25% 50%, rgba(0,0,0,0.12) 50% 75%, transparent 75% 100%),
+    #A8A8A8;
+  box-shadow: var(--skin-control-active-shadow);
+  cursor: grabbing;
+}
+
+:root[data-theme='desktop95'] .desktop95-scroll-thumb.is-disabled {
+  cursor: default;
+}

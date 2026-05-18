@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getRecipes } from '../adapters/database';
 import { supabase } from '../supabaseClient';
 import RecipeList from '../components/RecipeList';
-import ThemeSwitcher from '../components/ThemeSwitcher';
+import SettingsMenu from '../components/SettingsMenu';
 import { useTheme } from '../theme/useTheme';
 import { usesTopTabs } from '../theme/themeCatalog';
 import './DashboardView.css';
@@ -35,7 +35,7 @@ export default function DashboardView({ session }) {
         <div className="header-content">
           <h1>My Recipes</h1>
           <div className="header-actions">
-            <ThemeSwitcher />
+            <SettingsMenu />
             {session && (
               <button 
                 className="logout-btn" 

@@ -370,19 +370,23 @@
 :root[data-theme='desktop95'] *::-webkit-scrollbar {
   width: var(--skin-scrollbar-size);
   height: var(--skin-scrollbar-size);
+  background: #C0C0C0;
 }
 
 :root[data-theme='desktop95'] *::-webkit-scrollbar-track {
   background: var(--skin-scrollbar-track-bg);
   border-left: 1px solid #808080;
+  border-radius: 0;
   box-shadow: var(--skin-inset-shadow);
 }
 
 :root[data-theme='desktop95'] *::-webkit-scrollbar-thumb {
   background: var(--skin-scrollbar-thumb-bg);
   border: var(--skin-scrollbar-thumb-border);
+  border-radius: 0;
   box-shadow: var(--skin-scrollbar-thumb-shadow);
   min-height: 32px;
+  min-width: 32px;
 }
 
 :root[data-theme='desktop95'] *::-webkit-scrollbar-button {
@@ -391,5 +395,35 @@
   height: var(--skin-scrollbar-size);
   background: var(--skin-scrollbar-button-bg);
   border: var(--skin-scrollbar-thumb-border);
+  border-radius: 0;
   box-shadow: var(--skin-scrollbar-button-shadow);
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar-button:vertical:decrement {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 4 3 10h10z' fill='%23000000'/%3E%3C/svg%3E") center / 12px 12px no-repeat,
+    var(--skin-scrollbar-button-bg);
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar-button:vertical:increment {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 6h10l-5 6z' fill='%23000000'/%3E%3C/svg%3E") center / 12px 12px no-repeat,
+    var(--skin-scrollbar-button-bg);
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar-button:horizontal:decrement {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8 10 3v10z' fill='%23000000'/%3E%3C/svg%3E") center / 12px 12px no-repeat,
+    var(--skin-scrollbar-button-bg);
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar-button:horizontal:increment {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M6 3v10l6-5z' fill='%23000000'/%3E%3C/svg%3E") center / 12px 12px no-repeat,
+    var(--skin-scrollbar-button-bg);
+}
+
+:root[data-theme='desktop95'] *::-webkit-scrollbar-corner {
+  background: #C0C0C0;
+  border: var(--skin-scrollbar-thumb-border);
 }

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipe } from '../adapters/database';
+import Desktop95ScrollArea from '../components/Desktop95ScrollArea';
 import IngredientList from '../components/IngredientList';
+import SettingsMenu from '../components/SettingsMenu';
 import { hasUnscaledIngredients } from '../utils/scalingMath';
 import { useTheme } from '../theme/useTheme';
 import './RecipeViewer.css';
@@ -70,15 +72,18 @@ export default function RecipeViewer() {
   const showScalingWarning = hasUnscaledIngredients(recipe.ingredients, multiplier);
   const startCookingLabel = activeTheme.id === 'desktop95' ? 'Start Cooking' : 'Step-by-Step Mode';
 
-  return (
+  const recipeView = (
     <div className="recipe-viewer">
       <nav className="recipe-nav">
         <button className="nav-back-btn" onClick={() => navigate('/')}>
           &larr; Back to Recipes
         </button>
-        <button className="nav-edit-btn" onClick={() => navigate(`/editor/${recipe.id}`)}>
-          Edit Recipe
-        </button>
+        <div className="recipe-nav-actions">
+          <SettingsMenu />
+          <button className="nav-edit-btn" onClick={() => navigate(`/editor/${recipe.id}`)}>
+            Edit Recipe
+          </button>
+        </div>
       </nav>
       <div className="recipe-hero" style={{ backgroundImage: `url('${recipe.image_url || activeTheme.assets.recipeHero}')` }}></div>
       <header className="recipe-header">
@@ -157,14 +162,14 @@ export default function RecipeViewer() {
               </div>
             </div>
           ) : (
-            <div className="steps-list-view">
+            <Desktop95ScrollArea className="steps-list-view" contentClassName="steps-list-content" scrollStep={150}>
               {recipe.steps.map((step) => (
                 <div key={step.step_number} className="step-card">
                   <span className="step-number">{step.step_number}</span>
                   <p className="step-text">{step.text}</p>
                 </div>
               ))}
-            </div>
+            </Desktop95ScrollArea>
           )}
         </section>
       </div>
@@ -198,4 +203,18 @@ export default function RecipeViewer() {
       </footer>
     </div>
   );
+
+  if (activeTheme.id === 'desktop95') {
+    return (
+      <Desktop95ScrollArea
+        className="recipe-page-scroll"
+        contentClassName="recipe-page-scroll-content"
+        scrollStep={240}
+      >
+        {recipeView}
+      </Desktop95ScrollArea>
+    );
+  }
+
+  return recipeView;
 }
