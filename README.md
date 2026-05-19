@@ -14,6 +14,7 @@ A mobile-first, responsive recipe management application built with React, Vite,
   - Sortable ingredient lists that can be nested into categories (e.g., "Main", "Sauce").
   - Auto-expanding, sortable instruction steps designed to maximize typing space on both mobile and desktop views.
   - **Dynamic Multi-Tagging Input**: Converts the standard "Cuisine Type" field into an interactive tag pill system, supporting auto-suggestions for previously used tags, keyboard ArrowDown/ArrowUp navigation, and comma/Enter key tag creation.
+- **Secure Read-Only Public Sharing**: Exposes the Dashboard, Explore, and Recipe views to unauthenticated visitors (friends & family) under a secure, read-only **Guest Mode**. Visitors can only see recipes explicitly marked as public by the owner, with all creation, editing, and deleting capabilities completely removed.
 
 ## File Structure
 
@@ -91,6 +92,8 @@ VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 URL imports preserve the original webpage in a `source_url` column. Apply the SQL in `planning/url_import_schema.sql` to add it.
 
 Theme selection is stored locally for immediate reloads and synced to Supabase for authenticated users. Apply the SQL in `planning/theme_preferences_schema.sql` to create the `user_preferences` table and ownership-aware RLS policies.
+
+Public recipe sharing depends on database-level Row-Level Security rules and an `is_public` boolean column. Apply the SQL in `planning/is_public_schema.sql` to initialize the column and set up safe access policies.
 
 ## URL Import Configuration
 
