@@ -5,6 +5,7 @@ import DashboardView from './pages/DashboardView';
 import RecipeViewer from './pages/RecipeViewer';
 import LoginView from './pages/LoginView';
 import ExploreView from './pages/ExploreView';
+import SettingsView from './pages/SettingsView';
 import AppChrome from './components/AppChrome';
 import ThemeProvider from './theme/ThemeProvider';
 
@@ -48,6 +49,10 @@ function App() {
               />
               <Route path="/login" element={<LoginView />} />
               <Route path="/recipe/:id" element={<RecipeViewer session={session} />} />
+              <Route 
+                path="/settings" 
+                element={<SettingsView session={session} />} 
+              />
               <Route 
                 path="/editor" 
                 element={

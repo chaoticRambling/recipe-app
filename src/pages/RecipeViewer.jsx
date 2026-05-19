@@ -3,7 +3,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getRecipe } from '../adapters/database';
 import Desktop95ScrollArea from '../components/Desktop95ScrollArea';
 import IngredientList from '../components/IngredientList';
-import SettingsMenu from '../components/SettingsMenu';
 import { hasUnscaledIngredients } from '../utils/scalingMath';
 import { useTheme } from '../theme/useTheme';
 import './RecipeViewer.css';
@@ -79,7 +78,6 @@ export default function RecipeViewer({ session }) {
           &larr; Back to Recipes
         </button>
         <div className="recipe-nav-actions">
-          <SettingsMenu />
           {session && (
             <button className="nav-edit-btn" onClick={() => navigate(`/editor/${recipe.id}`)}>
               Edit Recipe

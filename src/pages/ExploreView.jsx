@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { getRecipes } from '../adapters/database';
 import { supabase } from '../supabaseClient';
 import RecipeList from '../components/RecipeList';
-import SettingsMenu from '../components/SettingsMenu';
 import AppNavigation from '../components/AppNavigation';
 import { useTheme } from '../theme/useTheme';
 import { usesTopTabs } from '../theme/themeCatalog';
@@ -255,7 +254,6 @@ export default function ExploreView({ session }) {
         <div className="header-content">
           <h1>Explore by Tags</h1>
           <div className="header-actions">
-            <SettingsMenu />
             {session ? (
               <button 
                 className="logout-btn" 

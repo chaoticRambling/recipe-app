@@ -1,0 +1,693 @@
+/* General Settings Layout Structure */
+.settings-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.settings-header-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-panel);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+.settings-header-nav h1 {
+  font-size: 1.5rem;
+  margin: 0;
+  color: var(--text-primary);
+}
+
+.settings-main {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+/* --- MODERN SETTINGS STYLES --- */
+.modern-settings-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+  align-items: start;
+}
+
+@media (min-width: 768px) {
+  .modern-settings-container {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+/* Sidebar Tabs Navigation */
+.modern-tabs-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  background: var(--skin-muted-bg);
+  padding: var(--spacing-xs);
+  border-radius: var(--radius-panel);
+  border: var(--skin-panel-border);
+}
+
+@media (min-width: 768px) {
+  .modern-tabs-list {
+    flex-direction: column;
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
+  }
+}
+
+.modern-tab-btn {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: 0.8rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.modern-tab-btn:hover {
+  background: var(--skin-control-hover-bg);
+  color: var(--text-primary);
+}
+
+.modern-tab-btn.active {
+  background: var(--skin-surface-bg);
+  color: var(--accent-color);
+  border-color: var(--border-color);
+  box-shadow: var(--skin-surface-shadow);
+}
+
+/* Content Container Card */
+.modern-settings-content-card {
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--skin-surface-shadow);
+  padding: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  min-height: 400px;
+  position: relative;
+}
+
+/* Form Styling Controls */
+.settings-tab-pane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  animation: paneFadeIn 0.3s ease-out;
+}
+
+@keyframes paneFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.settings-pane-title {
+  font-size: 1.3rem;
+  margin: 0;
+  color: var(--text-primary);
+  border-bottom: 2px dashed var(--border-color);
+  padding-bottom: var(--spacing-xs);
+}
+
+.settings-pane-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.settings-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.settings-field-group label {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.settings-text-input,
+.settings-select-input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background: var(--skin-input-bg);
+  border: var(--skin-input-border);
+  border-radius: var(--radius-control);
+  transition: border-color 0.2s ease;
+}
+
+.settings-text-input:focus,
+.settings-select-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+}
+
+.field-help-text {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.settings-field-checkbox {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  padding: var(--spacing-xs) 0;
+}
+
+.settings-field-checkbox input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.settings-field-checkbox label {
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Theme settings adaptations */
+.theme-switcher-wrapper-settings {
+  padding: var(--spacing-sm);
+  background: var(--skin-muted-bg);
+  border-radius: var(--radius-panel);
+  border: var(--skin-panel-border);
+}
+
+.settings-theme-preview-card {
+  padding: var(--spacing-md);
+  background: var(--skin-muted-bg);
+  border-radius: var(--radius-panel);
+  border: var(--skin-panel-border);
+}
+
+.preview-label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.preview-features-list {
+  margin: 0;
+  padding-left: var(--spacing-md);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.preview-features-list code {
+  font-family: monospace;
+  background: rgba(0, 0, 0, 0.06);
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+/* Sync Layout Settings */
+.sync-status-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--skin-muted-bg);
+  border-radius: var(--radius-panel);
+  border: var(--skin-panel-border);
+}
+
+.sync-indicator {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 1rem;
+}
+
+.sync-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sync-dot.active {
+  background: var(--success-color);
+  box-shadow: 0 0 8px var(--success-color);
+}
+
+.sync-dot.inactive {
+  background: var(--text-secondary);
+}
+
+.sync-desc {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.rls-readout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  background: var(--skin-input-bg);
+  border: var(--skin-input-border);
+  border-radius: var(--radius-control);
+  padding: var(--spacing-sm);
+}
+
+.rls-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.rls-row:last-child {
+  border-bottom: none;
+}
+
+.status-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
+.status-badge.success {
+  background: rgba(129, 178, 154, 0.2);
+  color: var(--success-color);
+}
+
+/* Toast Notification Feedback */
+.modern-feedback-toast {
+  position: absolute;
+  bottom: var(--spacing-xl);
+  left: var(--spacing-xl);
+  background: var(--text-primary);
+  color: var(--color-app-bg);
+  padding: 0.7rem 1.2rem;
+  border-radius: var(--radius-control);
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: var(--skin-elevated-shadow);
+  animation: toastFade 3s ease forwards;
+}
+
+@keyframes toastFade {
+  0% { opacity: 0; transform: translateY(8px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-4px); }
+}
+
+.modern-settings-footer-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: auto;
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+}
+
+.modern-btn-primary,
+.modern-btn-secondary {
+  padding: 0.7rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--radius-control);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modern-btn-primary {
+  background: var(--accent-color);
+  color: var(--color-on-primary);
+  border: var(--skin-primary-border);
+}
+
+.modern-btn-primary:hover {
+  background: var(--accent-hover);
+}
+
+.modern-btn-secondary {
+  background: transparent;
+  color: var(--text-secondary);
+  border: var(--skin-input-border);
+}
+
+.modern-btn-secondary:hover {
+  background: var(--skin-control-hover-bg);
+  color: var(--text-primary);
+}
+
+
+/* --- RETRO DESKTOP 95 SETTINGS STYLES --- */
+:root[data-theme='desktop95'] .settings-view {
+  gap: var(--spacing-sm);
+  margin: 0;
+  max-width: none;
+}
+
+:root[data-theme='desktop95'] .settings-header-nav {
+  border-radius: 0;
+  margin-bottom: 0;
+  padding: var(--spacing-xs);
+}
+
+:root[data-theme='desktop95'] .settings-header-nav h1 {
+  color: #000000;
+  font-size: 1.35rem;
+  line-height: 1.15;
+  font-weight: 900;
+}
+
+:root[data-theme='desktop95'] .settings-page-scroll {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+}
+
+:root[data-theme='desktop95'] .settings-page-scroll-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 0;
+}
+
+/* System Dialog Frame */
+:root[data-theme='desktop95'] .win95-dialog {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 580px;
+  margin: 0 auto;
+  background: #C0C0C0;
+  padding: var(--spacing-xs);
+}
+
+/* Beveled Tab Selector list */
+:root[data-theme='desktop95'] .win95-tabs {
+  display: flex;
+  flex-direction: row;
+  z-index: 10;
+  margin-bottom: -1px;
+}
+
+:root[data-theme='desktop95'] .win95-tab {
+  background: #C0C0C0;
+  border: 1px solid #808080;
+  border-bottom: none;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  padding: 6px 12px;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  color: #000000;
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 #FFFFFF, inset -1px 0 0 #808080;
+}
+
+:root[data-theme='desktop95'] .win95-tab:not(.active):hover {
+  background: #D8D8D8;
+}
+
+:root[data-theme='desktop95'] .win95-tab.active {
+  background: #C0C0C0;
+  padding-top: 8px;
+  padding-bottom: 7px;
+  margin-top: -2px;
+  border-bottom: none;
+  box-shadow: inset 1px 1px 0 #FFFFFF, inset -1px 0 0 #808080;
+  z-index: 12;
+  font-weight: 900;
+}
+
+/* Beveled Dialog Tab Contents box */
+:root[data-theme='desktop95'] .win95-tab-content {
+  background: #C0C0C0;
+  border: 2px solid #808080;
+  box-shadow: inset 1px 1px 0 #FFFFFF, inset -1px -1px 0 #000000;
+  padding: var(--spacing-md);
+  min-height: 280px;
+  z-index: 5;
+}
+
+/* Retro Tab Pane Layouts */
+:root[data-theme='desktop95'] .settings-tab-pane {
+  gap: var(--spacing-sm);
+  animation: none;
+}
+
+:root[data-theme='desktop95'] .settings-pane-title {
+  font-size: 0.95rem;
+  font-weight: 900;
+  color: #000080;
+  border-bottom: 1px solid #808080;
+  padding-bottom: 4px;
+}
+
+:root[data-theme='desktop95'] .settings-pane-desc {
+  font-size: 0.8rem;
+  color: #000000;
+  line-height: 1.4;
+}
+
+:root[data-theme='desktop95'] .settings-field-group {
+  gap: 3px;
+}
+
+:root[data-theme='desktop95'] .settings-field-group label {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #000000;
+}
+
+:root[data-theme='desktop95'] .settings-text-input,
+:root[data-theme='desktop95'] .settings-select-input {
+  border-radius: 0;
+  padding: 4px 6px;
+  font-size: 0.85rem;
+  font-family: monospace;
+  background: #FFFFFF;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #FFFFFF;
+}
+
+:root[data-theme='desktop95'] .settings-text-input:focus,
+:root[data-theme='desktop95'] .settings-select-input:focus {
+  border: 1px dotted #000000;
+}
+
+:root[data-theme='desktop95'] .field-help-text {
+  font-size: 0.75rem;
+  color: #404040;
+}
+
+:root[data-theme='desktop95'] .settings-field-checkbox {
+  align-items: start;
+  gap: var(--spacing-xs);
+  padding: 4px 0;
+}
+
+:root[data-theme='desktop95'] .settings-field-checkbox input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  border-radius: 0;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #FFFFFF;
+}
+
+:root[data-theme='desktop95'] .settings-field-checkbox label {
+  font-size: 0.8rem;
+  color: #000000;
+}
+
+/* Beveled Subpanels in Retro theme */
+:root[data-theme='desktop95'] .theme-switcher-wrapper-settings,
+:root[data-theme='desktop95'] .settings-theme-preview-card,
+:root[data-theme='desktop95'] .sync-status-card {
+  border-radius: 0;
+  padding: var(--spacing-sm);
+  background: #C0C0C0;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #FFFFFF;
+}
+
+:root[data-theme='desktop95'] .theme-switcher-wrapper-settings .theme-switcher {
+  border: none;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+:root[data-theme='desktop95'] .theme-switcher-wrapper-settings .theme-select {
+  border-radius: 0;
+  padding: 4px 6px;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #FFFFFF;
+  background: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+:root[data-theme='desktop95'] .preview-label {
+  font-size: 0.8rem;
+  color: #000000;
+  font-weight: 800;
+}
+
+:root[data-theme='desktop95'] .preview-features-list {
+  font-size: 0.8rem;
+  color: #000000;
+  padding-left: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .preview-features-list code {
+  background: #D8D8D8;
+  border: 1px solid #808080;
+  border-radius: 0;
+}
+
+:root[data-theme='desktop95'] .sync-indicator {
+  font-size: 0.85rem;
+  color: #000000;
+}
+
+:root[data-theme='desktop95'] .sync-dot {
+  width: 8px;
+  height: 8px;
+  border: 1px solid #000000;
+  box-shadow: none;
+}
+
+:root[data-theme='desktop95'] .sync-dot.active {
+  background: #00FF00;
+}
+
+:root[data-theme='desktop95'] .sync-dot.inactive {
+  background: #808080;
+}
+
+:root[data-theme='desktop95'] .sync-desc {
+  font-size: 0.78rem;
+  color: #000000;
+}
+
+:root[data-theme='desktop95'] .rls-readout {
+  border-radius: 0;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #000000, inset -1px -1px 0 #FFFFFF;
+  background: #FFFFFF;
+  padding: 6px;
+}
+
+:root[data-theme='desktop95'] .rls-row {
+  font-size: 0.78rem;
+  padding: 2px 0;
+}
+
+:root[data-theme='desktop95'] .status-badge {
+  border-radius: 0;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 1px 6px;
+}
+
+:root[data-theme='desktop95'] .status-badge.success {
+  background: #008000;
+  color: #FFFFFF;
+}
+
+/* Dialog footer buttons */
+:root[data-theme='desktop95'] .win95-dialog-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+:root[data-theme='desktop95'] .win95-btn {
+  background: #C0C0C0;
+  border: 1px solid #000000;
+  box-shadow: inset 1.5px 1.5px 0 #FFFFFF, inset -1.5px -1.5px 0 #808080;
+  padding: 5px 22px;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #000000;
+  cursor: pointer;
+  border-radius: 0;
+  outline: none;
+}
+
+:root[data-theme='desktop95'] .win95-btn:hover {
+  background: #C8C8C8;
+}
+
+:root[data-theme='desktop95'] .win95-btn:active {
+  padding: 6px 21px 4px 23px; /* visual push pressed effect */
+  box-shadow: inset 1.5px 1.5px 0 #404040, inset 2.5px 2.5px 0 #808080, inset -1px -1px 0 #FFFFFF;
+}
+
+/* dialog feedback banner */
+.win95-feedback-banner {
+  background: #FFFFD0;
+  border: 1px solid #808080;
+  box-shadow: inset 1px 1px 0 #FFFFFF;
+  color: #000000;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 5px;
+  text-align: center;
+  margin-top: var(--spacing-sm);
+}
+
+/* Stacking mobile tabs */
+@media (max-width: 640px) {
+  .win95-tabs {
+    flex-wrap: wrap;
+  }
+  
+  :root[data-theme='desktop95'] .win95-tab {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}

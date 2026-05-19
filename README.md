@@ -15,6 +15,7 @@ A mobile-first, responsive recipe management application built with React, Vite,
   - Auto-expanding, sortable instruction steps designed to maximize typing space on both mobile and desktop views.
   - **Dynamic Multi-Tagging Input**: Converts the standard "Cuisine Type" field into an interactive tag pill system, supporting auto-suggestions for previously used tags, keyboard ArrowDown/ArrowUp navigation, and comma/Enter key tag creation.
 - **Secure Read-Only Public Sharing**: Exposes the Dashboard, Explore, and Recipe views to unauthenticated visitors (friends & family) under a secure, read-only **Guest Mode**. Visitors can only see recipes explicitly marked as public by the owner, with all creation, editing, and deleting capabilities completely removed.
+- **Settings Page**: A dedicated tabbed settings view (`/settings`) housing visual theme switcher skin customizer, chef display name profile setups, default scale unit presets, and live database Row-Level Security (RLS) connection tables. Adapts dynamically to responsive horizontal/vertical card groups or inherits a custom double-beveled **System Properties dialog** under the `Desktop 95` theme, complete with functional pressed transforming action buttons.
 
 ## File Structure
 
@@ -32,12 +33,12 @@ src/
 │   ├── DashboardView.jsx    # Recipe library overview
 │   ├── ExploreView.jsx      # Tag explorer and text keyword search view
 │   ├── RecipeViewer.jsx     # Read-only cooking view
-│   └── RecipeEditor.jsx     # Complex creation and editing environment
+│   ├── RecipeEditor.jsx     # Complex creation and editing environment
+│   └── SettingsView.jsx     # Tabbed application & theme settings view
 │
 ├── components/              # Reusable, interactive UI elements
 │   ├── AppNavigation.jsx    # Unified theme-sensitive header-tabs and bottom-nav component
 │   ├── ThemeSwitcher.jsx    # Theme selector UI
-│   ├── SettingsMenu.jsx     # Settings popover with theme controls
 │   ├── Desktop95ScrollArea.jsx # Custom chunky scroll area for Desktop 95
 │   ├── TagInput.jsx         # Keyboard-navigable multi-tag input with auto-suggestions
 │   ├── IngredientEditor.jsx # Drag-and-drop ingredient sections
@@ -55,7 +56,7 @@ Themes are code-authored presets defined in `src/theme/themeCatalog.js` and styl
 
 Themes can also declare lightweight chrome metadata through `uiChrome`. `Desktop 95` uses this to request a window frame, top tabs, decorative window controls, and chunky scrollbar styling. Non-retro themes keep the regular page frame and bottom navigation.
 
-Desktop 95 uses `src/components/Desktop95ScrollArea.jsx` for its app-like scroll regions instead of relying only on browser-native scrollbar styling. Recipe viewer, editor, and explore pages get a right-hand Windows-95-style page scrollbar inside the faux window so bottom content remains reachable. To support smooth scrolling without nested double-scrollbar clipping, the Explore page's results list shell and matching container are designed with minimum height rules (`min-height: 260px` for `.recipe-list-shell` and `330px` for `.explore-results-container`), guaranteeing at least three recipe cards render fully inside the retro box without squishing. Ingredients and instructions keep their own fixed-height inset scroll panes inside the recipe viewer.
+Desktop 95 uses `src/components/Desktop95ScrollArea.jsx` for its app-like scroll regions instead of relying only on browser-native scrollbar styling. Recipe viewer, editor, settings, and explore pages get a right-hand Windows-95-style page scrollbar inside the faux window so bottom content remains reachable. To support smooth scrolling without nested double-scrollbar clipping, the Explore page's results list shell and matching container are designed with minimum height rules (`min-height: 260px` for `.recipe-list-shell` and `330px` for `.explore-results-container`), guaranteeing at least three recipe cards render fully inside the retro box without squishing. Ingredients and instructions keep their own fixed-height inset scroll panes inside the recipe viewer.
 
 The theme layer now has two levels of tokens:
 
@@ -67,6 +68,8 @@ Desktop-style chrome uses additional tokens such as `--skin-window-bg`, `--skin-
 The custom Desktop 95 scrollbar thumb supports hover, active, and click-drag interactions. Keep active/drag selectors scoped to the scroll area that owns the thumb, because recipe pages can nest ingredient/instruction scroll panes inside the full-page scroll pane.
 
 Prefer the component-level skin tokens when styling UI surfaces. They support full `background` values, so a theme can use flat colors, gradients, bevels, inset shadows, and generated textures. `Desktop 95` is the current proof theme for this deeper skinning model.
+
+The new **Settings Page** (`/settings`) implements tabs (General, Appearance, Network Sync) and maps to a custom beveled properties dialog under the `desktop95` skin, providing standard beveled gray active buttons (`OK`, `Cancel`, `Apply`) and responsive form skeletons that adjust seamlessly.
 
 `Desktop 95` also has replaceable PNG placeholders in `public/` for visual polish:
 

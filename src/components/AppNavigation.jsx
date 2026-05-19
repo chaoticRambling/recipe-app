@@ -30,6 +30,13 @@ export default function AppNavigation() {
         <button type="button" className="top-tab">
           Grocery List
         </button>
+        <button 
+          type="button" 
+          className={`top-tab ${currentPath === '/settings' ? 'active' : ''}`}
+          onClick={() => navigate('/settings')}
+        >
+          Settings
+        </button>
       </nav>
     );
   }
@@ -53,6 +60,13 @@ export default function AppNavigation() {
       <button className="nav-item">
         <span className="nav-icon">🧺</span>
         <span>Groceries</span>
+      </button>
+      <button 
+        className={`nav-item ${currentPath === '/settings' ? 'active' : ''}`}
+        onClick={() => navigate('/settings')}
+      >
+        <span className="nav-icon">⚙</span>
+        <span>Settings</span>
       </button>
     </nav>
   );
