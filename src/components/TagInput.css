@@ -1,0 +1,141 @@
+.tag-input-container {
+  position: relative;
+  width: 100%;
+  text-align: left;
+}
+
+.tag-input-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-height: 42px;
+  padding: var(--spacing-xs);
+  background: var(--skin-input-bg);
+  border: var(--skin-input-border);
+  border-radius: var(--radius-control);
+  box-shadow: var(--skin-inset-shadow);
+  cursor: text;
+  box-sizing: border-box;
+}
+
+.tag-input-field:focus-within {
+  border-color: var(--accent-color);
+  outline: none;
+}
+
+.tag-text-input {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 4px 6px !important;
+  margin: 0 !important;
+  flex-grow: 1;
+  min-width: 80px;
+  width: auto;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+/* Tag Pills styling */
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: 0.22em 0.5em;
+  background: var(--skin-tag-bg);
+  color: var(--skin-tag-color);
+  border: var(--skin-tag-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--skin-tag-shadow);
+  font-size: 0.85rem;
+  font-weight: 600;
+  user-select: none;
+}
+
+.tag-pill-remove {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  color: inherit !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+}
+
+.tag-pill-remove:hover {
+  opacity: 1;
+}
+
+/* Auto-Suggest Dropdown List */
+.tag-suggestions-list {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-elevated-shadow);
+  border-radius: var(--radius-panel);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 160px;
+  overflow-y: auto;
+  z-index: 100;
+  box-sizing: border-box;
+}
+
+.tag-suggestion-item {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  cursor: pointer;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  transition: background 0.15s, color 0.15s;
+  text-align: left;
+}
+
+.tag-suggestion-item:hover,
+.tag-suggestion-item.active {
+  background: var(--color-primary-bg, #F3F4F6);
+  color: var(--color-primary, #E07A5F);
+}
+
+/* Retro Desktop95 Specific overrides */
+:root[data-theme='desktop95'] .tag-input-field:focus-within {
+  border: var(--skin-focus-border);
+}
+
+:root[data-theme='desktop95'] .tag-pill {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  border-radius: 0;
+}
+
+:root[data-theme='desktop95'] .tag-pill-remove {
+  font-size: 1rem;
+}
+
+:root[data-theme='desktop95'] .tag-suggestions-list {
+  border-radius: 0;
+}
+
+:root[data-theme='desktop95'] .tag-suggestion-item {
+  font-weight: 800;
+}
+
+:root[data-theme='desktop95'] .tag-suggestion-item:hover,
+:root[data-theme='desktop95'] .tag-suggestion-item.active {
+  background: var(--skin-list-hover-bg, linear-gradient(180deg, #0000A8 0%, #000080 100%));
+  color: var(--skin-list-hover-color, #FFFFFF);
+}

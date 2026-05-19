@@ -90,7 +90,13 @@ export default function RecipeViewer() {
         <h1>{recipe.title || 'Untitled Recipe'}</h1>
         <div className="recipe-meta">
           <span className="pill-tag">{recipe.prep_time_minutes || 0} mins</span>
-          <span className="pill-tag">{recipe.cuisine_type || 'Unknown'}</span>
+          {recipe.cuisine_type ? (
+            recipe.cuisine_type.split(',').map(t => t.trim()).filter(Boolean).map(tag => (
+              <span key={tag} className="pill-tag">{tag}</span>
+            ))
+          ) : (
+            <span className="pill-tag">Unknown</span>
+          )}
         </div>
         {recipe.notes && <p className="recipe-notes">{recipe.notes}</p>}
       </header>

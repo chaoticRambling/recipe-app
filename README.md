@@ -12,6 +12,7 @@ A mobile-first, responsive recipe management application built with React, Vite,
   - Drag-and-drop reordering using `@dnd-kit`.
   - Sortable ingredient lists that can be nested into categories (e.g., "Main", "Sauce").
   - Auto-expanding, sortable instruction steps designed to maximize typing space on both mobile and desktop views.
+  - **Dynamic Multi-Tagging Input**: Converts the standard "Cuisine Type" field into an interactive tag pill system, supporting auto-suggestions for previously used tags, keyboard ArrowDown/ArrowUp navigation, and comma/Enter key tag creation.
 
 ## File Structure
 
@@ -34,6 +35,7 @@ src/
 │   ├── ThemeSwitcher.jsx    # Theme selector UI
 │   ├── SettingsMenu.jsx     # Settings popover with theme controls
 │   ├── Desktop95ScrollArea.jsx # Custom chunky scroll area for Desktop 95
+│   ├── TagInput.jsx         # Keyboard-navigable multi-tag input with auto-suggestions
 │   ├── IngredientEditor.jsx # Drag-and-drop ingredient sections
 │   ├── StepEditor.jsx       # Sortable and auto-expanding instruction steps
 │   ├── IngredientList.jsx   # Read-only ingredient display

@@ -6,7 +6,9 @@ import imageCompression from 'browser-image-compression';
 import Desktop95ScrollArea from '../components/Desktop95ScrollArea';
 import IngredientEditor from '../components/IngredientEditor';
 import StepEditor from '../components/StepEditor';
+import TagInput from '../components/TagInput';
 import { useTheme } from '../theme/useTheme';
+import { supabase } from '../supabaseClient';
 import './RecipeEditor.css';
 
 const AccordionSection = ({ title, isOpen, onToggle, children, className }) => (
@@ -77,6 +79,7 @@ export default function RecipeEditor() {
   const [title, setTitle] = useState('');
   const [prepTime, setPrepTime] = useState('');
   const [cuisine, setCuisine] = useState('');
+  const [existingTags, setExistingTags] = useState([]);
   const [notes, setNotes] = useState('');
   
   const [draftIngredients, setDraftIngredients] = useState('');
@@ -101,6 +104,34 @@ export default function RecipeEditor() {
   const [isImporting, setIsImporting] = useState(false);
   const [importProgress, setImportProgress] = useState(0);
   const [importStatus, setImportStatus] = useState('');
+
+  useEffect(() => {
+    async function fetchExistingTags() {
+      try {
+        const { data, error } = await supabase
+          .from('recipes')
+          .select('cuisine_type');
+        if (error) throw error;
+        
+        if (data) {
+          const tagsSet = new Set();
+          data.forEach(recipe => {
+            if (recipe.cuisine_type) {
+              recipe.cuisine_type
+                .split(',')
+                .map(t => t.trim())
+                .filter(Boolean)
+                .forEach(t => tagsSet.add(t));
+            }
+          });
+          setExistingTags(Array.from(tagsSet));
+        }
+      } catch (err) {
+        console.error('Error fetching existing tags:', err);
+      }
+    }
+    fetchExistingTags();
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -425,8 +456,12 @@ export default function RecipeEditor() {
                 <input type="number" required value={prepTime} onChange={e => setPrepTime(e.target.value)} placeholder="30" />
               </div>
               <div className="form-group">
-                <label>Cuisine Type</label>
-                <input type="text" value={cuisine} onChange={e => setCuisine(e.target.value)} placeholder="e.g. Italian" />
+                <label>Cuisine / Tags</label>
+                <TagInput
+                  tags={cuisine ? cuisine.split(',').map(t => t.trim()).filter(Boolean) : []}
+                  onChange={(newTags) => setCuisine(newTags.join(', '))}
+                  suggestions={existingTags}
+                />
               </div>
             </div>
             <div className="form-group">

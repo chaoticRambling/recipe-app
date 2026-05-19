@@ -35,9 +35,11 @@ export default function RecipeList({ recipes }) {
                 {recipe.is_draft && (
                   <span className="pill-draft">Draft</span>
                 )}
-                {recipe.cuisine_type && (
-                  <span className="pill-cuisine">{recipe.cuisine_type}</span>
-                )}
+                {recipe.cuisine_type &&
+                  recipe.cuisine_type.split(',').map(t => t.trim()).filter(Boolean).map(tag => (
+                    <span key={tag} className="pill-cuisine">{tag}</span>
+                  ))
+                }
               </div>
               
               <div className="cell-time">
