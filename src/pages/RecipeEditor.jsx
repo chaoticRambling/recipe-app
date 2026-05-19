@@ -85,6 +85,7 @@ export default function RecipeEditor() {
   const [draftIngredients, setDraftIngredients] = useState('');
   const [draftSteps, setDraftSteps] = useState('');
   const [isDraft, setIsDraft] = useState(true);
+  const [isPublic, setIsPublic] = useState(false);
   
   const [sections, setSections] = useState([{ section_name: 'Main', items: [] }]);
   const [steps, setSteps] = useState([]);
@@ -149,6 +150,7 @@ export default function RecipeEditor() {
           setDraftIngredients(data.draft_ingredients || '');
           setDraftSteps(data.draft_steps || '');
           setIsDraft(data.is_draft ?? true);
+          setIsPublic(data.is_public ?? false);
           setExistingImageUrl(data.image_url || null);
         }
         setIsLoading(false);
@@ -274,6 +276,7 @@ export default function RecipeEditor() {
         draft_ingredients: draftIngredients,
         draft_steps: draftSteps,
         is_draft: isDraft,
+        is_public: isPublic,
         image_url: finalImageUrl,
         updated_at: new Date().toISOString()
       };
@@ -330,6 +333,10 @@ export default function RecipeEditor() {
           <label className="draft-toggle">
             <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
             Save as Draft
+          </label>
+          <label className="draft-toggle">
+            <input type="checkbox" checked={isPublic} onChange={(e) => setIsPublic(e.target.checked)} />
+            Public Recipe
           </label>
           <button type="submit" className="save-btn" disabled={isSaving || isImporting}>
             {isSaving ? 'Saving...' : 'Save Recipe'}
@@ -525,10 +532,16 @@ export default function RecipeEditor() {
             {saveError}
           </div>
         ) : (
-          <label className="draft-toggle">
-            <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
-            Save as Draft
-          </label>
+          <div className="mobile-toggles-container" style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            <label className="draft-toggle">
+              <input type="checkbox" checked={isDraft} onChange={(e) => setIsDraft(e.target.checked)} />
+              Save as Draft
+            </label>
+            <label className="draft-toggle">
+              <input type="checkbox" checked={isPublic} onChange={(e) => setIsPublic(e.target.checked)} />
+              Public Recipe
+            </label>
+          </div>
         )}
         <button type="submit" className={`save-btn ${saveError ? 'save-btn-full' : ''}`} disabled={isSaving || isImporting}>
           {isSaving ? 'Saving...' : 'Save Recipe'}

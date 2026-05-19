@@ -8,7 +8,7 @@ import { hasUnscaledIngredients } from '../utils/scalingMath';
 import { useTheme } from '../theme/useTheme';
 import './RecipeViewer.css';
 
-export default function RecipeViewer() {
+export default function RecipeViewer({ session }) {
   const { id } = useParams();
   const recipeId = id || '123';
   const navigate = useNavigate();
@@ -80,15 +80,22 @@ export default function RecipeViewer() {
         </button>
         <div className="recipe-nav-actions">
           <SettingsMenu />
-          <button className="nav-edit-btn" onClick={() => navigate(`/editor/${recipe.id}`)}>
-            Edit Recipe
-          </button>
+          {session && (
+            <button className="nav-edit-btn" onClick={() => navigate(`/editor/${recipe.id}`)}>
+              Edit Recipe
+            </button>
+          )}
         </div>
       </nav>
       <div className="recipe-hero" style={{ backgroundImage: `url('${recipe.image_url || activeTheme.assets.recipeHero}')` }}></div>
       <header className="recipe-header">
         <h1>{recipe.title || 'Untitled Recipe'}</h1>
         <div className="recipe-meta">
+          {recipe.is_public && (
+            <span className="pill-tag public-badge">
+              <span className="public-icon" role="img" aria-label="globe">🌐</span> Public
+            </span>
+          )}
           <span className="pill-tag">{recipe.prep_time_minutes || 0} mins</span>
           {recipe.cuisine_type ? (
             recipe.cuisine_type.split(',').map(t => t.trim()).filter(Boolean).map(tag => (

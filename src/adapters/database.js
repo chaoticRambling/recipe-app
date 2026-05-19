@@ -1,10 +1,18 @@
 import { supabase } from '../supabaseClient';
 
 export const getRecipes = async () => {
-  const { data, error } = await supabase
+  const { data: { session } } = await supabase.auth.getSession();
+  
+  let query = supabase
     .from('recipes')
     .select('*')
     .order('updated_at', { ascending: false });
+    
+  if (!session) {
+    query = query.eq('is_public', true);
+  }
+  
+  const { data, error } = await query;
   
   if (error) {
     console.error("Error fetching recipes:", error);
@@ -14,11 +22,18 @@ export const getRecipes = async () => {
 };
 
 export const getRecipe = async (id) => {
-  const { data, error } = await supabase
+  const { data: { session } } = await supabase.auth.getSession();
+  
+  let query = supabase
     .from('recipes')
     .select('*')
-    .eq('id', id)
-    .single();
+    .eq('id', id);
+    
+  if (!session) {
+    query = query.eq('is_public', true);
+  }
+  
+  const { data, error } = await query.single();
     
   if (error) {
     console.error("Error fetching recipe:", error);

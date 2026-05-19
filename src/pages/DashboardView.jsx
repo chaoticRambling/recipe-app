@@ -37,7 +37,7 @@ export default function DashboardView({ session }) {
           <h1>My Recipes</h1>
           <div className="header-actions">
             <SettingsMenu />
-            {session && (
+            {session ? (
               <button 
                 className="logout-btn" 
                 onClick={async () => {
@@ -47,10 +47,19 @@ export default function DashboardView({ session }) {
               >
                 Log Out
               </button>
+            ) : (
+              <button 
+                className="logout-btn" 
+                onClick={() => navigate('/login')}
+              >
+                Log In
+              </button>
             )}
-            <button className="new-recipe-btn" onClick={() => navigate('/editor')}>
-              + New Recipe
-            </button>
+            {session && (
+              <button className="new-recipe-btn" onClick={() => navigate('/editor')}>
+                + New Recipe
+              </button>
+            )}
           </div>
         </div>
       </header>
@@ -67,7 +76,7 @@ export default function DashboardView({ session }) {
             </div>
             <div className="desktop95-welcome-copy">
               <p className="desktop95-kicker">Kitchen 95</p>
-              <h2>Welcome back, Chef!</h2>
+              <h2>{session ? 'Welcome back, Chef!' : 'Welcome to the Kitchen!'}</h2>
               <p>
                 {loading
                   ? 'Opening your recipe box...'

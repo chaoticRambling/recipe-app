@@ -40,14 +40,14 @@ function App() {
             <Routes>
               <Route 
                 path="/" 
-                element={session ? <DashboardView session={session} /> : <Navigate to="/login" replace />} 
+                element={<DashboardView session={session} />} 
               />
               <Route 
                 path="/explore" 
-                element={session ? <ExploreView session={session} /> : <Navigate to="/login" replace />} 
+                element={<ExploreView session={session} />} 
               />
               <Route path="/login" element={<LoginView />} />
-              <Route path="/recipe/:id" element={<RecipeViewer />} />
+              <Route path="/recipe/:id" element={<RecipeViewer session={session} />} />
               <Route 
                 path="/editor" 
                 element={

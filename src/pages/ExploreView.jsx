@@ -256,7 +256,7 @@ export default function ExploreView({ session }) {
           <h1>Explore by Tags</h1>
           <div className="header-actions">
             <SettingsMenu />
-            {session && (
+            {session ? (
               <button 
                 className="logout-btn" 
                 onClick={async () => {
@@ -266,10 +266,19 @@ export default function ExploreView({ session }) {
               >
                 Log Out
               </button>
+            ) : (
+              <button 
+                className="logout-btn" 
+                onClick={() => navigate('/login')}
+              >
+                Log In
+              </button>
             )}
-            <button className="new-recipe-btn" onClick={() => navigate('/editor')}>
-              + New Recipe
-            </button>
+            {session && (
+              <button className="new-recipe-btn" onClick={() => navigate('/editor')}>
+                + New Recipe
+              </button>
+            )}
           </div>
         </div>
       </header>
