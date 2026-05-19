@@ -4,6 +4,7 @@ import { getRecipes } from '../adapters/database';
 import { supabase } from '../supabaseClient';
 import RecipeList from '../components/RecipeList';
 import SettingsMenu from '../components/SettingsMenu';
+import AppNavigation from '../components/AppNavigation';
 import { useTheme } from '../theme/useTheme';
 import { usesTopTabs } from '../theme/themeCatalog';
 import './DashboardView.css';
@@ -55,17 +56,7 @@ export default function DashboardView({ session }) {
       </header>
 
       {useTopTabs && (
-        <nav className="top-tab-nav" aria-label="Recipe app sections">
-          <button type="button" className="top-tab active">
-            Saved Recipes
-          </button>
-          <button type="button" className="top-tab">
-            Grocery List
-          </button>
-          <button type="button" className="top-tab">
-            Search
-          </button>
-        </nav>
+        <AppNavigation />
       )}
 
       <main className="dashboard-main">
@@ -98,20 +89,7 @@ export default function DashboardView({ session }) {
       </main>
 
       {!useTopTabs && (
-        <nav className="bottom-nav">
-          <button className="nav-item active">
-            <span className="nav-icon">🥄</span>
-            <span>Recipes</span>
-          </button>
-          <button className="nav-item">
-            <span className="nav-icon">🧺</span>
-            <span>Groceries</span>
-          </button>
-          <button className="nav-item">
-            <span className="nav-icon">🔍</span>
-            <span>Search</span>
-          </button>
-        </nav>
+        <AppNavigation />
       )}
     </div>
   );

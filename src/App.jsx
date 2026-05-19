@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient';
 import DashboardView from './pages/DashboardView';
 import RecipeViewer from './pages/RecipeViewer';
 import LoginView from './pages/LoginView';
+import ExploreView from './pages/ExploreView';
 import AppChrome from './components/AppChrome';
 import ThemeProvider from './theme/ThemeProvider';
 
@@ -40,6 +41,10 @@ function App() {
               <Route 
                 path="/" 
                 element={session ? <DashboardView session={session} /> : <Navigate to="/login" replace />} 
+              />
+              <Route 
+                path="/explore" 
+                element={session ? <ExploreView session={session} /> : <Navigate to="/login" replace />} 
               />
               <Route path="/login" element={<LoginView />} />
               <Route path="/recipe/:id" element={<RecipeViewer />} />

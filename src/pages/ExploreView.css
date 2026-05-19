@@ -1,0 +1,425 @@
+.explore-view {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.explore-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  width: 100%;
+}
+
+.explore-search-container {
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-panel);
+  padding: var(--spacing-md);
+}
+
+.explore-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.search-input-icon {
+  position: absolute;
+  left: 12px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.explore-search-input {
+  width: 100%;
+  padding: 0.75rem 2.5rem 0.75rem 2.5rem;
+  font-size: 1rem;
+  font-family: var(--font-sans);
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--border-color, #CCCCCC);
+  color: var(--text-primary);
+  border-radius: var(--radius-control, 8px);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.explore-search-input:focus {
+  border-color: var(--color-primary, #E07A5F);
+  box-shadow: 0 0 0 3px var(--color-primary-bg, rgba(224, 122, 95, 0.15));
+}
+
+.explore-search-clear-btn {
+  position: absolute;
+  right: 12px;
+  background: var(--color-border, #E2E8F0);
+  border: none;
+  color: var(--text-secondary);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  padding-bottom: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.explore-search-clear-btn:hover {
+  background: var(--text-secondary);
+  color: var(--color-surface, #FFFFFF);
+}
+
+.explore-tags-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-panel);
+  padding: var(--spacing-md);
+  position: relative;
+}
+
+.explore-tags-container h3 {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.explore-tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.explore-tag-btn {
+  background: var(--skin-control-bg);
+  border: var(--skin-control-border);
+  box-shadow: var(--skin-control-shadow);
+  color: var(--text-primary);
+  border-radius: var(--radius-control, var(--radius-lg, 8px));
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, transform 0.1s, box-shadow 0.1s;
+  position: relative;
+}
+
+.explore-tag-btn:hover {
+  background: var(--skin-control-hover-bg);
+}
+
+.explore-tag-btn.active {
+  background: var(--color-primary, #E07A5F);
+  color: var(--color-on-primary, #FFFFFF);
+  border-color: var(--color-primary, #E07A5F);
+  box-shadow: none;
+}
+
+.tag-count-badge {
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+.explore-tag-btn.active .tag-count-badge {
+  opacity: 1;
+}
+
+.explore-results-container {
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-panel);
+  padding: var(--spacing-md);
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.explore-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-secondary);
+  padding: var(--spacing-xl) var(--spacing-md);
+  margin: auto;
+  gap: var(--spacing-sm);
+}
+
+.explore-prompt-icon {
+  font-size: 2.5rem;
+  opacity: 0.6;
+}
+
+.explore-prompt p {
+  margin: 0;
+  font-size: 1.05rem;
+  max-width: 400px;
+}
+
+.explore-empty-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--text-secondary);
+  padding: var(--spacing-xl) var(--spacing-md);
+  margin: auto;
+  gap: var(--spacing-md);
+}
+
+.explore-empty-results p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+.clear-filters-btn {
+  background: var(--skin-primary-bg);
+  border: var(--skin-primary-border);
+  color: var(--color-on-primary, #FFFFFF);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-control);
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.clear-filters-btn:hover {
+  background: var(--skin-primary-hover-bg);
+}
+
+.explore-filtered-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.explore-results-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.explore-results-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.clear-filters-link {
+  background: transparent;
+  border: none;
+  color: var(--color-primary, #E07A5F);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: var(--spacing-xs);
+  text-decoration: underline;
+}
+
+.clear-filters-link:hover {
+  color: var(--color-primary-hover, #D06A4F);
+}
+
+/* Theme overrides for desktop95 retro theme */
+:root[data-theme='desktop95'] .explore-view {
+  flex: 1;
+  gap: var(--spacing-sm);
+  margin: 0;
+  max-width: none;
+  min-height: 0;
+  overflow: hidden;
+  padding-bottom: 0;
+  width: 100%;
+}
+
+:root[data-theme='desktop95'] .explore-main {
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  max-height: none;
+  min-height: 0;
+  overflow: hidden;
+  padding: var(--spacing-sm);
+  gap: var(--spacing-sm);
+}
+
+:root[data-theme='desktop95'] .explore-tags-nav,
+:root[data-theme='desktop95'] .explore-search-container {
+  border-radius: 0;
+  padding: var(--spacing-sm);
+  margin-bottom: 0;
+  flex: 0 0 auto;
+}
+
+:root[data-theme='desktop95'] .explore-search-input {
+  border-radius: 0;
+  border: var(--skin-scroll-panel-border);
+  box-shadow: var(--skin-scroll-panel-shadow);
+  background: #FFFFFF;
+  color: #000000;
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem 2rem 0.5rem 2rem;
+}
+
+:root[data-theme='desktop95'] .explore-search-input:focus {
+  border-color: #808080;
+  box-shadow: var(--skin-scroll-panel-shadow);
+}
+
+:root[data-theme='desktop95'] .search-input-icon {
+  left: 8px;
+  color: #000000;
+  opacity: 0.8;
+  font-size: 0.95rem;
+}
+
+:root[data-theme='desktop95'] .explore-search-clear-btn {
+  border-radius: 0;
+  background: var(--skin-control-bg, #C0C0C0);
+  border: var(--skin-control-border);
+  box-shadow: var(--skin-control-shadow);
+  color: #000000;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  font-size: 0.85rem;
+  right: 6px;
+  padding: 0;
+  padding-bottom: 2px;
+}
+
+:root[data-theme='desktop95'] .explore-search-clear-btn:hover {
+  background: var(--skin-control-hover-bg, #D0D0D0);
+}
+
+:root[data-theme='desktop95'] .explore-search-clear-btn:active {
+  box-shadow: var(--skin-control-active-shadow);
+  transform: var(--skin-control-active-transform);
+}
+
+:root[data-theme='desktop95'] .explore-tags-container {
+  border-radius: 0;
+  padding: var(--spacing-sm);
+  margin-bottom: 0;
+  flex: 0 0 auto;
+}
+
+:root[data-theme='desktop95'] .explore-tag-btn {
+  border-radius: 0;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+:root[data-theme='desktop95'] .explore-tag-btn:hover {
+  background: var(--skin-control-hover-bg);
+}
+
+:root[data-theme='desktop95'] .explore-tag-btn.active {
+  background: var(--skin-control-active-bg, #C0C0C0);
+  box-shadow: var(--skin-control-active-shadow);
+  transform: var(--skin-control-active-transform);
+  border-color: var(--skin-control-border);
+  color: var(--text-primary);
+}
+
+/* Inner dot outline inside the active retro button to simulate Windows 95 focus state */
+:root[data-theme='desktop95'] .explore-tag-btn.active::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  border: 1px dotted #000000;
+  pointer-events: none;
+}
+
+:root[data-theme='desktop95'] .explore-results-container {
+  border-radius: 0;
+  padding: var(--spacing-sm);
+  flex: 1;
+  min-height: 330px; /* Generous height to accommodate matching header and recipes frame */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+:root[data-theme='desktop95'] .explore-filtered-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 280px;
+  overflow: hidden;
+}
+
+:root[data-theme='desktop95'] .explore-results-container .recipe-list-shell {
+  min-height: 260px; /* Fits at least three 78px recipe cards without any inner scrolling */
+}
+
+:root[data-theme='desktop95'] .explore-prompt,
+:root[data-theme='desktop95'] .explore-empty-results {
+  background: #FFFFFF;
+  border: var(--skin-scroll-panel-border);
+  box-shadow: var(--skin-scroll-panel-shadow);
+  padding: var(--spacing-lg);
+  margin: var(--spacing-xs) 0 var(--spacing-sm) 0;
+  flex: 1;
+}
+
+:root[data-theme='desktop95'] .clear-filters-btn {
+  border-radius: 0;
+  background: var(--skin-control-bg);
+  border: var(--skin-control-border);
+  box-shadow: var(--skin-control-shadow);
+  color: #000000;
+}
+
+:root[data-theme='desktop95'] .clear-filters-btn:hover {
+  background: var(--skin-control-hover-bg);
+}
+
+:root[data-theme='desktop95'] .clear-filters-link {
+  color: #0000A8;
+}
+
+:root[data-theme='desktop95'] .explore-page-scroll {
+  flex: 1 1 auto;
+  height: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+:root[data-theme='desktop95'] .explore-page-scroll-content {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding-right: var(--spacing-sm);
+  gap: var(--spacing-sm);
+}

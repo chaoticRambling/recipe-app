@@ -8,6 +8,7 @@ A mobile-first, responsive recipe management application built with React, Vite,
 - **URL Import**: Create a draft recipe from a webpage URL using recipe metadata first, with optional LLM fallback.
 - **Theme Skins**: Switch between code-authored visual skins, including a `Desktop 95` proof theme with sharp corners, bevels, and CSS-generated texture.
 - **Recipe Viewer**: An elegant, mobile-friendly interface for cooking and reading recipes.
+- **Explore View**: Search and filter your recipe box using dynamic tag buttons (strict "AND" intersection compounding logic) combined with type-ahead keyword search matching across Titles, Ingredients, and Steps.
 - **Advanced Recipe Editor**: 
   - Drag-and-drop reordering using `@dnd-kit`.
   - Sortable ingredient lists that can be nested into categories (e.g., "Main", "Sauce").
@@ -28,10 +29,12 @@ src/
 ├── pages/                   # Full-page routing views
 │   ├── LoginView.jsx        # Authentication view
 │   ├── DashboardView.jsx    # Recipe library overview
+│   ├── ExploreView.jsx      # Tag explorer and text keyword search view
 │   ├── RecipeViewer.jsx     # Read-only cooking view
 │   └── RecipeEditor.jsx     # Complex creation and editing environment
 │
 ├── components/              # Reusable, interactive UI elements
+│   ├── AppNavigation.jsx    # Unified theme-sensitive header-tabs and bottom-nav component
 │   ├── ThemeSwitcher.jsx    # Theme selector UI
 │   ├── SettingsMenu.jsx     # Settings popover with theme controls
 │   ├── Desktop95ScrollArea.jsx # Custom chunky scroll area for Desktop 95
@@ -51,7 +54,7 @@ Themes are code-authored presets defined in `src/theme/themeCatalog.js` and styl
 
 Themes can also declare lightweight chrome metadata through `uiChrome`. `Desktop 95` uses this to request a window frame, top tabs, decorative window controls, and chunky scrollbar styling. Non-retro themes keep the regular page frame and bottom navigation.
 
-Desktop 95 uses `src/components/Desktop95ScrollArea.jsx` for its app-like scroll regions instead of relying only on browser-native scrollbar styling. Recipe viewer pages and recipe editor pages get a right-hand Windows-95-style page scrollbar inside the faux window so bottom content such as rough notes, delete actions, and editor controls remains reachable. Ingredients and instructions keep their own fixed-height inset scroll panes inside the recipe viewer.
+Desktop 95 uses `src/components/Desktop95ScrollArea.jsx` for its app-like scroll regions instead of relying only on browser-native scrollbar styling. Recipe viewer, editor, and explore pages get a right-hand Windows-95-style page scrollbar inside the faux window so bottom content remains reachable. To support smooth scrolling without nested double-scrollbar clipping, the Explore page's results list shell and matching container are designed with minimum height rules (`min-height: 260px` for `.recipe-list-shell` and `330px` for `.explore-results-container`), guaranteeing at least three recipe cards render fully inside the retro box without squishing. Ingredients and instructions keep their own fixed-height inset scroll panes inside the recipe viewer.
 
 The theme layer now has two levels of tokens:
 
