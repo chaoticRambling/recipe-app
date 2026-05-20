@@ -127,8 +127,25 @@
 }
 
 .ingredient-item-checked .ingredient-name {
-  text-decoration: line-through;
-  opacity: 0.6;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.ingredient-item-checked {
+  background: color-mix(in srgb, var(--accent-color) 16%, transparent);
+  border-left: 4px solid var(--accent-color);
+  border-radius: var(--radius-panel);
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
+}
+
+.ingredient-item-checked:hover {
+  background: color-mix(in srgb, var(--accent-color) 22%, transparent);
+  padding-left: var(--spacing-sm);
+}
+
+.ingredient-item-checked .ingredient-amount {
+  color: var(--accent-color);
 }
 
 .ingredient-item-checkbox {
@@ -154,9 +171,17 @@
 :root[data-theme='desktop95'] .ingredient-item-checked .ingredient-name {
   text-decoration: line-through;
   color: #808080;
+  font-weight: normal;
 }
 
 :root[data-theme='desktop95'] .ingredient-item-checked {
   background-color: #F0F0F0;
+  border-left: 0;
+  border-radius: 0;
+  padding-left: 2px;
+  padding-right: 2px;
 }
 
+:root[data-theme='desktop95'] .ingredient-item-checked .ingredient-amount {
+  color: var(--text-primary);
+}

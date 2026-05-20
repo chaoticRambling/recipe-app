@@ -34,6 +34,7 @@ export default function RecipeViewer({ session }) {
 
   // Grocery populate state
   const [isGroceryMode, setIsGroceryMode] = useState(false);
+  const [isGroceryReviewOpen, setIsGroceryReviewOpen] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState({}); // key -> { name, quantity, store, aisle }
   const [currentGroceries, setCurrentGroceries] = useState([]);
   const [stores, setStores] = useState(() => {
@@ -55,7 +56,7 @@ export default function RecipeViewer({ session }) {
   }, [recipeId]);
 
   useEffect(() => {
-    if (isGroceryMode) {
+    if (isGroceryMode || isGroceryReviewOpen) {
       async function loadGroceries() {
         try {
           const loaded = await getGroceryItems(session);
@@ -66,7 +67,7 @@ export default function RecipeViewer({ session }) {
       }
       loadGroceries();
     }
-  }, [isGroceryMode, session]);
+  }, [isGroceryMode, isGroceryReviewOpen, session]);
 
   useEffect(() => {
     let wakeLock = null;
@@ -100,6 +101,15 @@ export default function RecipeViewer({ session }) {
     }
   }, [notification, activeTheme.id]);
 
+  useEffect(() => {
+    if (isGroceryReviewOpen && activeTheme.id !== 'desktop95') {
+      document.body.classList.add('recipe-grocery-review-lock');
+      return () => document.body.classList.remove('recipe-grocery-review-lock');
+    }
+
+    document.body.classList.remove('recipe-grocery-review-lock');
+  }, [isGroceryReviewOpen, activeTheme.id]);
+
   if (isLoading) return <div className="loader">Loading recipe...</div>;
 
   if (!recipe) {
@@ -117,6 +127,37 @@ export default function RecipeViewer({ session }) {
   const handleMultiplier = (val) => setMultiplier(val);
   const showScalingWarning = hasUnscaledIngredients(recipe.ingredients, multiplier);
   const startCookingLabel = activeTheme.id === 'desktop95' ? 'Start Cooking' : 'Step-by-Step Mode';
+  const selectedCount = Object.keys(selectedIngredients).length;
+  const isDesktop95Theme = activeTheme.id === 'desktop95';
+  const activeGroceryButtonStyle = isDesktop95Theme
+    ? { background: '#000080', color: '#FFFFFF', boxShadow: 'inset 1px 1px 0 #0a0a0a' }
+    : { borderColor: 'var(--success-color)', color: 'var(--success-color)' };
+
+  const exitGrocerySelection = () => {
+    setIsGroceryMode(false);
+    setIsGroceryReviewOpen(false);
+    setSelectedIngredients({});
+  };
+
+  const toggleGrocerySelection = () => {
+    if (isGroceryMode) {
+      exitGrocerySelection();
+      return;
+    }
+
+    setIsGroceryMode(true);
+    setIsGroceryReviewOpen(false);
+    setSelectedIngredients({});
+  };
+
+  const openGroceryReview = () => {
+    if (selectedCount === 0) return;
+    setIsGroceryReviewOpen(true);
+  };
+
+  const closeGroceryReview = () => {
+    setIsGroceryReviewOpen(false);
+  };
 
   const handleToggleIngredient = (key, parsedItem) => {
     setSelectedIngredients(prev => {
@@ -145,6 +186,14 @@ export default function RecipeViewer({ session }) {
     }));
   };
 
+  const handleRemoveSelectedIngredient = (key) => {
+    setSelectedIngredients(prev => {
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
+  };
+
   const handleAddSelectedGroceries = async () => {
     const itemsToAdd = Object.values(selectedIngredients);
     if (itemsToAdd.length === 0) return;
@@ -161,6 +210,7 @@ export default function RecipeViewer({ session }) {
       
       setSelectedIngredients({});
       setIsGroceryMode(false);
+      setIsGroceryReviewOpen(false);
       setNotification({
         type: 'success',
         count: itemsToAdd.length,
@@ -172,79 +222,109 @@ export default function RecipeViewer({ session }) {
     }
   };
 
-  const selectedCount = Object.keys(selectedIngredients).length;
-
-  const modernDrawer = isGroceryMode && activeTheme.id !== 'desktop95' && (
-    <div className="grocery-drawer">
-      <div className="grocery-drawer-header">
-        <h3>🛒 Shop Ingredients</h3>
-        <button className="close-drawer-btn" onClick={() => setIsGroceryMode(false)}>&times;</button>
+  const modernSelectionBar = isGroceryMode && !isDesktop95Theme && !isGroceryReviewOpen && (
+    <div className="grocery-selection-bar" role="status" aria-live="polite">
+      <div className="grocery-selection-summary">
+        <span className="grocery-selection-count">{selectedCount}</span>
+        <span>{selectedCount === 1 ? 'ingredient selected' : 'ingredients selected'}</span>
       </div>
-      <div className="grocery-drawer-content">
-        <div className="checked-ingredients-summary" style={{ display: 'flex', flexDirection: 'column', maxHeight: '320px' }}>
-          <h4 style={{ margin: 0, marginBottom: 'var(--spacing-sm)' }}>Selected Ingredients ({selectedCount})</h4>
-          {selectedCount === 0 ? (
-            <p className="checked-ingredients-empty">Check items in the recipe to add them.</p>
-          ) : (
-            <div style={{ overflowY: 'auto', flex: 1, paddingRight: '4px' }}>
-              {Object.values(selectedIngredients).map((item) => (
-                <div key={item.key} className="drawer-selected-item-config">
-                  <span className="selected-item-text">
-                    {item.quantity && <strong>{item.quantity} </strong>}
-                    {item.name}
-                  </span>
-                  <div className="selected-item-dropdowns">
-                    <select 
-                      value={item.store} 
-                      onChange={(e) => handleUpdateItemConfig(item.key, 'store', e.target.value)}
-                    >
-                      {stores.map(s => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                    <select
-                      value={item.aisle}
-                      onChange={(e) => handleUpdateItemConfig(item.key, 'aisle', e.target.value)}
-                    >
-                      {AISLE_SUGGESTIONS.map(a => <option key={a} value={a}>{a}</option>)}
-                    </select>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="grocery-drawer-preview" style={{ flex: 1, minHeight: 0 }}>
-          <h4>Current Grocery List Preview</h4>
-          <div className="preview-list-box" style={{ maxHeight: 'none', flex: 1 }}>
-            {currentGroceries.length === 0 ? (
-              <p className="checked-ingredients-empty">Your shopping list is empty.</p>
-            ) : (
-              currentGroceries.map((item) => (
-                <div key={item.id} className="preview-item-row">
-                  <span className="preview-item-name">
-                    {item.checked ? '✓ ' : ''}{item.name} {item.quantity && `(${item.quantity})`}
-                  </span>
-                  <span className="preview-item-meta">
-                    {item.store} | {item.aisle}
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-      </div>
-      <div className="grocery-drawer-footer">
-        <button className="nav-edit-btn" onClick={() => setIsGroceryMode(false)}>Cancel</button>
-        <button 
-          className="nav-edit-btn" 
-          style={{ background: 'var(--accent-color)', color: 'var(--color-on-primary)', border: 'none' }}
+      <div className="grocery-selection-actions">
+        <button className="grocery-selection-secondary" onClick={exitGrocerySelection}>
+          Cancel
+        </button>
+        <button
+          className="grocery-selection-primary"
           disabled={selectedCount === 0}
-          onClick={handleAddSelectedGroceries}
+          onClick={openGroceryReview}
         >
-          Add {selectedCount} Selected
+          Review
         </button>
       </div>
     </div>
+  );
+
+  const modernDrawer = isGroceryReviewOpen && !isDesktop95Theme && (
+    <>
+      <div className="grocery-drawer-backdrop" onClick={closeGroceryReview}></div>
+      <div className="grocery-drawer" role="dialog" aria-modal="true" aria-labelledby="grocery-review-title">
+        <div className="grocery-drawer-header">
+          <h3 id="grocery-review-title">Review Ingredients</h3>
+          <button className="close-drawer-btn" onClick={closeGroceryReview} aria-label="Keep selecting">&times;</button>
+        </div>
+        <div className="grocery-drawer-content">
+          <div className="checked-ingredients-summary" style={{ display: 'flex', flexDirection: 'column', maxHeight: '320px' }}>
+            <h4 style={{ margin: 0, marginBottom: 'var(--spacing-sm)' }}>Selected Ingredients ({selectedCount})</h4>
+            {selectedCount === 0 ? (
+              <p className="checked-ingredients-empty">No ingredients selected.</p>
+            ) : (
+              <div style={{ overflowY: 'auto', flex: 1, paddingRight: '4px' }}>
+                {Object.values(selectedIngredients).map((item) => (
+                  <div key={item.key} className="drawer-selected-item-config">
+                    <button
+                      type="button"
+                      className="remove-selected-item-btn"
+                      onClick={() => handleRemoveSelectedIngredient(item.key)}
+                      aria-label={`Remove ${item.name} from selected ingredients`}
+                    >
+                      ×
+                    </button>
+                    <span className="selected-item-text">
+                      {item.quantity && <strong>{item.quantity} </strong>}
+                      {item.name}
+                    </span>
+                    <div className="selected-item-dropdowns">
+                      <select
+                        value={item.store}
+                        onChange={(e) => handleUpdateItemConfig(item.key, 'store', e.target.value)}
+                      >
+                        {stores.map(s => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                      <select
+                        value={item.aisle}
+                        onChange={(e) => handleUpdateItemConfig(item.key, 'aisle', e.target.value)}
+                      >
+                        {AISLE_SUGGESTIONS.map(a => <option key={a} value={a}>{a}</option>)}
+                      </select>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <div className="grocery-drawer-preview">
+            <h4>Current Grocery List Preview</h4>
+            <div className="preview-list-box">
+              {currentGroceries.length === 0 ? (
+                <p className="checked-ingredients-empty">Your shopping list is empty.</p>
+              ) : (
+                currentGroceries.map((item) => (
+                  <div key={item.id} className="preview-item-row">
+                    <span className="preview-item-name">
+                      {item.checked ? '✓ ' : ''}{item.name} {item.quantity && `(${item.quantity})`}
+                    </span>
+                    <span className="preview-item-meta">
+                      {item.store} | {item.aisle}
+                    </span>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+        <div className="grocery-drawer-footer">
+          <button className="nav-edit-btn" onClick={closeGroceryReview}>Keep Selecting</button>
+          <button
+            className="nav-edit-btn"
+            style={{ background: 'var(--accent-color)', color: 'var(--color-on-primary)', border: 'none' }}
+            disabled={selectedCount === 0}
+            onClick={handleAddSelectedGroceries}
+          >
+            Add {selectedCount} Selected
+          </button>
+        </div>
+      </div>
+    </>
   );
 
   const retroDialog = isGroceryMode && activeTheme.id === 'desktop95' && (
@@ -362,7 +442,7 @@ export default function RecipeViewer({ session }) {
   );
 
   const recipeView = (
-    <div className="recipe-viewer">
+    <div className={`recipe-viewer ${isGroceryMode && !isDesktop95Theme ? 'grocery-selection-active' : ''}`}>
       <nav className="recipe-nav">
         <button className="nav-back-btn" onClick={() => navigate('/')}>
           &larr; Back to Recipes
@@ -370,11 +450,8 @@ export default function RecipeViewer({ session }) {
         <div className="recipe-nav-actions">
           <button 
             className="nav-edit-btn"
-            onClick={() => {
-              setIsGroceryMode(!isGroceryMode);
-              setSelectedIngredients({});
-            }}
-            style={isGroceryMode ? (activeTheme.id === 'desktop95' ? { background: '#000080', color: '#FFFFFF', boxShadow: 'inset 1px 1px 0 #0a0a0a' } : { borderColor: 'var(--success-color)', color: 'var(--success-color)' }) : undefined}
+            onClick={toggleGrocerySelection}
+            style={isGroceryMode ? activeGroceryButtonStyle : undefined}
           >
             {isGroceryMode ? 'Exit Selection' : '🛒 Shop Ingredients'}
           </button>
@@ -413,11 +490,8 @@ export default function RecipeViewer({ session }) {
             <div style={{ display: 'flex', gap: 'var(--spacing-sm)', alignItems: 'center' }}>
               <button 
                 className="toggle-btn"
-                onClick={() => {
-                  setIsGroceryMode(!isGroceryMode);
-                  setSelectedIngredients({});
-                }}
-                style={isGroceryMode ? (activeTheme.id === 'desktop95' ? { background: '#000080', color: '#FFFFFF', boxShadow: 'inset 1px 1px 0 #0a0a0a' } : { borderColor: 'var(--success-color)', color: 'var(--success-color)' }) : undefined}
+                onClick={toggleGrocerySelection}
+                style={isGroceryMode ? activeGroceryButtonStyle : undefined}
               >
                 {isGroceryMode ? 'Cancel Shop' : '🛒 Shop Ingredients'}
               </button>
@@ -553,6 +627,7 @@ export default function RecipeViewer({ session }) {
     <>
       {recipeView}
       {modernDrawer}
+      {modernSelectionBar}
       {successNotification}
     </>
   );

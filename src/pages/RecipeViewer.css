@@ -559,6 +559,87 @@
 /* Grocery Populate Feature CSS */
 
 /* --- Modern Drawer --- */
+body.recipe-grocery-review-lock {
+  overflow: hidden;
+}
+
+.recipe-viewer.grocery-selection-active {
+  padding-bottom: 96px;
+}
+
+.grocery-selection-bar {
+  position: fixed;
+  left: max(var(--spacing-md), env(safe-area-inset-left));
+  right: max(var(--spacing-md), env(safe-area-inset-right));
+  bottom: max(var(--spacing-md), env(safe-area-inset-bottom));
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  width: min(720px, calc(100vw - (var(--spacing-md) * 2)));
+  margin: 0 auto;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  border-radius: var(--radius-card);
+  box-shadow: 0 14px 38px rgba(45, 49, 66, 0.18);
+}
+
+.grocery-selection-summary {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-width: 0;
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.grocery-selection-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  border-radius: 50%;
+  background: var(--skin-primary-bg);
+  color: var(--color-on-primary);
+  font-weight: 800;
+}
+
+.grocery-selection-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+}
+
+.grocery-selection-actions button {
+  min-width: 92px;
+  padding: 0.65em 1em;
+  font-size: 0.95rem;
+}
+
+.grocery-selection-secondary {
+  background: var(--skin-control-bg);
+  color: var(--text-secondary);
+  border: var(--skin-control-border);
+  border-radius: var(--radius-control);
+}
+
+.grocery-selection-primary {
+  background: var(--skin-primary-bg);
+  color: var(--color-on-primary);
+  border: var(--skin-primary-border);
+  border-radius: var(--radius-control);
+}
+
+.grocery-selection-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .grocery-drawer-backdrop {
   position: fixed;
   top: 0;
@@ -584,6 +665,7 @@
   z-index: 1001;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -595,6 +677,11 @@
 @keyframes slideInRight {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
+}
+
+@keyframes slideInUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
 }
 
 .grocery-drawer-header {
@@ -622,7 +709,9 @@
 
 .grocery-drawer-content {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: var(--spacing-lg);
   display: flex;
   flex-direction: column;
@@ -695,10 +784,10 @@
 }
 
 .grocery-drawer-preview {
-  flex: 1;
+  flex: 0 0 auto;
   display: flex;
   flex-direction: column;
-  min-height: 200px;
+  min-height: 0;
 }
 
 .grocery-drawer-preview h4 {
@@ -708,13 +797,13 @@
 }
 
 .preview-list-box {
-  flex: 1;
   border: 1px dashed var(--border-color);
   border-radius: var(--radius-panel);
   padding: var(--spacing-sm);
-  overflow-y: auto;
+  min-height: clamp(320px, 44vh, 540px);
+  overflow: visible;
   background: var(--skin-muted-bg);
-  max-height: 300px;
+  max-height: none;
 }
 
 .preview-item-row {
@@ -747,6 +836,95 @@
   flex: 1;
   padding: var(--spacing-sm);
   font-size: 1rem;
+}
+
+@media (max-width: 720px) {
+  .recipe-viewer.grocery-selection-active {
+    padding-bottom: 122px;
+  }
+
+  .grocery-selection-bar {
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: none;
+    align-items: stretch;
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    padding: var(--spacing-sm) var(--spacing-md) calc(var(--spacing-sm) + env(safe-area-inset-bottom));
+  }
+
+  .grocery-selection-summary {
+    flex: 1 1 auto;
+    font-size: 0.95rem;
+  }
+
+  .grocery-selection-actions {
+    flex: 0 0 auto;
+  }
+
+  .grocery-selection-actions button {
+    min-width: 82px;
+  }
+
+  .grocery-drawer {
+    top: auto;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100vw;
+    height: min(86dvh, 680px);
+    border-top: var(--skin-panel-border);
+    border-left: 0;
+    border-radius: var(--radius-card) var(--radius-card) 0 0;
+    animation: slideInUp 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .grocery-drawer-content {
+    overflow-y: auto;
+  }
+
+  .preview-list-box {
+    min-height: clamp(240px, 42dvh, 420px);
+  }
+
+  .grocery-drawer-header,
+  .grocery-drawer-content,
+  .grocery-drawer-footer {
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+  }
+
+  .grocery-drawer-footer {
+    padding-bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+  }
+
+  .selected-item-dropdowns {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-item-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+@media (max-width: 440px) {
+  .grocery-selection-bar {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  .grocery-selection-actions {
+    width: 100%;
+  }
+
+  .grocery-selection-actions button {
+    flex: 1;
+  }
 }
 
 
@@ -905,12 +1083,14 @@
   background: var(--skin-surface-bg);
   border: 1px solid var(--border-color);
   padding: var(--spacing-sm);
+  padding-right: calc(var(--spacing-sm) + 30px);
   border-radius: var(--radius-panel);
   margin-bottom: var(--spacing-sm);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-xs);
   text-align: left;
+  position: relative;
 }
 
 .drawer-selected-item-config:last-child {
@@ -937,6 +1117,33 @@
   border-radius: var(--radius-control);
   background: var(--skin-surface-bg);
   color: var(--text-primary);
+}
+
+.remove-selected-item-btn {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid color-mix(in srgb, var(--danger-color, #b00020) 54%, var(--border-color));
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--danger-color, #b00020) 10%, var(--skin-surface-bg));
+  color: var(--danger-color, #b00020);
+  cursor: pointer;
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0;
+}
+
+.remove-selected-item-btn:hover,
+.remove-selected-item-btn:focus-visible {
+  background: var(--danger-color, #b00020);
+  color: var(--color-on-primary);
+  outline: none;
 }
 
 /* Retro styling for Desktop 95 */
@@ -1108,6 +1315,3 @@
   font-family: inherit;
   font-size: 0.85rem;
 }
-
-
-
