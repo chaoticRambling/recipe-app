@@ -16,6 +16,7 @@ A mobile-first, responsive recipe management application built with React, Vite,
   - **Dynamic Multi-Tagging Input**: Converts the standard "Cuisine Type" field into an interactive tag pill system, supporting auto-suggestions for previously used tags, keyboard ArrowDown/ArrowUp navigation, and comma/Enter key tag creation.
 - **Secure Read-Only Public Sharing**: Exposes the Dashboard, Explore, and Recipe views to unauthenticated visitors (friends & family) under a secure, read-only **Guest Mode**. Visitors can only see recipes explicitly marked as public by the owner, with all creation, editing, and deleting capabilities completely removed.
 - **Settings Page**: A dedicated tabbed settings view (`/settings`) housing visual theme switcher skin customizer, chef display name profile setups, default scale unit presets, and live database Row-Level Security (RLS) connection tables. Adapts dynamically to responsive horizontal/vertical card groups or inherits a custom double-beveled **System Properties dialog** under the `Desktop 95` theme, complete with functional pressed transforming action buttons.
+- **Groceries Management**: A fully integrated `/groceries` hub functioning as a list builder and active shopping assistant. Features autocomplete aisle suggestions, keyboard navigation, automated store groupings, responsive multi-column checklist grids on modern desktop themes, and perfectly responsive full-width system dialog windows on retro themes leveraging robust viewport height constraints.
 
 ## File Structure
 
