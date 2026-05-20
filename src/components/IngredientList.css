@@ -115,3 +115,48 @@
   border-left: 3px solid #800000;
   border-radius: 0;
 }
+
+/* Selectable Ingredient Mode Styles */
+.ingredient-item-selectable {
+  transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.ingredient-item-selectable:hover {
+  background-color: rgba(var(--accent-color-rgb, 0, 100, 200), 0.05);
+  padding-left: var(--spacing-xs);
+}
+
+.ingredient-item-checked .ingredient-name {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.ingredient-item-checkbox {
+  cursor: pointer;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+/* Retro styling for selectable ingredients in Desktop 95 */
+:root[data-theme='desktop95'] .ingredient-item-selectable:hover {
+  background-color: #000080;
+  color: #FFFFFF;
+  padding-left: 2px; /* keep same padding to prevent jitter */
+}
+
+:root[data-theme='desktop95'] .ingredient-item-selectable:hover .ingredient-name,
+:root[data-theme='desktop95'] .ingredient-item-selectable:hover .ingredient-amount {
+  color: #FFFFFF;
+}
+
+:root[data-theme='desktop95'] .ingredient-item-checked .ingredient-name {
+  text-decoration: line-through;
+  color: #808080;
+}
+
+:root[data-theme='desktop95'] .ingredient-item-checked {
+  background-color: #F0F0F0;
+}
+
