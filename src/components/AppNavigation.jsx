@@ -27,7 +27,11 @@ export default function AppNavigation() {
         >
           Explore
         </button>
-        <button type="button" className="top-tab">
+        <button 
+          type="button" 
+          className={`top-tab ${currentPath === '/groceries' ? 'active' : ''}`}
+          onClick={() => navigate('/groceries')}
+        >
           Grocery List
         </button>
         <button 
@@ -57,7 +61,10 @@ export default function AppNavigation() {
         <span className="nav-icon">🔍</span>
         <span>Explore</span>
       </button>
-      <button className="nav-item">
+      <button 
+        className={`nav-item ${currentPath === '/groceries' ? 'active' : ''}`}
+        onClick={() => navigate('/groceries')}
+      >
         <span className="nav-icon">🧺</span>
         <span>Groceries</span>
       </button>

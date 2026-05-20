@@ -6,6 +6,7 @@ import RecipeViewer from './pages/RecipeViewer';
 import LoginView from './pages/LoginView';
 import ExploreView from './pages/ExploreView';
 import SettingsView from './pages/SettingsView';
+import GroceriesView from './pages/GroceriesView';
 import AppChrome from './components/AppChrome';
 import ThemeProvider from './theme/ThemeProvider';
 
@@ -46,6 +47,10 @@ function App() {
               <Route 
                 path="/explore" 
                 element={<ExploreView session={session} />} 
+              />
+              <Route 
+                path="/groceries" 
+                element={<GroceriesView session={session} />} 
               />
               <Route path="/login" element={<LoginView />} />
               <Route path="/recipe/:id" element={<RecipeViewer session={session} />} />

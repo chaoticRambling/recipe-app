@@ -1,0 +1,829 @@
+/* ==========================================================================
+   🏥 Core Layout Definitions for Groceries Page
+   ========================================================================== */
+
+.groceries-view {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--skin-app-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans, inherit);
+  padding-bottom: 90px; /* Avoid overlapping bottom nav bar buttons */
+}
+
+:root[data-theme='desktop95'] .groceries-view {
+  padding-bottom: 0 !important;
+}
+
+.groceries-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-sm);
+  box-sizing: border-box;
+}
+
+.modern-groceries-container {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1200px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+/* ==========================================================================
+   📝 1. Planning Panel (Builder Split Grid)
+   ========================================================================== */
+
+.groceries-planning-panel {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--spacing-md);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .groceries-planning-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.groceries-planning-controls {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.win95-input {
+  background: var(--skin-input-bg, #ffffff);
+  color: var(--color-text, #000000);
+  border: var(--skin-input-border, 1px solid var(--border-color));
+  border-radius: var(--radius-control, var(--radius-md));
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-family: inherit;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  outline: none;
+  height: 38px;
+  width: 100%;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.win95-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-primary-alpha);
+}
+
+:root[data-theme='desktop95'] .win95-input {
+  border: 2px solid #808080 !important;
+  border-top-color: #404040 !important;
+  border-left-color: #404040 !important;
+  border-bottom-color: #ffffff !important;
+  border-right-color: #ffffff !important;
+  box-shadow: inset 1px 1px 0 #000000 !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-radius: 0 !important;
+  height: 28px !important;
+  padding: 3px 6px !important;
+  font-size: 14px !important;
+}
+
+/* Win95 & Modern Form Styling */
+.groceries-form {
+  padding: var(--spacing-md);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.form-row {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+.flex-1 { flex: 1; min-width: 0; }
+.flex-2 { flex: 2; min-width: 0; }
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  position: relative;
+}
+
+.field-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+}
+
+:root[data-theme='desktop95'] .field-group label {
+  color: #000000;
+  font-weight: normal;
+}
+
+/* Select Wrapper Custom Layout */
+.store-select-wrapper {
+  display: flex;
+  gap: var(--spacing-xs);
+  align-items: center;
+}
+
+.store-select-wrapper select {
+  flex: 1;
+}
+
+.add-store-trigger {
+  padding: 0 var(--spacing-sm);
+  font-size: 1.1rem;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:root[data-theme='desktop95'] .add-store-trigger {
+  height: 28px !important;
+  border-radius: 0 !important;
+  font-weight: bold;
+}
+
+/* Aisle & Usual Suggestions Popups */
+.aisle-suggestions-popup,
+.usual-suggestions-popup {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--skin-input-bg);
+  border: var(--skin-border);
+  box-shadow: var(--skin-elevated-shadow);
+  z-index: 20;
+  max-height: 180px;
+  overflow-y: auto;
+  border-radius: var(--radius-sm);
+}
+
+.suggestion-container {
+  position: relative;
+}
+
+.suggestion-item {
+  width: 100%;
+  text-align: left;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.suggestion-item small {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  margin-top: 1px;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+  background: var(--accent-bg);
+  color: var(--color-text);
+}
+
+:root[data-theme='desktop95'] .suggestion-item:hover,
+:root[data-theme='desktop95'] .suggestion-item.active {
+  background: #000080;
+  color: #ffffff;
+}
+
+.add-store-panel {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+  background: var(--skin-muted-bg);
+  border: var(--skin-border);
+  border-radius: var(--radius-sm);
+}
+
+.add-store-row {
+  display: flex;
+  gap: var(--spacing-xs);
+  margin-top: var(--spacing-xs);
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: var(--spacing-xs);
+}
+
+/* ==========================================================================
+   ⭐ 2. Usual Purchases Catalog Styles
+   ========================================================================== */
+
+.usual-purchases-quick-bar {
+  padding: var(--spacing-md);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-md);
+}
+
+.usual-purchases-quick-bar h4 {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 1rem;
+}
+
+.quick-help {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.usual-tags-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.usual-tag-pill {
+  padding: 0.4rem 0.7rem;
+  font-size: 0.8rem;
+  background: var(--skin-tag-bg);
+  color: var(--skin-tag-color);
+  border: var(--skin-tag-border);
+  box-shadow: var(--skin-tag-shadow);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.usual-tag-pill:hover {
+  background: var(--accent-bg);
+  transform: translateY(-1px);
+}
+
+.usual-tag-pill small {
+  opacity: 0.7;
+  margin-left: 2px;
+}
+
+:root[data-theme='desktop95'] .usual-tag-pill:hover {
+  background: #000080;
+  color: #ffffff;
+  transform: none;
+}
+
+/* ==========================================================================
+   🏪 3. Table Layouts & Retro Grids
+   ========================================================================== */
+
+.groceries-list-table-wrapper {
+  padding: var(--spacing-md);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-md);
+}
+
+.groceries-list-table-wrapper h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 1.1rem;
+}
+
+.planning-list-scroller {
+  max-height: 48vh; /* Scale dynamically with viewport height */
+  min-height: 220px;
+  overflow-y: auto;
+  padding-right: var(--spacing-xs);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.store-grouping-panel {
+  border: var(--skin-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  max-height: 36vh; /* Scale dynamically with viewport height */
+  min-height: 180px;
+}
+
+.store-group-content {
+  overflow-y: auto; /* Independent inner scrollbar support */
+  flex: 1;
+  padding-bottom: var(--spacing-xs);
+}
+
+.store-group-header {
+  margin: 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--skin-section-header-bg);
+  border-bottom: var(--skin-border);
+  font-size: 0.95rem;
+}
+
+.aisle-grouping-pane {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-bottom: var(--skin-border);
+}
+
+.aisle-grouping-pane:last-child {
+  border-bottom: none;
+}
+
+.aisle-group-header {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+:root[data-theme='desktop95'] .aisle-group-header {
+  color: #000000;
+  font-weight: bold;
+}
+
+/* Table Style System */
+.win95-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.win95-table th {
+  padding: var(--spacing-xs);
+  background: var(--skin-control-bg);
+  border: var(--skin-control-border);
+  box-shadow: var(--skin-control-shadow);
+  font-weight: normal;
+  font-size: 0.8rem;
+}
+
+.win95-table td {
+  padding: var(--spacing-xs);
+  border: var(--skin-border);
+  background: var(--skin-input-bg, #ffffff);
+  color: var(--color-text, #000000);
+  vertical-align: middle;
+}
+
+.row-checked td {
+  background: var(--skin-muted-bg);
+  text-decoration: line-through;
+  opacity: 0.6;
+}
+
+.item-name-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  border: none !important;
+  background: transparent !important;
+}
+
+.win95-checkbox-cell {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.row-action-buttons,
+.inline-action-buttons {
+  display: flex;
+  gap: var(--spacing-xs);
+}
+
+.inline-btn {
+  padding: 0.2rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.inline-edit-input {
+  width: 100%;
+  padding: 2px 4px;
+  font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   🧺 4. Shopping Mode Interface
+   ========================================================================== */
+
+.shopping-controls-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.shopping-controls-header h3 {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.shopping-meta-stats {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  font-size: 0.9rem;
+}
+
+.shopping-mode-scroller {
+  padding: var(--spacing-md);
+  max-height: 52vh; /* Dynamic scale matching screen heights and zoom levels */
+  min-height: 250px;
+  overflow-y: auto;
+  display: grid; /* Grid container for side-by-side store cards */
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: start;
+  gap: var(--spacing-md);
+  background: var(--skin-scroll-panel-bg);
+  border: var(--skin-scroll-panel-border);
+  box-shadow: var(--skin-scroll-panel-shadow);
+}
+
+@media (max-width: 768px) {
+  .shopping-mode-scroller {
+    grid-template-columns: 1fr;
+  }
+}
+
+.shopping-store-card {
+  border: var(--skin-border);
+  border-radius: var(--radius-sm);
+  background: var(--skin-surface-bg);
+  padding: var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.shopping-store-title {
+  margin: 0;
+  font-size: 1.05rem;
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 2px solid var(--border-color);
+}
+
+.shopping-aisle-panel {
+  border: var(--skin-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.shopping-aisle-title {
+  margin: 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  background: var(--skin-muted-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+}
+
+.shopping-checkbox-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  background: var(--skin-surface-bg, #ffffff);
+  color: var(--color-text);
+}
+
+.shopping-item-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px dashed var(--border-color);
+}
+
+.shopping-item-row:last-child {
+  border-bottom: none;
+}
+
+.shopping-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 1rem;
+  cursor: pointer;
+  flex: 1;
+}
+
+.shopping-checkbox-label input[type='checkbox'] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.shopping-item-qty {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-left: var(--spacing-xs);
+}
+
+/* Strikethrough checked items (Option A) */
+.bought-items-list {
+  background: var(--skin-muted-bg);
+  opacity: 0.7;
+}
+
+.strike-through .shopping-item-name {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+}
+
+.shopping-recently-bought-panel {
+  grid-column: 1 / -1; /* Spans all grid columns on desktop */
+  margin-top: var(--spacing-md);
+  border-top: 2px dashed var(--border-color);
+  padding-top: var(--spacing-md);
+}
+
+.bought-section-header {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: 1rem;
+  color: var(--color-success);
+}
+
+.clear-helper-text {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.shopping-trip-completed-banner {
+  padding: var(--spacing-xl);
+  text-align: center;
+  background: var(--skin-success-bg);
+  color: var(--color-on-success);
+  border-radius: var(--radius-md);
+  border: var(--skin-border);
+}
+
+/* ==========================================================================
+   ⭐ 5. Catalog Management (Usual Purchases Tab)
+   ========================================================================== */
+
+.groceries-usual-panel {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: var(--spacing-md);
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .groceries-usual-panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.usual-form-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.manage-stores-card {
+  padding: var(--spacing-md);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-md);
+}
+
+.manage-stores-card h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.stores-bullet-list {
+  margin: 0;
+  padding-left: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.store-bullet-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.bullet-delete-trigger {
+  background: transparent;
+  border: none;
+  color: var(--color-danger);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.bullet-delete-trigger:hover {
+  font-weight: bold;
+}
+
+/* ==========================================================================
+   📜 6. Timeline History Log
+   ========================================================================== */
+
+.groceries-history-panel {
+  padding: var(--spacing-md);
+  background: var(--skin-surface-bg);
+  border: var(--skin-panel-border);
+  box-shadow: var(--skin-surface-shadow);
+  border-radius: var(--radius-md);
+}
+
+.history-header {
+  margin-bottom: var(--spacing-md);
+}
+
+.history-header h3 {
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.history-kicker {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.history-timeline-wrapper {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+/* ==========================================================================
+   🗂️ 7. Undo Action Toast Overlay System
+   ========================================================================== */
+
+.win95-undo-toast {
+  position: fixed;
+  bottom: 80px;
+  right: var(--spacing-md);
+  background: #C0C0C0;
+  border: 2px solid #ffffff;
+  border-top-color: #ffffff;
+  border-left-color: #ffffff;
+  border-bottom-color: #000000;
+  border-right-color: #000000;
+  box-shadow: 2px 2px 8px rgba(0,0,0,0.34);
+  padding: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  z-index: 100;
+  animation: win95ToastSlide 0.2s ease-out;
+}
+
+.undo-msg {
+  font-size: 0.9rem;
+  color: #000000;
+}
+
+.undo-btn {
+  font-weight: bold !important;
+}
+
+@keyframes win95ToastSlide {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Modern Floating Undo FAB */
+.groceries-undo-toast {
+  position: fixed;
+  bottom: 84px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-surface);
+  color: var(--color-text); /* Guarantee clear light/dark text contrast matching the theme */
+  border: 1px solid var(--color-border);
+  box-shadow: var(--skin-elevated-shadow);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-pill);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  z-index: 100;
+  font-size: 0.95rem;
+  animation: modernToastSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.undo-trigger-btn {
+  padding: 0.3rem 0.8rem;
+  font-size: 0.85rem;
+  background: var(--color-primary) !important;
+  color: #ffffff !important;
+  border: none;
+  border-radius: var(--radius-pill);
+}
+
+@keyframes modernToastSlide {
+  from { bottom: 30px; opacity: 0; }
+  to { bottom: 84px; opacity: 1; }
+}
+
+/* ==========================================================================
+   🕹️ 8. Win95 Custom Dialog System Overrides
+   ========================================================================== */
+
+.win95-grocery-dialog {
+  display: flex;
+  flex-direction: column;
+}
+
+:root[data-theme='desktop95'] .win95-grocery-dialog {
+  max-width: none !important;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.win95-grocery-tabs {
+  margin-bottom: 0 !important;
+}
+
+.win95-grocery-content {
+  background: #C0C0C0;
+  border: 2px solid #ffffff;
+  border-top: none !important;
+  border-left-color: #ffffff;
+  border-bottom-color: #808080;
+  border-right-color: #808080;
+  padding: var(--spacing-md) var(--spacing-md) var(--spacing-lg) var(--spacing-md);
+  min-height: 480px;
+}
+
+.retro-groceries-view .settings-page-scroll {
+  height: calc(100vh - 195px); /* Decreased height to prevent running off viewport bottom */
+}
+
+.retro-groceries-view .settings-page-scroll-content {
+  padding-bottom: 120px !important; /* Generous extra scrollable margin for zoomed levels and small screens */
+}
+
+.retro-groceries-view .win95-table td {
+  border: 1px solid #808080 !important;
+}
+
+.retro-groceries-view .win95-table th {
+  border: 1px solid #808080 !important;
+  border-top-color: #ffffff !important;
+  border-left-color: #ffffff !important;
+}
+
+/* Custom checkbox graphic override for desktop95 */
+:root[data-theme='desktop95'] input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  background: #ffffff;
+  border: 2px solid #808080;
+  border-top-color: #404040;
+  border-left-color: #404040;
+  border-bottom-color: #ffffff;
+  border-right-color: #ffffff;
+  box-shadow: inset 1px 1px 0 #000000;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+}
+
+:root[data-theme='desktop95'] input[type='checkbox']:checked::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  left: 4px;
+  width: 6px;
+  height: 10px;
+  border: solid #000000;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+:root[data-theme='desktop95'] input[type='checkbox']:active {
+  background: #d8d8d8;
+}

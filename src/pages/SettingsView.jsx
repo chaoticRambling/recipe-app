@@ -5,6 +5,7 @@ import AppNavigation from '../components/AppNavigation';
 import { useTheme } from '../theme/useTheme';
 import { usesTopTabs } from '../theme/themeCatalog';
 import Desktop95ScrollArea from '../components/Desktop95ScrollArea';
+import { supabase } from '../supabaseClient';
 import './SettingsView.css';
 
 export default function SettingsView({ session }) {
@@ -218,8 +219,30 @@ export default function SettingsView({ session }) {
 
   const modernLayout = (
     <div className="settings-view modern-settings-view">
-      <header className="dashboard-header settings-header-nav">
-        <h1>Application Settings</h1>
+      <header className="dashboard-header">
+        <div className="header-content">
+          <h1>Application Settings</h1>
+          <div className="header-actions">
+            {session ? (
+              <button 
+                className="logout-btn" 
+                onClick={async () => {
+                  await supabase.auth.signOut();
+                  navigate('/login');
+                }}
+              >
+                Log Out
+              </button>
+            ) : (
+              <button 
+                className="logout-btn" 
+                onClick={() => navigate('/login')}
+              >
+                Log In
+              </button>
+            )}
+          </div>
+        </div>
       </header>
 
       <main className="dashboard-main settings-main">
